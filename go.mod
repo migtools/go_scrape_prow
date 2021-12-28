@@ -9,6 +9,7 @@ require (
 	github.com/geziyor/geziyor v0.0.0-20211211110410-34d17a2d3d5a
 	github.com/go-kit/kit v0.12.0 // indirect
 	github.com/prometheus/common v0.32.1 // indirect
+	github.com/smallfish/simpleyaml v0.1.0
 	github.com/temoto/robotstxt v1.1.2 // indirect
 	golang.org/x/net v0.0.0-20211216030914-fe4d6282115f // indirect
 	golang.org/x/sys v0.0.0-20211216021012-1d35b9e2eb4e // indirect
