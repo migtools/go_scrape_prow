@@ -25,6 +25,7 @@ type Job struct {
 	log_artifacts string
 	start_time    string
 	end_time      string
+	name          string
 }
 
 var all_jobs = make(map[string]Job)
@@ -32,7 +33,11 @@ var all_jobs = make(map[string]Job)
 func main() {
 	// get cli args
 	var url_to_scrape string
+	var print_for_human bool
+
 	flag.StringVar(&url_to_scrape, "url_to_scrape", "https://prow.ci.openshift.org/?job=*oadp*", "prow url to scrape, e.g. ")
+	flag.BoolVar(&print_for_human, "print_for_human", false, "print for a human, not influxdb")
+
 	flag.Parse()
 
 	// start dem spinners
@@ -48,7 +53,11 @@ func main() {
 	spinner.Stop()
 
 	// print output
-	printAllJobs(all_jobs)
+	if print_for_human {
+		print_human(all_jobs)
+	} else {
+		print_db(all_jobs)
+	}
 }
 
 func start_geziyor(url_to_scrape string) {
@@ -112,7 +121,7 @@ func getProwJobs(g *geziyor.Geziyor, r *client.Response) {
 		id := u.Path[strings.LastIndex(u.Path, "/")+1:]
 		//log.Printf(id)
 
-		this_job := Job{id, false, u.String(), "", "", "", ""}
+		this_job := Job{id, false, u.String(), "", "", "", "", ""}
 		all_jobs[id] = this_job
 
 	})
@@ -194,19 +203,36 @@ func getYAMLDetails(all_jobs map[string]Job) {
 		if err != nil {
 			panic(err)
 		}
+		name, err := yaml.Get("metadata").Get("annotations").Get("prow.k8s.io/job").String()
+		if err != nil {
+			panic(err)
+		}
 
 		job.start_time = start
 		job.end_time = end
+		job.name = name
 
 		// update object w/ success, failure status
 		all_jobs[id] = job
 	}
 }
 
-func printAllJobs(all_jobs map[string]Job) {
+func print_human(all_jobs map[string]Job) {
 	for _, my_job := range all_jobs {
 		//log.Printf("\n%+v\n", my_job)
 		//log.Println(my_job)
 		fmt.Printf("%+v\n", my_job)
+	}
+}
+
+func print_db(all_jobs map[string]Job) {
+	for _, my_job := range all_jobs {
+		build_string := "build," +
+			"job_name=" + my_job.name +
+			",build_id=" + my_job.id +
+			",pull_request=None" + //TO-DO
+			",start_time=" + my_job.start_time
+
+		fmt.Println(build_string)
 	}
 }
