@@ -1,16 +1,19 @@
 package main
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
 	"strings"
+	"time"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/geziyor/geziyor"
 	"github.com/geziyor/geziyor/client"
 	"github.com/smallfish/simpleyaml"
+	"github.com/theckman/yacspin"
 )
 
 type Job struct {
@@ -26,7 +29,18 @@ type Job struct {
 var all_jobs = make(map[string]Job)
 
 func main() {
+	spinner, err := start_spinner()
+	if err != nil {
+		log.Printf("spinner failed")
+	}
+	start_geziyor()
+	spinner.Stop()
+	printAllJobs(all_jobs)
+}
+
+func start_geziyor() {
 	geziyor.NewGeziyor(&geziyor.Options{
+		LogDisabled: true,
 		StartRequestsFunc: func(g *geziyor.Geziyor) {
 			g.GetRendered("https://prow.ci.openshift.org/?job=*oadp*", g.Opt.ParseFunc)
 		},
@@ -34,12 +48,48 @@ func main() {
 	}).Start()
 }
 
+func start_spinner() (*yacspin.Spinner, error) {
+	// meh have some fun
+	cfg := yacspin.Config{
+		Frequency:         500 * time.Millisecond,
+		Writer:            nil,
+		ShowCursor:        false,
+		HideCursor:        false,
+		SpinnerAtEnd:      false,
+		ColorAll:          false,
+		Colors:            []string{},
+		CharSet:           yacspin.CharSets[59],
+		Prefix:            " ",
+		Suffix:            " ",
+		SuffixAutoColon:   true,
+		Message:           " Getting your jobs",
+		StopMessage:       "",
+		StopCharacter:     "",
+		StopColors:        []string{"fgGreen"},
+		StopFailMessage:   "",
+		StopFailCharacter: "",
+		StopFailColors:    []string{},
+		NotTTY:            false,
+	}
+
+	spinner, err := yacspin.New(cfg)
+	if err != nil {
+		return nil, fmt.Errorf("failed to make spinner from struct: %s", err)
+	}
+
+	err = spinner.Start()
+	time.Sleep(1 * time.Second)
+	// end fun
+	return spinner, err
+
+}
+
 func getProwJobs(g *geziyor.Geziyor, r *client.Response) {
 
 	// to dump entire html body
 	//fmt.Println(string(r.Body))
 	rows := r.HTMLDoc.Find("#builds > tbody > tr")
-	log.Printf("length: %d", rows.Length())
+	//log.Printf("length: %d", rows.Length())
 	rows.Each(func(i int, s *goquery.Selection) {
 		link := s.Find("td:nth-child(8) > a")
 		my_url, _ := link.Attr("href")
@@ -55,7 +105,6 @@ func getProwJobs(g *geziyor.Geziyor, r *client.Response) {
 	})
 	getJobDetails(all_jobs)
 	getYAMLDetails(all_jobs)
-	printAllJobs(all_jobs)
 }
 
 func getJobDetails(all_jobs map[string]Job) {
@@ -142,8 +191,9 @@ func getYAMLDetails(all_jobs map[string]Job) {
 }
 
 func printAllJobs(all_jobs map[string]Job) {
-	log.Printf("FINAL DICTIONARY VALUES")
 	for _, my_job := range all_jobs {
-		log.Printf("%+v\n", my_job)
+		//log.Printf("\n%+v\n", my_job)
+		//log.Println(my_job)
+		fmt.Printf("%+v\n", my_job)
 	}
 }
