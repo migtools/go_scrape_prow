@@ -226,12 +226,31 @@ func print_human(all_jobs map[string]Job) {
 }
 
 func print_db(all_jobs map[string]Job) {
+	//TO-DO convert time stamps
+	// https://pkg.go.dev/github.com/lestrrat-go/strftime#section-documentation
+	// https://pkg.go.dev/github.com/levenlabs/golib/timeutil
 	for _, my_job := range all_jobs {
 		build_string := "build," +
 			"job_name=" + my_job.name +
 			",build_id=" + my_job.id +
 			",pull_request=None" + //TO-DO
-			",start_time=" + my_job.start_time
+			",start_time=" + my_job.start_time +
+			",end_time=" + my_job.end_time +
+			",duration=" + //TO-DO
+			",state_int=" + //TO-DO
+			",state=" + //TO-DO
+			" " + //space required for influxdb format
+			"job_name=" + "\"" + my_job.name + "\"" +
+			",build_id=" + "\"" + my_job.id + "\"" +
+			",pull_request=None" + //TO-DO
+			",start_time=" + "\"" + my_job.start_time + "\"" +
+			",end_time=" + "\"" + my_job.end_time + "\"" +
+			",duration=" + //TO-DO
+			",state_int=" + //TO-DO
+			",state=" + //TO-DO
+			",log=" + "\"" + my_job.log_url + "\"" +
+			" "
+			// TO-DO post timestamp here
 
 		fmt.Println(build_string)
 	}
