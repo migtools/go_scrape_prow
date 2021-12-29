@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -29,20 +30,32 @@ type Job struct {
 var all_jobs = make(map[string]Job)
 
 func main() {
+	// get cli args
+	var url_to_scrape string
+	flag.StringVar(&url_to_scrape, "url_to_scrape", "https://prow.ci.openshift.org/?job=*oadp*", "prow url to scrape, e.g. ")
+	flag.Parse()
+
+	// start dem spinners
 	spinner, err := start_spinner()
 	if err != nil {
 		log.Printf("spinner failed")
 	}
-	start_geziyor()
+
+	// start web scraping
+	start_geziyor(url_to_scrape)
+
+	// stop spinner
 	spinner.Stop()
+
+	// print output
 	printAllJobs(all_jobs)
 }
 
-func start_geziyor() {
+func start_geziyor(url_to_scrape string) {
 	geziyor.NewGeziyor(&geziyor.Options{
 		LogDisabled: true,
 		StartRequestsFunc: func(g *geziyor.Geziyor) {
-			g.GetRendered("https://prow.ci.openshift.org/?job=*oadp*", g.Opt.ParseFunc)
+			g.GetRendered(url_to_scrape, g.Opt.ParseFunc)
 		},
 		ParseFunc: getProwJobs,
 	}).Start()
