@@ -7,7 +7,10 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"os"
+	"os/signal"
 	"strings"
+	"syscall"
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
@@ -41,16 +44,25 @@ func main() {
 	flag.Parse()
 
 	// start dem spinners
-	spinner, err := start_spinner()
-	if err != nil {
-		log.Printf("spinner failed")
+
+	// required if stopSpinner is called
+	//var spinner *yacspin.Spinner
+	if print_for_human {
+		spinner, err := start_spinner()
+		spinner = spinner // get around compile error
+		if err != nil {
+			log.Printf("spinner failed")
+		}
 	}
 
 	// start web scraping
 	start_geziyor(url_to_scrape)
 
+	// This may not be required
 	// stop spinner
-	spinner.Stop()
+	// if print_for_human {
+	// 	stopSpinnerOnSignal(spinner)
+	// }
 
 	// print output
 	if print_for_human {
@@ -78,19 +90,19 @@ func start_spinner() (*yacspin.Spinner, error) {
 		ShowCursor:        false,
 		HideCursor:        false,
 		SpinnerAtEnd:      false,
-		ColorAll:          false,
-		Colors:            []string{},
 		CharSet:           yacspin.CharSets[59],
 		Prefix:            " ",
 		Suffix:            " ",
 		SuffixAutoColon:   true,
 		Message:           " Getting your jobs",
-		StopMessage:       "",
-		StopCharacter:     "",
+		ColorAll:          true,
+		Colors:            []string{"fgYellow"},
+		StopCharacter:     "✓",
 		StopColors:        []string{"fgGreen"},
-		StopFailMessage:   "",
-		StopFailCharacter: "",
-		StopFailColors:    []string{},
+		StopMessage:       "done",
+		StopFailCharacter: "✗",
+		StopFailColors:    []string{"fgRed"},
+		StopFailMessage:   "failed",
 		NotTTY:            false,
 	}
 
@@ -104,6 +116,23 @@ func start_spinner() (*yacspin.Spinner, error) {
 	// end fun
 	return spinner, err
 
+}
+
+func stopSpinnerOnSignal(spinner *yacspin.Spinner) {
+	// ensure we stop the spinner before exiting, otherwise cursor will remain
+	// hidden and terminal will require a `reset`
+	sigCh := make(chan os.Signal, 1)
+	signal.Notify(sigCh, os.Interrupt, syscall.SIGTERM)
+	go func() {
+		<-sigCh
+
+		spinner.StopFailMessage("interrupted")
+
+		// ignoring error intentionally
+		_ = spinner.StopFail()
+
+		os.Exit(0)
+	}()
 }
 
 func getProwJobs(g *geziyor.Geziyor, r *client.Response) {
