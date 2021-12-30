@@ -9,6 +9,7 @@ import (
 	"net/url"
 	"os"
 	"os/signal"
+	"strconv"
 	"strings"
 	"syscall"
 	"time"
@@ -22,13 +23,15 @@ import (
 
 type Job struct {
 	id            string
-	pass          bool
+	state         string
+	state_int     int
 	log_url       string
 	log_yaml      string
 	log_artifacts string
 	start_time    string
 	end_time      string
 	name          string
+	pull_request  string
 }
 
 var all_jobs = make(map[string]Job)
@@ -150,7 +153,7 @@ func getProwJobs(g *geziyor.Geziyor, r *client.Response) {
 		id := u.Path[strings.LastIndex(u.Path, "/")+1:]
 		//log.Printf(id)
 
-		this_job := Job{id, false, u.String(), "", "", "", "", ""}
+		this_job := Job{id, "", 4, u.String(), "", "", "", "", "", "todo"}
 		all_jobs[id] = this_job
 
 	})
@@ -216,12 +219,28 @@ func getYAMLDetails(all_jobs map[string]Job) {
 		if err != nil {
 			panic(err)
 		}
-		// log.Printf("Value: %#v\n", status)
-		if status != "success" {
-			job.pass = false
-		} else {
-			job.pass = true
+
+		// get state
+		//  0 = success, 1 = pending, 2 = failed 3 = aborted / other
+		state_int := 4
+		state := ""
+		switch status {
+		case "success":
+			state_int = 0
+			state = "success"
+		case "pending":
+			state_int = 1
+			state = "pending"
+		case "failed":
+			state_int = 2
+			state = "failed"
+		default:
+			state_int = 4
+			state = "unknown"
 		}
+
+		job.state = state
+		job.state_int = state_int
 
 		// Get Start / Stop time
 		start, err := yaml.Get("status").Get("startTime").String()
@@ -248,38 +267,48 @@ func getYAMLDetails(all_jobs map[string]Job) {
 
 func print_human(all_jobs map[string]Job) {
 	for _, my_job := range all_jobs {
-		//log.Printf("\n%+v\n", my_job)
-		//log.Println(my_job)
 		fmt.Printf("%+v\n", my_job)
 	}
 }
 
 func print_db(all_jobs map[string]Job) {
-	//TO-DO convert time stamps
-	// https://pkg.go.dev/github.com/lestrrat-go/strftime#section-documentation
-	// https://pkg.go.dev/github.com/levenlabs/golib/timeutil
 	for _, my_job := range all_jobs {
+		// datestamps
+		st, _ := time.Parse(time.RFC3339, my_job.start_time)
+		et, _ := time.Parse(time.RFC3339, my_job.end_time)
+		duration := fmt.Sprint(et.Sub(st).Seconds())
+		timestamp := fmt.Sprint(st.Unix() * 1000000000)
+
+		// log.Printf(my_job.start_time)
+		// log.Printf(my_job.end_time)
+		// log.Printf(st.String())
+		// log.Printf(et.String())
+		// log.Printf("%f", st.Unix())
+
+		// influxdb line format
+		// https://docs.influxdata.com/influxdb/v2.1/reference/syntax/line-protocol/
+
 		build_string := "build," +
 			"job_name=" + my_job.name +
 			",build_id=" + my_job.id +
-			",pull_request=None" + //TO-DO
+			",pull_request=" + my_job.pull_request +
 			",start_time=" + my_job.start_time +
 			",end_time=" + my_job.end_time +
-			",duration=" + //TO-DO
-			",state_int=" + //TO-DO
-			",state=" + //TO-DO
+			",duration=" + duration + //seconds
+			",state_int=" + strconv.Itoa(my_job.state_int) +
+			",state=" + my_job.state +
 			" " + //space required for influxdb format
-			"job_name=" + "\"" + my_job.name + "\"" +
-			",build_id=" + "\"" + my_job.id + "\"" +
-			",pull_request=None" + //TO-DO
-			",start_time=" + "\"" + my_job.start_time + "\"" +
-			",end_time=" + "\"" + my_job.end_time + "\"" +
-			",duration=" + //TO-DO
-			",state_int=" + //TO-DO
-			",state=" + //TO-DO
-			",log=" + "\"" + my_job.log_url + "\"" +
-			" "
-			// TO-DO post timestamp here
+			"job_name=" + strconv.Quote(my_job.name) +
+			",build_id=" + my_job.id +
+			",pull_request=" + strconv.Quote(my_job.pull_request) +
+			",start_time=" + strconv.Quote(my_job.start_time) +
+			",end_time=" + strconv.Quote(my_job.end_time) +
+			",duration=" + duration +
+			",state_int=" + strconv.Itoa(my_job.state_int) +
+			",state=" + strconv.Quote(my_job.state) +
+			",log=" + strconv.Quote(my_job.log_url) +
+			" " +
+			timestamp // this timestap is the job recorded timestamp in influx
 
 		fmt.Println(build_string)
 	}
