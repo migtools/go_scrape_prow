@@ -332,7 +332,7 @@ func print_db(all_jobs map[string]Job) {
 		build_string := "build," +
 			"job_name=" + my_job.name +
 			",build_id=" + my_job.id +
-			",pull_request=" + my_job.pull_request +
+			",pull_request=" + strconv.Quote(my_job.pull_request) +
 			",start_time=" + my_job.start_time +
 			",end_time=" + my_job.end_time +
 			",duration=" + duration + //seconds
