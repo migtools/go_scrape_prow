@@ -278,7 +278,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.8.*/  AND \"state\" = 'success' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*4.8.*/  AND \"state\" = 'success' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -317,7 +317,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.8.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*4.8.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -356,7 +356,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.8.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*4.8.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
@@ -439,7 +439,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.7.*/  AND \"state\" = 'success' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*4.7.*/  AND \"state\" = 'success' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -478,7 +478,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.7.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*4.7.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -517,7 +517,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.7.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*4.7.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
@@ -2309,16 +2309,7 @@
                             "align":null,
                             "filterable":true
                         },
-                        "mappings":[
-                            {
-                                "from":"",
-                                "id":1,
-                                "text":"",
-                                "to":"",
-                                "type":1,
-                                "value":""
-                            }
-                        ],
+                        "mappings":[],
                         "thresholds":{
                             "mode":"absolute",
                             "steps":[
@@ -2327,8 +2318,20 @@
                                     "value":null
                                 },
                                 {
+                                    "color":"green",
+                                    "value":0
+                                },
+                                {
+                                    "color":"super-light-blue",
+                                    "value":1
+                                },
+                                {
                                     "color":"red",
-                                    "value":80
+                                    "value":2
+                                },
+                                {
+                                    "color":"red",
+                                    "value":3
                                 }
                             ]
                         }
@@ -2337,40 +2340,61 @@
                         {
                             "matcher":{
                                 "id":"byName",
-                                "options":"job_name"
+                                "options":"state_int"
                             },
                             "properties":[
                                 {
-                                    "id":"custom.width",
-                                    "value":753
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"build_id"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":188
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"duration"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":150
+                                    "id":"custom.displayMode",
+                                    "value":"color-background"
                                 },
                                 {
-                                    "id":"unit",
-                                    "value":"dthms"
+                                    "id":"mappings",
+                                    "value":[
+                                        {
+                                            "from":"",
+                                            "id":1,
+                                            "text":"success",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"0 "
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":2,
+                                            "text":"pending",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"1"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":3,
+                                            "text":"failure",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"2"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":4,
+                                            "text":"aborted",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"3"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":5,
+                                            "text":"failed",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"4"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id":"displayName",
+                                    "value":"state"
                                 }
                             ]
                         },
@@ -2389,30 +2413,10 @@
                                             "url":"${__data.fields.log}"
                                         }
                                     ]
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"state"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.displayMode",
-                                    "value":"color-background"
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"log"
-                            },
-                            "properties":[
+                                },
                                 {
                                     "id":"custom.width",
-                                    "value":1
+                                    "value":537
                                 }
                             ]
                         },
@@ -2424,19 +2428,73 @@
                             "properties":[
                                 {
                                     "id":"custom.width",
-                                    "value":159
+                                    "value":158
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"pull_request"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.width",
+                                    "value":384
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"pull_request"
+                            },
+                            "properties":[
+                                {
+                                    "id":"links",
+                                    "value":[
+                                        {
+                                            "targetBlank":true,
+                                            "title":"link to pull request",
+                                            "url":"${__data.fields.pull_request}"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"duration"
+                            },
+                            "properties":[
+                                {
+                                    "id":"unit",
+                                    "value":"dtdurations"
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"build_id"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.width",
+                                    "value":234
                                 }
                             ]
                         }
                     ]
                 },
                 "gridPos":{
-                    "h":6,
+                    "h":10,
                     "w":24,
                     "x":0,
                     "y":49
                 },
-                "id":15,
+                "id":43,
                 "options":{
                     "showHeader":true,
                     "sortBy":[
@@ -2465,7 +2523,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT \"job_name\", \"state\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /.*4.8.*aws.*/  ) AND $timeFilter ",
+                        "query":"SELECT \"job_name\", \"state_int\",  \"duration\",   \"build_id\", \"log\" FROM \"build\" WHERE (\"job_name\" =~ /^periodic.*4.8.*aws.*/  ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -2499,7 +2557,8 @@
                             },
                             "indexByName":{},
                             "renameByName":{
-                                "log":""
+                                "log":"",
+                                "state":""
                             }
                         }
                     }
@@ -2514,16 +2573,7 @@
                             "align":null,
                             "filterable":true
                         },
-                        "mappings":[
-                            {
-                                "from":"",
-                                "id":1,
-                                "text":"",
-                                "to":"",
-                                "type":1,
-                                "value":""
-                            }
-                        ],
+                        "mappings":[],
                         "thresholds":{
                             "mode":"absolute",
                             "steps":[
@@ -2532,8 +2582,20 @@
                                     "value":null
                                 },
                                 {
+                                    "color":"green",
+                                    "value":0
+                                },
+                                {
+                                    "color":"super-light-blue",
+                                    "value":1
+                                },
+                                {
                                     "color":"red",
-                                    "value":80
+                                    "value":2
+                                },
+                                {
+                                    "color":"red",
+                                    "value":3
                                 }
                             ]
                         }
@@ -2542,40 +2604,61 @@
                         {
                             "matcher":{
                                 "id":"byName",
-                                "options":"job_name"
+                                "options":"state_int"
                             },
                             "properties":[
                                 {
-                                    "id":"custom.width",
-                                    "value":753
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"build_id"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":188
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"duration"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":150
+                                    "id":"custom.displayMode",
+                                    "value":"color-background"
                                 },
                                 {
-                                    "id":"unit",
-                                    "value":"dthms"
+                                    "id":"mappings",
+                                    "value":[
+                                        {
+                                            "from":"",
+                                            "id":1,
+                                            "text":"success",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"0 "
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":2,
+                                            "text":"pending",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"1"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":3,
+                                            "text":"failure",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"2"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":4,
+                                            "text":"aborted",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"3"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":5,
+                                            "text":"failed",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"4"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id":"displayName",
+                                    "value":"state"
                                 }
                             ]
                         },
@@ -2594,30 +2677,10 @@
                                             "url":"${__data.fields.log}"
                                         }
                                     ]
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"state"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.displayMode",
-                                    "value":"color-background"
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"log"
-                            },
-                            "properties":[
+                                },
                                 {
                                     "id":"custom.width",
-                                    "value":1
+                                    "value":537
                                 }
                             ]
                         },
@@ -2629,19 +2692,73 @@
                             "properties":[
                                 {
                                     "id":"custom.width",
-                                    "value":159
+                                    "value":158
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"pull_request"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.width",
+                                    "value":384
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"pull_request"
+                            },
+                            "properties":[
+                                {
+                                    "id":"links",
+                                    "value":[
+                                        {
+                                            "targetBlank":true,
+                                            "title":"link to pull request",
+                                            "url":"${__data.fields.pull_request}"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"duration"
+                            },
+                            "properties":[
+                                {
+                                    "id":"unit",
+                                    "value":"dtdurations"
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"build_id"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.width",
+                                    "value":234
                                 }
                             ]
                         }
                     ]
                 },
                 "gridPos":{
-                    "h":6,
+                    "h":10,
                     "w":24,
                     "x":0,
-                    "y":55
+                    "y":59
                 },
-                "id":28,
+                "id":47,
                 "options":{
                     "showHeader":true,
                     "sortBy":[
@@ -2670,7 +2787,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT \"job_name\", \"state\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /.*4.8.*gcp.*/  ) AND $timeFilter ",
+                        "query":"SELECT \"job_name\", \"state_int\",  \"duration\",   \"build_id\", \"log\" FROM \"build\" WHERE (\"job_name\" =~ /^periodic.*4.8.*gcp.*/  ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -2704,7 +2821,8 @@
                             },
                             "indexByName":{},
                             "renameByName":{
-                                "log":""
+                                "log":"",
+                                "state":""
                             }
                         }
                     }
@@ -2719,16 +2837,7 @@
                             "align":null,
                             "filterable":true
                         },
-                        "mappings":[
-                            {
-                                "from":"",
-                                "id":1,
-                                "text":"",
-                                "to":"",
-                                "type":1,
-                                "value":""
-                            }
-                        ],
+                        "mappings":[],
                         "thresholds":{
                             "mode":"absolute",
                             "steps":[
@@ -2737,8 +2846,20 @@
                                     "value":null
                                 },
                                 {
+                                    "color":"green",
+                                    "value":0
+                                },
+                                {
+                                    "color":"super-light-blue",
+                                    "value":1
+                                },
+                                {
                                     "color":"red",
-                                    "value":80
+                                    "value":2
+                                },
+                                {
+                                    "color":"red",
+                                    "value":3
                                 }
                             ]
                         }
@@ -2747,40 +2868,61 @@
                         {
                             "matcher":{
                                 "id":"byName",
-                                "options":"job_name"
+                                "options":"state_int"
                             },
                             "properties":[
                                 {
-                                    "id":"custom.width",
-                                    "value":753
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"build_id"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":188
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"duration"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":150
+                                    "id":"custom.displayMode",
+                                    "value":"color-background"
                                 },
                                 {
-                                    "id":"unit",
-                                    "value":"dthms"
+                                    "id":"mappings",
+                                    "value":[
+                                        {
+                                            "from":"",
+                                            "id":1,
+                                            "text":"success",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"0 "
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":2,
+                                            "text":"pending",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"1"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":3,
+                                            "text":"failure",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"2"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":4,
+                                            "text":"aborted",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"3"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":5,
+                                            "text":"failed",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"4"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id":"displayName",
+                                    "value":"state"
                                 }
                             ]
                         },
@@ -2799,30 +2941,10 @@
                                             "url":"${__data.fields.log}"
                                         }
                                     ]
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"state"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.displayMode",
-                                    "value":"color-background"
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"log"
-                            },
-                            "properties":[
+                                },
                                 {
                                     "id":"custom.width",
-                                    "value":1
+                                    "value":537
                                 }
                             ]
                         },
@@ -2834,19 +2956,73 @@
                             "properties":[
                                 {
                                     "id":"custom.width",
-                                    "value":159
+                                    "value":158
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"pull_request"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.width",
+                                    "value":384
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"pull_request"
+                            },
+                            "properties":[
+                                {
+                                    "id":"links",
+                                    "value":[
+                                        {
+                                            "targetBlank":true,
+                                            "title":"link to pull request",
+                                            "url":"${__data.fields.pull_request}"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"duration"
+                            },
+                            "properties":[
+                                {
+                                    "id":"unit",
+                                    "value":"dtdurations"
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"build_id"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.width",
+                                    "value":234
                                 }
                             ]
                         }
                     ]
                 },
                 "gridPos":{
-                    "h":6,
+                    "h":10,
                     "w":24,
                     "x":0,
-                    "y":61
+                    "y":69
                 },
-                "id":29,
+                "id":48,
                 "options":{
                     "showHeader":true,
                     "sortBy":[
@@ -2875,7 +3051,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT \"job_name\", \"state\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /.*4.8.*azure.*/  ) AND $timeFilter ",
+                        "query":"SELECT \"job_name\", \"state_int\",  \"duration\",   \"build_id\", \"log\" FROM \"build\" WHERE (\"job_name\" =~ /^periodic.*4.8.*azure.*/  ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -2909,7 +3085,8 @@
                             },
                             "indexByName":{},
                             "renameByName":{
-                                "log":""
+                                "log":"",
+                                "state":""
                             }
                         }
                     }
@@ -2937,7 +3114,7 @@
                     "h":8,
                     "w":6,
                     "x":0,
-                    "y":67
+                    "y":79
                 },
                 "id":23,
                 "interval":null,
@@ -2971,7 +3148,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.7.*aws.*/  AND \"state\" = 'success' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*4.7.*aws.*/  AND \"state_int\" = 0 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -3010,7 +3187,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.7.*aws.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*4.7.*aws.*/  AND \"state_int\"= 2 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -3049,7 +3226,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.7.*aws.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*4.7.*aws.*/  AND \"state_int\" = 4 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
@@ -3098,9 +3275,9 @@
                     "h":8,
                     "w":6,
                     "x":6,
-                    "y":67
+                    "y":79
                 },
-                "id":25,
+                "id":40,
                 "interval":null,
                 "legend":{
                     "percentage":true,
@@ -3132,7 +3309,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.7.*gcp.*/  AND \"state\" = 'success' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*4.7.*gcp.*/  AND \"state_int\" = 0 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -3171,7 +3348,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.7.*gcp.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*4.7.*gcp.*/  AND \"state_int\"= 2 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -3210,7 +3387,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.7.*gcp.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*4.7.*gcp.*/  AND \"state_int\" = 4 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
@@ -3259,9 +3436,9 @@
                     "h":8,
                     "w":6,
                     "x":12,
-                    "y":67
+                    "y":79
                 },
-                "id":26,
+                "id":41,
                 "interval":null,
                 "legend":{
                     "percentage":true,
@@ -3293,7 +3470,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.7.*azure.*/  AND \"state\" = 'success' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*4.7.*.azure*/  AND \"state_int\" = 0 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -3332,7 +3509,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.7.*azure.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*4.7.*.azure*/  AND \"state_int\"= 2 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -3371,7 +3548,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.7.*azure.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*4.7.*azure.*/  AND \"state_int\" = 4 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
@@ -3407,16 +3584,7 @@
                             "align":null,
                             "filterable":true
                         },
-                        "mappings":[
-                            {
-                                "from":"",
-                                "id":1,
-                                "text":"",
-                                "to":"",
-                                "type":1,
-                                "value":""
-                            }
-                        ],
+                        "mappings":[],
                         "thresholds":{
                             "mode":"absolute",
                             "steps":[
@@ -3425,8 +3593,20 @@
                                     "value":null
                                 },
                                 {
+                                    "color":"green",
+                                    "value":0
+                                },
+                                {
+                                    "color":"super-light-blue",
+                                    "value":1
+                                },
+                                {
                                     "color":"red",
-                                    "value":80
+                                    "value":2
+                                },
+                                {
+                                    "color":"red",
+                                    "value":3
                                 }
                             ]
                         }
@@ -3435,40 +3615,61 @@
                         {
                             "matcher":{
                                 "id":"byName",
-                                "options":"job_name"
+                                "options":"state_int"
                             },
                             "properties":[
                                 {
-                                    "id":"custom.width",
-                                    "value":753
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"build_id"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":188
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"duration"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":150
+                                    "id":"custom.displayMode",
+                                    "value":"color-background"
                                 },
                                 {
-                                    "id":"unit",
-                                    "value":"dthms"
+                                    "id":"mappings",
+                                    "value":[
+                                        {
+                                            "from":"",
+                                            "id":1,
+                                            "text":"success",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"0 "
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":2,
+                                            "text":"pending",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"1"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":3,
+                                            "text":"failure",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"2"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":4,
+                                            "text":"aborted",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"3"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":5,
+                                            "text":"failed",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"4"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id":"displayName",
+                                    "value":"state"
                                 }
                             ]
                         },
@@ -3487,30 +3688,10 @@
                                             "url":"${__data.fields.log}"
                                         }
                                     ]
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"state"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.displayMode",
-                                    "value":"color-background"
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"log"
-                            },
-                            "properties":[
+                                },
                                 {
                                     "id":"custom.width",
-                                    "value":1
+                                    "value":537
                                 }
                             ]
                         },
@@ -3522,19 +3703,73 @@
                             "properties":[
                                 {
                                     "id":"custom.width",
-                                    "value":159
+                                    "value":158
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"pull_request"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.width",
+                                    "value":384
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"pull_request"
+                            },
+                            "properties":[
+                                {
+                                    "id":"links",
+                                    "value":[
+                                        {
+                                            "targetBlank":true,
+                                            "title":"link to pull request",
+                                            "url":"${__data.fields.pull_request}"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"duration"
+                            },
+                            "properties":[
+                                {
+                                    "id":"unit",
+                                    "value":"dtdurations"
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"build_id"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.width",
+                                    "value":234
                                 }
                             ]
                         }
                     ]
                 },
                 "gridPos":{
-                    "h":6,
+                    "h":10,
                     "w":24,
                     "x":0,
-                    "y":75
+                    "y":87
                 },
-                "id":27,
+                "id":46,
                 "options":{
                     "showHeader":true,
                     "sortBy":[
@@ -3563,7 +3798,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT \"job_name\", \"state\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /.*4.7.*aws.*/  ) AND $timeFilter ",
+                        "query":"SELECT \"job_name\", \"state_int\",  \"duration\",   \"build_id\", \"log\" FROM \"build\" WHERE (\"job_name\" =~ /^periodic.*4.7.*aws.*/  ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -3597,7 +3832,8 @@
                             },
                             "indexByName":{},
                             "renameByName":{
-                                "log":""
+                                "log":"",
+                                "state":""
                             }
                         }
                     }
@@ -3612,16 +3848,7 @@
                             "align":null,
                             "filterable":true
                         },
-                        "mappings":[
-                            {
-                                "from":"",
-                                "id":1,
-                                "text":"",
-                                "to":"",
-                                "type":1,
-                                "value":""
-                            }
-                        ],
+                        "mappings":[],
                         "thresholds":{
                             "mode":"absolute",
                             "steps":[
@@ -3630,8 +3857,20 @@
                                     "value":null
                                 },
                                 {
+                                    "color":"green",
+                                    "value":0
+                                },
+                                {
+                                    "color":"super-light-blue",
+                                    "value":1
+                                },
+                                {
                                     "color":"red",
-                                    "value":80
+                                    "value":2
+                                },
+                                {
+                                    "color":"red",
+                                    "value":3
                                 }
                             ]
                         }
@@ -3640,40 +3879,61 @@
                         {
                             "matcher":{
                                 "id":"byName",
-                                "options":"job_name"
+                                "options":"state_int"
                             },
                             "properties":[
                                 {
-                                    "id":"custom.width",
-                                    "value":753
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"build_id"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":188
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"duration"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":150
+                                    "id":"custom.displayMode",
+                                    "value":"color-background"
                                 },
                                 {
-                                    "id":"unit",
-                                    "value":"dthms"
+                                    "id":"mappings",
+                                    "value":[
+                                        {
+                                            "from":"",
+                                            "id":1,
+                                            "text":"success",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"0 "
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":2,
+                                            "text":"pending",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"1"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":3,
+                                            "text":"failure",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"2"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":4,
+                                            "text":"aborted",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"3"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":5,
+                                            "text":"failed",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"4"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id":"displayName",
+                                    "value":"state"
                                 }
                             ]
                         },
@@ -3692,30 +3952,10 @@
                                             "url":"${__data.fields.log}"
                                         }
                                     ]
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"state"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.displayMode",
-                                    "value":"color-background"
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"log"
-                            },
-                            "properties":[
+                                },
                                 {
                                     "id":"custom.width",
-                                    "value":1
+                                    "value":537
                                 }
                             ]
                         },
@@ -3727,19 +3967,73 @@
                             "properties":[
                                 {
                                     "id":"custom.width",
-                                    "value":159
+                                    "value":158
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"pull_request"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.width",
+                                    "value":384
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"pull_request"
+                            },
+                            "properties":[
+                                {
+                                    "id":"links",
+                                    "value":[
+                                        {
+                                            "targetBlank":true,
+                                            "title":"link to pull request",
+                                            "url":"${__data.fields.pull_request}"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"duration"
+                            },
+                            "properties":[
+                                {
+                                    "id":"unit",
+                                    "value":"dtdurations"
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"build_id"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.width",
+                                    "value":234
                                 }
                             ]
                         }
                     ]
                 },
                 "gridPos":{
-                    "h":6,
+                    "h":10,
                     "w":24,
                     "x":0,
-                    "y":81
+                    "y":97
                 },
-                "id":19,
+                "id":44,
                 "options":{
                     "showHeader":true,
                     "sortBy":[
@@ -3768,7 +4062,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT \"job_name\", \"state\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /.*4.7.*gcp.*/  ) AND $timeFilter ",
+                        "query":"SELECT \"job_name\", \"state_int\",  \"duration\",   \"build_id\", \"log\" FROM \"build\" WHERE (\"job_name\" =~ /^periodic.*4.7.*gcp.*/  ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -3802,7 +4096,8 @@
                             },
                             "indexByName":{},
                             "renameByName":{
-                                "log":""
+                                "log":"",
+                                "state":""
                             }
                         }
                     }
@@ -3817,16 +4112,7 @@
                             "align":null,
                             "filterable":true
                         },
-                        "mappings":[
-                            {
-                                "from":"",
-                                "id":1,
-                                "text":"",
-                                "to":"",
-                                "type":1,
-                                "value":""
-                            }
-                        ],
+                        "mappings":[],
                         "thresholds":{
                             "mode":"absolute",
                             "steps":[
@@ -3835,8 +4121,20 @@
                                     "value":null
                                 },
                                 {
+                                    "color":"green",
+                                    "value":0
+                                },
+                                {
+                                    "color":"super-light-blue",
+                                    "value":1
+                                },
+                                {
                                     "color":"red",
-                                    "value":80
+                                    "value":2
+                                },
+                                {
+                                    "color":"red",
+                                    "value":3
                                 }
                             ]
                         }
@@ -3845,40 +4143,61 @@
                         {
                             "matcher":{
                                 "id":"byName",
-                                "options":"job_name"
+                                "options":"state_int"
                             },
                             "properties":[
                                 {
-                                    "id":"custom.width",
-                                    "value":753
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"build_id"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":188
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"duration"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":150
+                                    "id":"custom.displayMode",
+                                    "value":"color-background"
                                 },
                                 {
-                                    "id":"unit",
-                                    "value":"dthms"
+                                    "id":"mappings",
+                                    "value":[
+                                        {
+                                            "from":"",
+                                            "id":1,
+                                            "text":"success",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"0 "
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":2,
+                                            "text":"pending",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"1"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":3,
+                                            "text":"failure",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"2"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":4,
+                                            "text":"aborted",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"3"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":5,
+                                            "text":"failed",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"4"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id":"displayName",
+                                    "value":"state"
                                 }
                             ]
                         },
@@ -3897,30 +4216,10 @@
                                             "url":"${__data.fields.log}"
                                         }
                                     ]
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"state"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.displayMode",
-                                    "value":"color-background"
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"log"
-                            },
-                            "properties":[
+                                },
                                 {
                                     "id":"custom.width",
-                                    "value":1
+                                    "value":537
                                 }
                             ]
                         },
@@ -3932,19 +4231,73 @@
                             "properties":[
                                 {
                                     "id":"custom.width",
-                                    "value":159
+                                    "value":158
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"pull_request"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.width",
+                                    "value":384
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"pull_request"
+                            },
+                            "properties":[
+                                {
+                                    "id":"links",
+                                    "value":[
+                                        {
+                                            "targetBlank":true,
+                                            "title":"link to pull request",
+                                            "url":"${__data.fields.pull_request}"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"duration"
+                            },
+                            "properties":[
+                                {
+                                    "id":"unit",
+                                    "value":"dtdurations"
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"build_id"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.width",
+                                    "value":234
                                 }
                             ]
                         }
                     ]
                 },
                 "gridPos":{
-                    "h":6,
+                    "h":10,
                     "w":24,
                     "x":0,
-                    "y":87
+                    "y":107
                 },
-                "id":20,
+                "id":45,
                 "options":{
                     "showHeader":true,
                     "sortBy":[
@@ -3973,7 +4326,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT \"job_name\", \"state\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /.*4.7.*azure.*/  ) AND $timeFilter ",
+                        "query":"SELECT \"job_name\", \"state_int\",  \"duration\",   \"build_id\", \"log\" FROM \"build\" WHERE (\"job_name\" =~ /^periodic.*4.7.*azure.*/  ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -4007,7 +4360,8 @@
                             },
                             "indexByName":{},
                             "renameByName":{
-                                "log":""
+                                "log":"",
+                                "state":""
                             }
                         }
                     }
