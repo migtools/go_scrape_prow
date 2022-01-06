@@ -311,6 +311,18 @@ func print_human_row(my_job Job) {
 
 func print_db(all_jobs map[string]Job) {
 	for _, my_job := range all_jobs {
+
+		// ensure all the rows have the required data for entry
+		if my_job.end_time == "" {
+			print_human_row(my_job)
+			break
+		}
+
+		if my_job.name == "" {
+			print_human_row(my_job)
+			break
+		}
+
 		// datestamps
 		st, _ := time.Parse(time.RFC3339, my_job.start_time)
 		et, _ := time.Parse(time.RFC3339, my_job.end_time)
