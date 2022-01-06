@@ -47,8 +47,16 @@ type Job struct {
 }
 
 var all_jobs = make(map[string]Job)
+var ErrorLogger *log.Logger
 
 func main() {
+	//error logging
+	file, err := os.OpenFile("/tmp/prow_error.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	if err != nil {
+		log.Fatal(err)
+	}
+	ErrorLogger = log.New(file, "ERROR: ", log.Ldate|log.Ltime|log.Lshortfile)
+
 	// get cli args
 	var url_to_scrape string
 	var print_for_human bool
@@ -227,23 +235,19 @@ func getYAMLDetails(all_jobs map[string]Job) {
 		response, err := http.Get(job.log_yaml)
 		if err != nil {
 			print_human_row(job)
-			fmt.Println(err.Error())
 		}
 		defer response.Body.Close()
 		yaml_data, readErr := ioutil.ReadAll(response.Body)
 		if readErr != nil {
 			print_human_row(job)
-			fmt.Println(readErr)
 		}
 		yaml, err := simpleyaml.NewYaml(yaml_data)
 		if err != nil {
 			print_human_row(job)
-			fmt.Println(err.Error())
 		}
 		status, err := yaml.Get("status").Get("state").String()
 		if err != nil {
 			print_human_row(job)
-			fmt.Println(err.Error())
 		}
 
 		// get state
@@ -279,13 +283,11 @@ func getYAMLDetails(all_jobs map[string]Job) {
 		// Get Start / Stop time
 		start, err := yaml.Get("status").Get("startTime").String()
 		if err != nil {
-			fmt.Println(id, job)
-			fmt.Println(err.Error())
+			print_human_row(job)
 		}
 		end, err := yaml.Get("status").Get("completionTime").String()
 		if err != nil {
-			fmt.Println(id, job)
-			fmt.Println(err.Error())
+			print_human_row(job)
 		}
 
 		job.start_time = start
@@ -304,7 +306,7 @@ func print_human(all_jobs map[string]Job) {
 }
 
 func print_human_row(my_job Job) {
-	fmt.Printf("%+v\n", my_job)
+	ErrorLogger.Printf("%+v\n", my_job)
 }
 
 func print_db(all_jobs map[string]Job) {
