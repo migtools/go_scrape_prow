@@ -20,11 +20,43 @@
         "panels":[
             {
                 "datasource":null,
+                "description":"",
+                "fieldConfig":{
+                    "defaults":{
+                        "custom":{}
+                    },
+                    "overrides":[]
+                },
+                "gridPos":{
+                    "h":5,
+                    "w":24,
+                    "x":0,
+                    "y":0
+                },
+                "id":39,
+                "options":{
+                    "content":"# OADP Pull CI Dashboard\n\n## Useful links\n* Search for errors:  https://search.ci.openshift.org/  \n* Test Grid: https://testgrid.k8s.io/redhat\n* OADP CI Config: https://github.com/openshift/release/tree/master/ci-operator/config/openshift/oadp-operator\n      ",
+                    "mode":"markdown"
+                },
+                "pluginVersion":"7.3.6",
+                "targets":[
+                    {
+                        "queryType":"randomWalk",
+                        "refId":"A"
+                    }
+                ],
+                "timeFrom":null,
+                "timeShift":null,
+                "title":"OADP CI Monitor",
+                "type":"text"
+            },
+            {
+                "datasource":null,
                 "gridPos":{
                     "h":1,
                     "w":24,
                     "x":0,
-                    "y":0
+                    "y":5
                 },
                 "id":33,
                 "title":"Periodic OADP Summary",
@@ -51,7 +83,7 @@
                     "h":8,
                     "w":6,
                     "x":0,
-                    "y":1
+                    "y":6
                 },
                 "id":16,
                 "interval":null,
@@ -212,7 +244,7 @@
                     "h":8,
                     "w":6,
                     "x":6,
-                    "y":1
+                    "y":6
                 },
                 "id":35,
                 "interval":null,
@@ -373,7 +405,7 @@
                     "h":8,
                     "w":6,
                     "x":12,
-                    "y":1
+                    "y":6
                 },
                 "id":36,
                 "interval":null,
@@ -534,7 +566,7 @@
                     "h":8,
                     "w":6,
                     "x":18,
-                    "y":1
+                    "y":6
                 },
                 "id":37,
                 "interval":null,
@@ -681,7 +713,7 @@
                     "h":1,
                     "w":24,
                     "x":0,
-                    "y":9
+                    "y":14
                 },
                 "id":31,
                 "panels":[],
@@ -709,7 +741,7 @@
                     "h":8,
                     "w":6,
                     "x":0,
-                    "y":10
+                    "y":15
                 },
                 "id":34,
                 "interval":null,
@@ -870,7 +902,7 @@
                     "h":8,
                     "w":6,
                     "x":6,
-                    "y":10
+                    "y":15
                 },
                 "id":13,
                 "interval":null,
@@ -1031,7 +1063,7 @@
                     "h":8,
                     "w":6,
                     "x":12,
-                    "y":10
+                    "y":15
                 },
                 "id":14,
                 "interval":null,
@@ -1304,7 +1336,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":18
+                    "y":23
                 },
                 "id":6,
                 "options":{
@@ -1509,7 +1541,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":24
+                    "y":29
                 },
                 "id":9,
                 "options":{
@@ -1714,7 +1746,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":30
+                    "y":35
                 },
                 "id":8,
                 "options":{
@@ -1807,7 +1839,7 @@
                     "h":8,
                     "w":6,
                     "x":0,
-                    "y":36
+                    "y":41
                 },
                 "id":12,
                 "interval":null,
@@ -1968,7 +2000,7 @@
                     "h":8,
                     "w":6,
                     "x":6,
-                    "y":36
+                    "y":41
                 },
                 "id":17,
                 "interval":null,
@@ -2129,7 +2161,7 @@
                     "h":8,
                     "w":6,
                     "x":12,
-                    "y":36
+                    "y":41
                 },
                 "id":18,
                 "interval":null,
@@ -2402,7 +2434,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":44
+                    "y":49
                 },
                 "id":15,
                 "options":{
@@ -2607,7 +2639,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":50
+                    "y":55
                 },
                 "id":28,
                 "options":{
@@ -2812,7 +2844,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":56
+                    "y":61
                 },
                 "id":29,
                 "options":{
@@ -2905,7 +2937,7 @@
                     "h":8,
                     "w":6,
                     "x":0,
-                    "y":62
+                    "y":67
                 },
                 "id":23,
                 "interval":null,
@@ -3066,7 +3098,7 @@
                     "h":8,
                     "w":6,
                     "x":6,
-                    "y":62
+                    "y":67
                 },
                 "id":25,
                 "interval":null,
@@ -3227,7 +3259,7 @@
                     "h":8,
                     "w":6,
                     "x":12,
-                    "y":62
+                    "y":67
                 },
                 "id":26,
                 "interval":null,
@@ -3500,7 +3532,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":70
+                    "y":75
                 },
                 "id":27,
                 "options":{
@@ -3705,7 +3737,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":76
+                    "y":81
                 },
                 "id":19,
                 "options":{
@@ -3910,7 +3942,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":82
+                    "y":87
                 },
                 "id":20,
                 "options":{

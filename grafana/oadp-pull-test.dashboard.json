@@ -19,6 +19,38 @@
         "links":[],
         "panels":[
             {
+                "datasource":null,
+                "description":"",
+                "fieldConfig":{
+                    "defaults":{
+                        "custom":{}
+                    },
+                    "overrides":[]
+                },
+                "gridPos":{
+                    "h":5,
+                    "w":24,
+                    "x":0,
+                    "y":0
+                },
+                "id":27,
+                "options":{
+                    "content":"# OADP Pull CI Dashboard\n\n## Useful links\n* Search for errors:  https://search.ci.openshift.org/  \n* Test Grid: https://testgrid.k8s.io/redhat\n* OADP CI Config: https://github.com/openshift/release/tree/master/ci-operator/config/openshift/oadp-operator\n      ",
+                    "mode":"markdown"
+                },
+                "pluginVersion":"7.3.6",
+                "targets":[
+                    {
+                        "queryType":"randomWalk",
+                        "refId":"A"
+                    }
+                ],
+                "timeFrom":null,
+                "timeShift":null,
+                "title":"OADP CI Monitor",
+                "type":"text"
+            },
+            {
                 "aliasColors":{},
                 "breakPoint":"50%",
                 "cacheTimeout":null,
@@ -39,7 +71,7 @@
                     "h":6,
                     "w":6,
                     "x":0,
-                    "y":0
+                    "y":5
                 },
                 "id":24,
                 "interval":null,
@@ -239,7 +271,7 @@
                     "h":6,
                     "w":6,
                     "x":6,
-                    "y":0
+                    "y":5
                 },
                 "id":19,
                 "interval":null,
@@ -460,7 +492,7 @@
                     "h":13,
                     "w":12,
                     "x":12,
-                    "y":0
+                    "y":5
                 },
                 "id":15,
                 "options":{
@@ -551,7 +583,7 @@
                     "h":6,
                     "w":6,
                     "x":0,
-                    "y":6
+                    "y":11
                 },
                 "id":25,
                 "interval":null,
@@ -751,7 +783,7 @@
                     "h":6,
                     "w":6,
                     "x":6,
-                    "y":6
+                    "y":11
                 },
                 "id":23,
                 "interval":null,
@@ -1113,7 +1145,7 @@
                     "h":10,
                     "w":24,
                     "x":0,
-                    "y":13
+                    "y":18
                 },
                 "id":6,
                 "options":{
@@ -1377,7 +1409,7 @@
                     "h":10,
                     "w":24,
                     "x":0,
-                    "y":23
+                    "y":28
                 },
                 "id":20,
                 "options":{
@@ -1641,7 +1673,7 @@
                     "h":10,
                     "w":24,
                     "x":0,
-                    "y":33
+                    "y":38
                 },
                 "id":21,
                 "options":{
@@ -1905,7 +1937,7 @@
                     "h":10,
                     "w":24,
                     "x":0,
-                    "y":43
+                    "y":48
                 },
                 "id":22,
                 "options":{
