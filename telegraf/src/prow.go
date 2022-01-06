@@ -21,6 +21,18 @@ import (
 	"github.com/theckman/yacspin"
 )
 
+// type error interface {
+// 	Error() string
+// }
+
+// type errorString struct {
+// 	s string
+// }
+
+// func (e *errorString) Error() string {
+// 	return e.s
+// }
+
 type Job struct {
 	id            string
 	state         string
@@ -204,24 +216,28 @@ func getYAMLDetails(all_jobs map[string]Job) {
 		//log.Printf(id)
 		response, err := http.Get(job.log_yaml)
 		if err != nil {
-			log.Fatal(err)
+			print_human_row(job)
+			fmt.Println(err.Error())
 		}
 		defer response.Body.Close()
 		yaml_data, readErr := ioutil.ReadAll(response.Body)
 		if readErr != nil {
-			log.Fatal(readErr)
+			print_human_row(job)
+			fmt.Println(readErr)
 		}
 		yaml, err := simpleyaml.NewYaml(yaml_data)
 		if err != nil {
-			panic(err)
+			print_human_row(job)
+			fmt.Println(err.Error())
 		}
 		status, err := yaml.Get("status").Get("state").String()
 		if err != nil {
-			panic(err)
+			print_human_row(job)
+			fmt.Println(err.Error())
 		}
 
 		// get state
-		//  0 = success, 1 = pending, 2 = failed 3 = aborted / other
+		//  0 = success, 1 = pending, 2 = failure 3 = aborted / other
 		state_int := 4
 		state := ""
 		switch status {
@@ -231,9 +247,9 @@ func getYAMLDetails(all_jobs map[string]Job) {
 		case "pending":
 			state_int = 1
 			state = "pending"
-		case "failed":
+		case "failure":
 			state_int = 2
-			state = "failed"
+			state = "failure"
 		default:
 			state_int = 4
 			state = "unknown"
@@ -242,18 +258,24 @@ func getYAMLDetails(all_jobs map[string]Job) {
 		job.state = state
 		job.state_int = state_int
 
+		name, _ := yaml.Get("metadata").Get("annotations").Get("prow.k8s.io/job").String()
+		if len(name) < 1 {
+			print_human_row(job)
+			name = "name_not_found"
+			job.name = name
+		}
+		//log.Printf("name:" + name)
+
 		// Get Start / Stop time
 		start, err := yaml.Get("status").Get("startTime").String()
 		if err != nil {
-			panic(err)
+			fmt.Println(id, job)
+			fmt.Println(err.Error())
 		}
 		end, err := yaml.Get("status").Get("completionTime").String()
 		if err != nil {
-			panic(err)
-		}
-		name, err := yaml.Get("metadata").Get("annotations").Get("prow.k8s.io/job").String()
-		if err != nil {
-			panic(err)
+			fmt.Println(id, job)
+			fmt.Println(err.Error())
 		}
 
 		job.start_time = start
@@ -271,6 +293,10 @@ func print_human(all_jobs map[string]Job) {
 	}
 }
 
+func print_human_row(my_job Job) {
+	fmt.Printf("%+v\n", my_job)
+}
+
 func print_db(all_jobs map[string]Job) {
 	for _, my_job := range all_jobs {
 		// datestamps
@@ -278,6 +304,11 @@ func print_db(all_jobs map[string]Job) {
 		et, _ := time.Parse(time.RFC3339, my_job.end_time)
 		duration := fmt.Sprint(et.Sub(st).Seconds())
 		timestamp := fmt.Sprint(st.Unix() * 1000000000)
+		timestamp_int, _ := strconv.Atoi(timestamp)
+		if timestamp_int < 1 {
+			fmt.Println("timestamp is wrong, break out")
+			break
+		}
 
 		// log.Printf(my_job.start_time)
 		// log.Printf(my_job.end_time)
