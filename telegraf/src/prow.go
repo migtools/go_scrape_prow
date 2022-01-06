@@ -165,7 +165,7 @@ func getProwJobs(g *geziyor.Geziyor, r *client.Response) {
 		id := u.Path[strings.LastIndex(u.Path, "/")+1:]
 		//log.Printf(id)
 
-		this_job := Job{id, "", 4, u.String(), "", "", "", "", "", "todo"}
+		this_job := Job{id, "", 4, u.String(), "", "", "", "", "", "not_found"}
 		all_jobs[id] = this_job
 
 	})
@@ -207,6 +207,16 @@ func getJobDetails(all_jobs map[string]Job) {
 				//log.Printf(job.log_artifacts)
 			}
 		})
+
+		// Get pull request
+		document.Find("#links-card > a:nth-child(4)").Each(func(i int, s *goquery.Selection) {
+			pull_request, ok := s.Attr("href")
+			if ok {
+				job.pull_request = pull_request
+				//log.Printf(job.log_artifacts)
+			}
+		})
+
 		all_jobs[id] = job
 	}
 }
