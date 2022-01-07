@@ -326,6 +326,15 @@ func print_db(all_jobs map[string]Job) {
 			break
 		}
 
+		if my_job.state_int == 4 {
+			// job state not known.
+			// this also causes duplicate entries for build_id
+			// the state is eventually written by prow and the job in question
+			// will be captured, most likely as aborted.
+			print_human_row(my_job)
+			break
+		}
+
 		// datestamps
 		st, _ := time.Parse(time.RFC3339, my_job.start_time)
 		et, _ := time.Parse(time.RFC3339, my_job.end_time)
