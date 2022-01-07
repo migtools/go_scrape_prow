@@ -251,7 +251,7 @@ func getYAMLDetails(all_jobs map[string]Job) {
 		}
 
 		// get state
-		//  0 = success, 1 = pending, 2 = failure 3 = aborted / other
+		//  0 = success, 1 = pending, 2 = failure 3 = aborted, 4 = unknown
 		state_int := 4
 		state := ""
 		switch status {
@@ -264,6 +264,9 @@ func getYAMLDetails(all_jobs map[string]Job) {
 		case "failure":
 			state_int = 2
 			state = "failure"
+		case "aborted":
+			state_int = 3
+			state = "aborted"
 		default:
 			state_int = 4
 			state = "unknown"
