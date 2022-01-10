@@ -357,7 +357,7 @@ func print_db(all_jobs map[string]Job) {
 
 		build_string := "build," +
 			"job_name=" + my_job.name +
-			",build_id=" + my_job.id +
+			",build_id=" + strconv.Quote(my_job.id) +
 			",pull_request=" + strconv.Quote(my_job.pull_request) +
 			",start_time=" + my_job.start_time +
 			",end_time=" + my_job.end_time +
@@ -366,7 +366,7 @@ func print_db(all_jobs map[string]Job) {
 			",state=" + my_job.state +
 			" " + //space required for influxdb format
 			"job_name=" + strconv.Quote(my_job.name) +
-			",build_id=" + my_job.id +
+			",build_id=" + strconv.Quote(my_job.id) +
 			",pull_request=" + strconv.Quote(my_job.pull_request) +
 			",start_time=" + strconv.Quote(my_job.start_time) +
 			",end_time=" + strconv.Quote(my_job.end_time) +
