@@ -27,14 +27,14 @@
                     "overrides":[]
                 },
                 "gridPos":{
-                    "h":9,
-                    "w":12,
+                    "h":16,
+                    "w":24,
                     "x":0,
                     "y":0
                 },
                 "id":2,
                 "options":{
-                    "content":"# OADP CI Dashboards\n\n* [OADP Prow Periodic CI](http://oadp-ci.usersys.redhat.com:8080/d/yTPw4TOnz/prow-periodic?orgId=1)\n* [OADP Prow Pull Test CI](http://oadp-ci.usersys.redhat.com:8080/d/u2EQ4od7k/oadp-pull-test?orgId=1&from=now-7d&to=now)\n\n",
+                    "content":"## THIS IS STILL A WIP, validating data\n\n# OADP CI Dashboards\n\n* [OADP Prow Periodic CI](http://oadp-ci.usersys.redhat.com:8080/d/yTPw4TOnz/prow-periodic?orgId=1)\n* [OADP Prow Pull Test CI](http://oadp-ci.usersys.redhat.com:8080/d/u2EQ4od7k/oadp-pull-test?orgId=1&from=now-7d&to=now)\n\n\n## Useful links\n* Search for errors:  https://search.ci.openshift.org/  \n* Test Grid: https://testgrid.k8s.io/redhat\n* OADP CI Config: https://github.com/openshift/release/tree/master/ci-operator/config/openshift/oadp-operator\n      \n## builds\n* upstream: https://app.travis-ci.com/github/openshift/oadp-operator\n* downstream: https://jenkins-cpaas-oadp.apps.cpaas-poc.r6c9.p1.openshiftapps.com/\n* internal cvp: https://jenkins-cvp-5d6ccd93bed8bd3809ddcb5d.apps.ocp-c1.prod.psi.redhat.com/view/Production%20Pipeline/job/cvp-product-test/",
                     "mode":"markdown"
                 },
                 "pluginVersion":"7.3.6",
