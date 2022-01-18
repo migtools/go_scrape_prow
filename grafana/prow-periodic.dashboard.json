@@ -1229,8 +1229,20 @@
                                     "value":null
                                 },
                                 {
+                                    "color":"green",
+                                    "value":0
+                                },
+                                {
+                                    "color":"super-light-blue",
+                                    "value":1
+                                },
+                                {
                                     "color":"red",
-                                    "value":80
+                                    "value":2
+                                },
+                                {
+                                    "color":"red",
+                                    "value":3
                                 }
                             ]
                         }
@@ -1297,12 +1309,61 @@
                         {
                             "matcher":{
                                 "id":"byName",
-                                "options":"state"
+                                "options":"state_int"
                             },
                             "properties":[
                                 {
                                     "id":"custom.displayMode",
                                     "value":"color-background"
+                                },
+                                {
+                                    "id":"mappings",
+                                    "value":[
+                                        {
+                                            "from":"",
+                                            "id":1,
+                                            "text":"success",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"0"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":2,
+                                            "text":"pending",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"1"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":3,
+                                            "text":"failure",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"2"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":4,
+                                            "text":"aborted",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"3"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":5,
+                                            "text":"unknown",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"4 "
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id":"displayName",
+                                    "value":"state"
                                 }
                             ]
                         },
@@ -1338,7 +1399,7 @@
                     "x":0,
                     "y":28
                 },
-                "id":6,
+                "id":9,
                 "options":{
                     "showHeader":true,
                     "sortBy":[
@@ -1367,7 +1428,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT \"job_name\", \"state\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /.*4.9.*aws.*/  ) AND $timeFilter ",
+                        "query":"SELECT \"job_name\", \"state_int\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /.*4.9.*aws.*/  ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -1434,8 +1495,20 @@
                                     "value":null
                                 },
                                 {
+                                    "color":"green",
+                                    "value":0
+                                },
+                                {
+                                    "color":"super-light-blue",
+                                    "value":1
+                                },
+                                {
                                     "color":"red",
-                                    "value":80
+                                    "value":2
+                                },
+                                {
+                                    "color":"red",
+                                    "value":3
                                 }
                             ]
                         }
@@ -1502,12 +1575,61 @@
                         {
                             "matcher":{
                                 "id":"byName",
-                                "options":"state"
+                                "options":"state_int"
                             },
                             "properties":[
                                 {
                                     "id":"custom.displayMode",
                                     "value":"color-background"
+                                },
+                                {
+                                    "id":"mappings",
+                                    "value":[
+                                        {
+                                            "from":"",
+                                            "id":1,
+                                            "text":"success",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"0"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":2,
+                                            "text":"pending",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"1"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":3,
+                                            "text":"failure",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"2"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":4,
+                                            "text":"aborted",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"3"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":5,
+                                            "text":"unknown",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"4 "
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id":"displayName",
+                                    "value":"state"
                                 }
                             ]
                         },
@@ -1543,7 +1665,7 @@
                     "x":0,
                     "y":34
                 },
-                "id":9,
+                "id":49,
                 "options":{
                     "showHeader":true,
                     "sortBy":[
@@ -1572,7 +1694,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT \"job_name\", \"state\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /.*4.9.*gcp.*/  ) AND $timeFilter ",
+                        "query":"SELECT \"job_name\", \"state_int\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /.*4.9.*gcp.*/  ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -1597,6 +1719,272 @@
                 "timeFrom":null,
                 "timeShift":null,
                 "title":"OADP -  OpenShift 4.9 GCP Periodic",
+                "transformations":[
+                    {
+                        "id":"organize",
+                        "options":{
+                            "excludeByName":{
+                                "log":false
+                            },
+                            "indexByName":{},
+                            "renameByName":{
+                                "log":""
+                            }
+                        }
+                    }
+                ],
+                "type":"table"
+            },
+            {
+                "datasource":"telegraf",
+                "fieldConfig":{
+                    "defaults":{
+                        "custom":{
+                            "align":null,
+                            "filterable":true
+                        },
+                        "mappings":[
+                            {
+                                "from":"",
+                                "id":1,
+                                "text":"",
+                                "to":"",
+                                "type":1,
+                                "value":""
+                            }
+                        ],
+                        "thresholds":{
+                            "mode":"absolute",
+                            "steps":[
+                                {
+                                    "color":"green",
+                                    "value":null
+                                },
+                                {
+                                    "color":"green",
+                                    "value":0
+                                },
+                                {
+                                    "color":"super-light-blue",
+                                    "value":1
+                                },
+                                {
+                                    "color":"red",
+                                    "value":2
+                                },
+                                {
+                                    "color":"red",
+                                    "value":3
+                                }
+                            ]
+                        }
+                    },
+                    "overrides":[
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"job_name"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.width",
+                                    "value":753
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"build_id"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.width",
+                                    "value":188
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"duration"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.width",
+                                    "value":150
+                                },
+                                {
+                                    "id":"unit",
+                                    "value":"dthms"
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"job_name"
+                            },
+                            "properties":[
+                                {
+                                    "id":"links",
+                                    "value":[
+                                        {
+                                            "targetBlank":true,
+                                            "title":"link to logs",
+                                            "url":"${__data.fields.log}"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"state_int"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.displayMode",
+                                    "value":"color-background"
+                                },
+                                {
+                                    "id":"mappings",
+                                    "value":[
+                                        {
+                                            "from":"",
+                                            "id":1,
+                                            "text":"success",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"0"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":2,
+                                            "text":"pending",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"1"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":3,
+                                            "text":"failure",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"2"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":4,
+                                            "text":"aborted",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"3"
+                                        },
+                                        {
+                                            "from":"",
+                                            "id":5,
+                                            "text":"unknown",
+                                            "to":"",
+                                            "type":1,
+                                            "value":"4 "
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id":"displayName",
+                                    "value":"state"
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"log"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.width",
+                                    "value":1
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"Time"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.width",
+                                    "value":159
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "gridPos":{
+                    "h":6,
+                    "w":24,
+                    "x":0,
+                    "y":40
+                },
+                "id":50,
+                "options":{
+                    "showHeader":true,
+                    "sortBy":[
+                        {
+                            "desc":true,
+                            "displayName":"Time"
+                        }
+                    ]
+                },
+                "pluginVersion":"7.3.6",
+                "targets":[
+                    {
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT \"job_name\", \"state_int\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /.*4.9.*azure.*/  ) AND $timeFilter ",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"A",
+                        "resultFormat":"table",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
+                    }
+                ],
+                "timeFrom":null,
+                "timeShift":null,
+                "title":"OADP -  OpenShift 4.9 Azure Periodic",
                 "transformations":[
                     {
                         "id":"organize",
@@ -1746,7 +2134,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":40
+                    "y":46
                 },
                 "id":8,
                 "options":{
@@ -1839,7 +2227,7 @@
                     "h":8,
                     "w":6,
                     "x":0,
-                    "y":46
+                    "y":52
                 },
                 "id":12,
                 "interval":null,
@@ -2000,7 +2388,7 @@
                     "h":8,
                     "w":6,
                     "x":6,
-                    "y":46
+                    "y":52
                 },
                 "id":17,
                 "interval":null,
@@ -2161,7 +2549,7 @@
                     "h":8,
                     "w":6,
                     "x":12,
-                    "y":46
+                    "y":52
                 },
                 "id":18,
                 "interval":null,
@@ -2496,7 +2884,7 @@
                     "h":10,
                     "w":24,
                     "x":0,
-                    "y":54
+                    "y":60
                 },
                 "id":43,
                 "options":{
@@ -2764,7 +3152,7 @@
                     "h":10,
                     "w":24,
                     "x":0,
-                    "y":64
+                    "y":70
                 },
                 "id":47,
                 "options":{
@@ -3032,7 +3420,7 @@
                     "h":10,
                     "w":24,
                     "x":0,
-                    "y":74
+                    "y":80
                 },
                 "id":48,
                 "options":{
@@ -3126,7 +3514,7 @@
                     "h":8,
                     "w":6,
                     "x":0,
-                    "y":84
+                    "y":90
                 },
                 "id":23,
                 "interval":null,
@@ -3287,7 +3675,7 @@
                     "h":8,
                     "w":6,
                     "x":6,
-                    "y":84
+                    "y":90
                 },
                 "id":40,
                 "interval":null,
@@ -3448,7 +3836,7 @@
                     "h":8,
                     "w":6,
                     "x":12,
-                    "y":84
+                    "y":90
                 },
                 "id":41,
                 "interval":null,
@@ -3783,7 +4171,7 @@
                     "h":10,
                     "w":24,
                     "x":0,
-                    "y":92
+                    "y":98
                 },
                 "id":46,
                 "options":{
@@ -4051,7 +4439,7 @@
                     "h":10,
                     "w":24,
                     "x":0,
-                    "y":102
+                    "y":108
                 },
                 "id":44,
                 "options":{
@@ -4319,7 +4707,7 @@
                     "h":10,
                     "w":24,
                     "x":0,
-                    "y":112
+                    "y":118
                 },
                 "id":45,
                 "options":{
