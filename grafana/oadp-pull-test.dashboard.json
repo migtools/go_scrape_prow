@@ -29,7 +29,7 @@
                 },
                 "gridPos":{
                     "h":7,
-                    "w":24,
+                    "w":12,
                     "x":0,
                     "y":0
                 },
@@ -49,6 +49,118 @@
                 "timeShift":null,
                 "title":"OADP CI Monitor",
                 "type":"text"
+            },
+            {
+                "datasource":"telegraf",
+                "fieldConfig":{
+                    "defaults":{
+                        "custom":{
+                            "align":null,
+                            "filterable":false
+                        },
+                        "mappings":[],
+                        "thresholds":{
+                            "mode":"absolute",
+                            "steps":[
+                                {
+                                    "color":"green",
+                                    "value":null
+                                },
+                                {
+                                    "color":"red",
+                                    "value":80
+                                }
+                            ]
+                        }
+                    },
+                    "overrides":[
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"job_name"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.width",
+                                    "value":710
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "gridPos":{
+                    "h":11,
+                    "w":12,
+                    "x":12,
+                    "y":0
+                },
+                "id":15,
+                "options":{
+                    "showHeader":true,
+                    "sortBy":[
+                        {
+                            "desc":true,
+                            "displayName":"count"
+                        }
+                    ]
+                },
+                "pluginVersion":"7.3.6",
+                "targets":[
+                    {
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "orderByTime":"ASC",
+                        "policy":"autogen",
+                        "query":"SELECT count(\"state\") FROM \"autogen\".\"build\" WHERE (\"job_name\" =~ /^pull.*/) AND $timeFilter GROUP BY \"job_name\"\n",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"A",
+                        "resultFormat":"table",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
+                    }
+                ],
+                "timeFrom":null,
+                "timeShift":null,
+                "title":"Job Executions",
+                "transformations":[
+                    {
+                        "id":"organize",
+                        "options":{
+                            "excludeByName":{
+                                "Time":true
+                            },
+                            "indexByName":{},
+                            "renameByName":{}
+                        }
+                    }
+                ],
+                "type":"table"
             },
             {
                 "aliasColors":{},
@@ -455,7 +567,7 @@
                 "fieldConfig":{
                     "defaults":{
                         "custom":{
-                            "align":null,
+                            "align":"left",
                             "filterable":false
                         },
                         "mappings":[],
@@ -485,22 +597,71 @@
                                     "value":710
                                 }
                             ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"passed"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.width",
+                                    "value":86
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"pull_request"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.width",
+                                    "value":499
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"failed"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.width",
+                                    "value":66
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"aborted 1"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.width",
+                                    "value":185
+                                }
+                            ]
                         }
                     ]
                 },
                 "gridPos":{
-                    "h":13,
+                    "h":15,
                     "w":12,
                     "x":12,
-                    "y":7
+                    "y":11
                 },
-                "id":15,
+                "hideTimeOverride":false,
+                "id":29,
                 "options":{
                     "showHeader":true,
                     "sortBy":[
                         {
                             "desc":true,
-                            "displayName":"count"
+                            "displayName":"pull_request"
                         }
                     ]
                 },
@@ -523,10 +684,86 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"autogen",
-                        "query":"SELECT count(\"state\") FROM \"autogen\".\"build\" WHERE (\"job_name\" =~ /^pull.*/) AND $timeFilter GROUP BY \"job_name\"\n",
+                        "query":"select count(\"state_int\") as \"passed\"  FROM \"build\" WHERE (\"job_name\" =~ /^pull.*.e2e.*/ and \"state_int\" = 0 ) GROUP BY pull_request\n",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
+                        "resultFormat":"table",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
+                    },
+                    {
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "orderByTime":"ASC",
+                        "policy":"autogen",
+                        "query":"select count(\"state_int\") as \"failed\"  FROM \"build\" WHERE (\"job_name\" =~ /^pull.*.e2e.*/ and \"state_int\" = 2) GROUP BY pull_request",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"B",
+                        "resultFormat":"table",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
+                    },
+                    {
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "orderByTime":"ASC",
+                        "policy":"autogen",
+                        "query":"select count(\"state_int\") as \"aborted\"  FROM \"build\" WHERE (\"job_name\" =~ /^pull.*.e2e.*/ and \"state_int\" = 3) GROUP BY pull_request",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"C",
                         "resultFormat":"table",
                         "select":[
                             [
@@ -547,7 +784,7 @@
                 ],
                 "timeFrom":null,
                 "timeShift":null,
-                "title":"Job Executions",
+                "title":"End to End ( E2E ) Pass / Fail Rate ",
                 "transformations":[
                     {
                         "id":"organize",
@@ -555,8 +792,19 @@
                             "excludeByName":{
                                 "Time":true
                             },
-                            "indexByName":{},
+                            "indexByName":{
+                                "Time":0,
+                                "failed":3,
+                                "passed":2,
+                                "pull_request":1
+                            },
                             "renameByName":{}
+                        }
+                    },
+                    {
+                        "id":"seriesToColumns",
+                        "options":{
+                            "byField":"pull_request"
                         }
                     }
                 ],
@@ -967,160 +1215,6 @@
                 "fieldConfig":{
                     "defaults":{
                         "custom":{
-                            "align":"left",
-                            "filterable":false
-                        },
-                        "mappings":[],
-                        "thresholds":{
-                            "mode":"absolute",
-                            "steps":[
-                                {
-                                    "color":"green",
-                                    "value":null
-                                },
-                                {
-                                    "color":"red",
-                                    "value":80
-                                }
-                            ]
-                        }
-                    },
-                    "overrides":[
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"job_name"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":710
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"passed"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":86
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"pull_request"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":499
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"failed"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":66
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "gridPos":{
-                    "h":15,
-                    "w":12,
-                    "x":12,
-                    "y":20
-                },
-                "hideTimeOverride":false,
-                "id":28,
-                "options":{
-                    "showHeader":true,
-                    "sortBy":[
-                        {
-                            "desc":true,
-                            "displayName":"pull_request"
-                        }
-                    ]
-                },
-                "pluginVersion":"7.3.6",
-                "targets":[
-                    {
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "orderByTime":"ASC",
-                        "policy":"autogen",
-                        "query":"SELECT * from  (select count(\"state_int\") as \"failed\"  FROM \"build\" WHERE (\"job_name\" =~ /^pull.*.e2e.*/ and \"state_int\" = 2 )),(select count(\"state_int\") as \"passed\"  FROM \"build\" WHERE (\"job_name\" =~ /^pull.*.e2e.*/ and \"state_int\" = 0 )),(select count(\"state_int\") as \"aborted\"  FROM \"build\" WHERE (\"job_name\" =~ /^pull.*.e2e.*/ and \"state_int\" = 3 ))  GROUP BY \"pull_request\" \n",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"A",
-                        "resultFormat":"table",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    }
-                ],
-                "timeFrom":null,
-                "timeShift":null,
-                "title":"End to End ( E2E ) Pass / Fail Rate (WIP)",
-                "transformations":[
-                    {
-                        "id":"organize",
-                        "options":{
-                            "excludeByName":{
-                                "Time":true
-                            },
-                            "indexByName":{
-                                "Time":0,
-                                "failed":3,
-                                "passed":2,
-                                "pull_request":1
-                            },
-                            "renameByName":{}
-                        }
-                    }
-                ],
-                "type":"table"
-            },
-            {
-                "datasource":"telegraf",
-                "fieldConfig":{
-                    "defaults":{
-                        "custom":{
                             "align":null,
                             "filterable":true
                         },
@@ -1311,7 +1405,7 @@
                     "h":10,
                     "w":24,
                     "x":0,
-                    "y":35
+                    "y":26
                 },
                 "id":6,
                 "options":{
@@ -1579,7 +1673,7 @@
                     "h":10,
                     "w":24,
                     "x":0,
-                    "y":45
+                    "y":36
                 },
                 "id":21,
                 "options":{
@@ -1847,7 +1941,7 @@
                     "h":10,
                     "w":24,
                     "x":0,
-                    "y":55
+                    "y":46
                 },
                 "id":22,
                 "options":{
