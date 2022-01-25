@@ -89,7 +89,7 @@
                     ]
                 },
                 "gridPos":{
-                    "h":11,
+                    "h":13,
                     "w":12,
                     "x":12,
                     "y":0
@@ -186,6 +186,406 @@
                     "y":7
                 },
                 "id":24,
+                "interval":null,
+                "legend":{
+                    "percentage":true,
+                    "show":true,
+                    "values":true
+                },
+                "legendType":"Under graph",
+                "links":[],
+                "nullPointMode":"connected",
+                "pieType":"pie",
+                "pluginVersion":"7.3.6",
+                "strokeWidth":1,
+                "targets":[
+                    {
+                        "alias":"SUCCESS",
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.6.*unit.*/  AND \"state_int\" = 0 ) AND $timeFilter ",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"A",
+                        "resultFormat":"time_series",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
+                    },
+                    {
+                        "alias":"PENDING",
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*4.6.*unit.*/  AND \"state_int\" = 1 ) AND $timeFilter ",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"D",
+                        "resultFormat":"time_series",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
+                    },
+                    {
+                        "alias":"FAILURE",
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*4.6.*unit*/  AND \"state_int\" = 2 ) AND $timeFilter ",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"B",
+                        "resultFormat":"time_series",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
+                    },
+                    {
+                        "alias":"FAILURE / ABORTED",
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*4.6.*unit.*/  AND \"state_int\" = 4 ) AND $timeFilter ",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"C",
+                        "resultFormat":"time_series",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
+                    }
+                ],
+                "timeFrom":null,
+                "timeShift":null,
+                "title":"OpenShift 4.6 Unit Test",
+                "type":"grafana-piechart-panel",
+                "valueName":"current"
+            },
+            {
+                "aliasColors":{},
+                "breakPoint":"50%",
+                "cacheTimeout":null,
+                "combine":{
+                    "label":"Others",
+                    "threshold":0
+                },
+                "datasource":"telegraf",
+                "fieldConfig":{
+                    "defaults":{
+                        "custom":{}
+                    },
+                    "overrides":[]
+                },
+                "fontSize":"80%",
+                "format":"short",
+                "gridPos":{
+                    "h":6,
+                    "w":6,
+                    "x":6,
+                    "y":7
+                },
+                "id":19,
+                "interval":null,
+                "legend":{
+                    "percentage":true,
+                    "show":true,
+                    "values":true
+                },
+                "legendType":"Under graph",
+                "links":[],
+                "nullPointMode":"connected",
+                "pieType":"pie",
+                "pluginVersion":"7.3.6",
+                "strokeWidth":1,
+                "targets":[
+                    {
+                        "alias":"SUCCESS",
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.6.*e2e.*/  AND \"state_int\" = 0 ) AND $timeFilter ",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"A",
+                        "resultFormat":"time_series",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
+                    },
+                    {
+                        "alias":"PENDING",
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*4.6.*e2e.*/  AND \"state_int\" = 1 ) AND $timeFilter ",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"D",
+                        "resultFormat":"time_series",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
+                    },
+                    {
+                        "alias":"FAILURE",
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*4.6.*e2e.*/  AND \"state_int\" = 2 ) AND $timeFilter ",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"B",
+                        "resultFormat":"time_series",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
+                    },
+                    {
+                        "alias":"FAILURE / ABORTED",
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*4.6.*e2e.*/  AND \"state_int\" = 4 ) AND $timeFilter ",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"C",
+                        "resultFormat":"time_series",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
+                    }
+                ],
+                "timeFrom":null,
+                "timeShift":null,
+                "title":"OpenShift 4.6 E2E Test",
+                "type":"grafana-piechart-panel",
+                "valueName":"current"
+            },
+            {
+                "aliasColors":{},
+                "breakPoint":"50%",
+                "cacheTimeout":null,
+                "combine":{
+                    "label":"Others",
+                    "threshold":0
+                },
+                "datasource":"telegraf",
+                "fieldConfig":{
+                    "defaults":{
+                        "custom":{}
+                    },
+                    "overrides":[]
+                },
+                "fontSize":"80%",
+                "format":"short",
+                "gridPos":{
+                    "h":6,
+                    "w":6,
+                    "x":0,
+                    "y":13
+                },
+                "id":32,
                 "interval":null,
                 "legend":{
                     "percentage":true,
@@ -383,9 +783,9 @@
                     "h":6,
                     "w":6,
                     "x":6,
-                    "y":7
+                    "y":13
                 },
-                "id":19,
+                "id":33,
                 "interval":null,
                 "legend":{
                     "percentage":true,
@@ -649,10 +1049,10 @@
                     ]
                 },
                 "gridPos":{
-                    "h":15,
+                    "h":18,
                     "w":12,
                     "x":12,
-                    "y":11
+                    "y":13
                 },
                 "hideTimeOverride":false,
                 "id":29,
@@ -831,7 +1231,7 @@
                     "h":6,
                     "w":6,
                     "x":0,
-                    "y":13
+                    "y":19
                 },
                 "id":25,
                 "interval":null,
@@ -1031,7 +1431,7 @@
                     "h":6,
                     "w":6,
                     "x":6,
-                    "y":13
+                    "y":19
                 },
                 "id":23,
                 "interval":null,
@@ -1207,6 +1607,406 @@
                 "timeFrom":null,
                 "timeShift":null,
                 "title":"OpenShift 4.8 E2E Test",
+                "type":"grafana-piechart-panel",
+                "valueName":"current"
+            },
+            {
+                "aliasColors":{},
+                "breakPoint":"50%",
+                "cacheTimeout":null,
+                "combine":{
+                    "label":"Others",
+                    "threshold":0
+                },
+                "datasource":"telegraf",
+                "fieldConfig":{
+                    "defaults":{
+                        "custom":{}
+                    },
+                    "overrides":[]
+                },
+                "fontSize":"80%",
+                "format":"short",
+                "gridPos":{
+                    "h":6,
+                    "w":6,
+                    "x":0,
+                    "y":25
+                },
+                "id":30,
+                "interval":null,
+                "legend":{
+                    "percentage":true,
+                    "show":true,
+                    "values":true
+                },
+                "legendType":"Under graph",
+                "links":[],
+                "nullPointMode":"connected",
+                "pieType":"pie",
+                "pluginVersion":"7.3.6",
+                "strokeWidth":1,
+                "targets":[
+                    {
+                        "alias":"SUCCESS",
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.9.*unit.*/  AND \"state_int\" = 0 ) AND $timeFilter ",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"A",
+                        "resultFormat":"time_series",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
+                    },
+                    {
+                        "alias":"PENDING",
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*4.9.*unit.*/  AND \"state_int\" = 1 ) AND $timeFilter ",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"D",
+                        "resultFormat":"time_series",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
+                    },
+                    {
+                        "alias":"FAILURE",
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*4.9.*unit*/  AND \"state_int\" = 2 ) AND $timeFilter ",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"B",
+                        "resultFormat":"time_series",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
+                    },
+                    {
+                        "alias":"FAILURE / ABORTED",
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*4.9.*unit.*/  AND \"state_int\" = 4 ) AND $timeFilter ",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"C",
+                        "resultFormat":"time_series",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
+                    }
+                ],
+                "timeFrom":null,
+                "timeShift":null,
+                "title":"OpenShift 4.9 Unit Test",
+                "type":"grafana-piechart-panel",
+                "valueName":"current"
+            },
+            {
+                "aliasColors":{},
+                "breakPoint":"50%",
+                "cacheTimeout":null,
+                "combine":{
+                    "label":"Others",
+                    "threshold":0
+                },
+                "datasource":"telegraf",
+                "fieldConfig":{
+                    "defaults":{
+                        "custom":{}
+                    },
+                    "overrides":[]
+                },
+                "fontSize":"80%",
+                "format":"short",
+                "gridPos":{
+                    "h":6,
+                    "w":6,
+                    "x":6,
+                    "y":25
+                },
+                "id":31,
+                "interval":null,
+                "legend":{
+                    "percentage":true,
+                    "show":true,
+                    "values":true
+                },
+                "legendType":"Under graph",
+                "links":[],
+                "nullPointMode":"connected",
+                "pieType":"pie",
+                "pluginVersion":"7.3.6",
+                "strokeWidth":1,
+                "targets":[
+                    {
+                        "alias":"SUCCESS",
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.9.*e2e.*/  AND \"state_int\" = 0 ) AND $timeFilter ",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"A",
+                        "resultFormat":"time_series",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
+                    },
+                    {
+                        "alias":"PENDING",
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*4.9.*e2e.*/  AND \"state_int\" = 1 ) AND $timeFilter ",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"D",
+                        "resultFormat":"time_series",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
+                    },
+                    {
+                        "alias":"FAILURE",
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*4.9.*e2e.*/  AND \"state_int\" = 2 ) AND $timeFilter ",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"B",
+                        "resultFormat":"time_series",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
+                    },
+                    {
+                        "alias":"FAILURE / ABORTED",
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*4.9.*e2e.*/  AND \"state_int\" = 4 ) AND $timeFilter ",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"C",
+                        "resultFormat":"time_series",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
+                    }
+                ],
+                "timeFrom":null,
+                "timeShift":null,
+                "title":"OpenShift 4.9 E2E Test",
                 "type":"grafana-piechart-panel",
                 "valueName":"current"
             },
@@ -1405,7 +2205,7 @@
                     "h":10,
                     "w":24,
                     "x":0,
-                    "y":26
+                    "y":31
                 },
                 "id":6,
                 "options":{
@@ -1673,7 +2473,7 @@
                     "h":10,
                     "w":24,
                     "x":0,
-                    "y":36
+                    "y":41
                 },
                 "id":21,
                 "options":{
@@ -1941,7 +2741,7 @@
                     "h":10,
                     "w":24,
                     "x":0,
-                    "y":46
+                    "y":51
                 },
                 "id":22,
                 "options":{
