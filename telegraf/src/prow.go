@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -44,7 +45,18 @@ type Job struct {
 	end_time      string
 	name          string
 	pull_request  string
+	job_type      JobType
+	cloud_profile string // Supposed to remove this; however, it can help differentiate tests by cluster profiles
+	test_type     string
 }
+
+type JobType string
+
+const (
+	PULL     JobType = "pull"
+	PERIODIC JobType = "periodic"
+	REHEARSE JobType = "rehearse"
+)
 
 var all_jobs = make(map[string]Job)
 var ErrorLogger *log.Logger
@@ -62,7 +74,7 @@ func main() {
 	var print_for_human bool
 
 	flag.StringVar(&url_to_scrape, "url_to_scrape", "https://prow.ci.openshift.org/?job=*oadp*", "prow url to scrape, e.g. ")
-	flag.BoolVar(&print_for_human, "print_for_human", false, "print for a human, not influxdb")
+	flag.BoolVar(&print_for_human, "print_for_human", false, "print for a human, not influxdb!!!!!")
 
 	flag.Parse()
 
@@ -138,7 +150,6 @@ func start_spinner() (*yacspin.Spinner, error) {
 	time.Sleep(1 * time.Second)
 	// end fun
 	return spinner, err
-
 }
 
 func stopSpinnerOnSignal(spinner *yacspin.Spinner) {
@@ -173,7 +184,7 @@ func getProwJobs(g *geziyor.Geziyor, r *client.Response) {
 		id := u.Path[strings.LastIndex(u.Path, "/")+1:]
 		//log.Printf(id)
 
-		this_job := Job{id, "", 4, u.String(), "", "", "", "", "", "not_found"}
+		this_job := Job{id, "", 4, u.String(), "", "", "", "", "", "not_found", "", "", ""}
 		all_jobs[id] = this_job
 
 	})
@@ -198,37 +209,119 @@ func getJobDetails(all_jobs map[string]Job) {
 			log.Fatal("Error loading HTTP response body. ", err)
 		}
 
-		// Get the Prow job YAML link
-		document.Find("#links-card > a:nth-child(2)").Each(func(i int, s *goquery.Selection) {
-			yaml_link, ok := s.Attr("href")
-			if ok {
-				job.log_yaml = log_yaml_base + yaml_link
-				//log.Printf(job.log_yaml)
-			}
+		//number of URLs (children ) are diff based on the Job_type
+		//length of children helps to scrape URLS
+		var children = 0
+		document.Find("#links-card").Each(func(i int, s *goquery.Selection) {
+			children = s.Children().Length()
+			//fmt.Printf("children: %v\n", s.Children().Length())
+
 		})
 
-		// Get the Prow job Artifacts link
-		document.Find("#links-card > a:nth-child(3)").Each(func(i int, s *goquery.Selection) {
-			artifact_link, ok := s.Attr("href")
-			if ok {
-				job.log_artifacts = artifact_link
-				//log.Printf(job.log_artifacts)
-			}
-		})
+		// PULL job_type has more than 3 children, and periodic job_type has less than 3 children
+		if children > 3 {
 
-		// Get pull request
-		document.Find("#links-card > a:nth-child(4)").Each(func(i int, s *goquery.Selection) {
-			pull_request, ok := s.Attr("href")
-			if ok {
-				job.pull_request = pull_request
-				//log.Printf(job.log_artifacts)
-			}
-		})
+			// Get the Prow job YAML link
+			document.Find("#links-card > a:nth-child(2)").Each(func(i int, s *goquery.Selection) {
+				yaml_link, ok := s.Attr("href")
+				if ok {
+					job.log_yaml = log_yaml_base + yaml_link
+					//log.Printf(job.log_yaml)
+				}
+			})
+
+			// Get the Prow job Artifacts link
+			document.Find("#links-card > a:nth-child(5)").Each(func(i int, s *goquery.Selection) {
+				artifact_link, ok := s.Attr("href")
+				if ok {
+					job.log_artifacts = artifact_link
+					//log.Printf(job.log_artifacts)
+				}
+			})
+
+			// Get pull request
+			document.Find("#links-card > a:nth-child(4)").Each(func(i int, s *goquery.Selection) {
+				pull_request, ok := s.Attr("href")
+				if ok {
+					job.pull_request = pull_request
+					//log.Printf(job.log_artifacts)
+				}
+			})
+
+		} else {
+			// Get the Prow job YAML link
+			document.Find("#links-card > a:nth-child(2)").Each(func(i int, s *goquery.Selection) {
+				yaml_link, ok := s.Attr("href")
+				if ok {
+					job.log_yaml = log_yaml_base + yaml_link
+					//log.Printf(job.log_yaml)
+				}
+			})
+
+			// Get the Prow job Artifacts link
+			document.Find("#links-card > a:nth-child(3)").Each(func(i int, s *goquery.Selection) {
+				artifact_link, ok := s.Attr("href")
+				if ok {
+					job.log_artifacts = artifact_link
+					//log.Printf(job.log_artifacts)
+				}
+			})
+
+		}
 
 		all_jobs[id] = job
 	}
 }
 
+// if build-log.txt does not exist, then failure is FLAKE.
+func isFlake(job Job) bool {
+
+	if job.job_type == PERIODIC || strings.Contains(job.name, "periodic") {
+		buid_log_url := job.log_artifacts + "artifacts/operator-e2e-" + job.cloud_profile + "-periodic-slack/e2e/"
+		buildlog_response, err := http.Get(buid_log_url)
+		if err != nil {
+			print_human_row(job)
+		}
+		defer buildlog_response.Body.Close()
+
+		buidlog, err := io.ReadAll(buildlog_response.Body)
+		if err != nil {
+			print_human_row(job)
+		}
+		if strings.Contains(string(buidlog), "build-log.txt") {
+			return false
+		}
+	} else if job.job_type == PULL || strings.Contains(job.name, "pull") {
+		//artifacts/operator-e2e/e2e/
+		buid_log_url := job.log_artifacts + "artifacts/operator-e2e/e2e/"
+		buildlog_response, err := http.Get(buid_log_url)
+		if err != nil {
+			print_human_row(job)
+		}
+		defer buildlog_response.Body.Close()
+
+		buidlog, err := io.ReadAll(buildlog_response.Body)
+		if err != nil {
+			print_human_row(job)
+		}
+		//fmt.Println(string(buidlog))
+		if strings.Contains(string(buidlog), "build-log.txt") {
+			return false
+		}
+	}
+	return true
+}
+
+//get JobType by passing job as argument
+func getJobType(job Job) JobType {
+	if strings.HasPrefix(job.name, "pull") {
+		return PULL
+	} else if strings.HasPrefix(job.name, "rehearse") {
+		return REHEARSE
+	} else {
+		return PERIODIC
+	}
+}
 func getYAMLDetails(all_jobs map[string]Job) {
 	for id, job := range all_jobs {
 		//log.Printf(id)
@@ -245,16 +338,60 @@ func getYAMLDetails(all_jobs map[string]Job) {
 		if err != nil {
 			print_human_row(job)
 		}
+
+		//set cluterProfile
+		clusterProfile, err := yaml.Get("metadata").Get("labels").Get("ci-operator.openshift.io/cloud").String()
+		if err != nil {
+			print_human_row(job)
+		}
+		if clusterProfile == "azure4" {
+			clusterProfile = "azure"
+		}
+		job.cloud_profile = clusterProfile
+
+		//set name
+		name, _ := yaml.Get("metadata").Get("annotations").Get("prow.k8s.io/job").String()
+		if len(name) < 1 {
+			print_human_row(job)
+			name = "name_not_found"
+			job.name = name
+		}
+		job.name = name
+		//log.Printf("name:" + name)
+
+		// Get Start / Stop time
+		start, err := yaml.Get("status").Get("startTime").String()
+		if err != nil {
+			print_human_row(job)
+		}
+		end, err := yaml.Get("status").Get("completionTime").String()
+		if err != nil {
+			print_human_row(job)
+		}
+		job.start_time = start
+		job.end_time = end
+
 		status, err := yaml.Get("status").Get("state").String()
 		if err != nil {
 			print_human_row(job)
 		}
 
+		//setting job_type = periodic, pull, rehearse
+		job.job_type = getJobType(job)
+
+		//checking if failure is flake.
+		if status == "failure" {
+			if isFlake(job) {
+				status = "flake"
+			}
+		}
+
 		// get state
 		//  0 = success, 1 = pending, 2 = failure 3 = aborted, 4 = unknown
-		state_int := 4
+		state_int := 10
 		state := ""
 		switch status {
+
 		case "success":
 			state_int = 0
 			state = "success"
@@ -267,35 +404,16 @@ func getYAMLDetails(all_jobs map[string]Job) {
 		case "aborted":
 			state_int = 3
 			state = "aborted"
-		default:
+		case "flake":
 			state_int = 4
+			state = "flake"
+		default:
+			state_int = 10
 			state = "unknown"
 		}
 
 		job.state = state
 		job.state_int = state_int
-
-		name, _ := yaml.Get("metadata").Get("annotations").Get("prow.k8s.io/job").String()
-		if len(name) < 1 {
-			print_human_row(job)
-			name = "name_not_found"
-			job.name = name
-		}
-		//log.Printf("name:" + name)
-
-		// Get Start / Stop time
-		start, err := yaml.Get("status").Get("startTime").String()
-		if err != nil {
-			print_human_row(job)
-		}
-		end, err := yaml.Get("status").Get("completionTime").String()
-		if err != nil {
-			print_human_row(job)
-		}
-
-		job.start_time = start
-		job.end_time = end
-		job.name = name
 
 		// update object w/ success, failure status
 		all_jobs[id] = job
@@ -304,7 +422,7 @@ func getYAMLDetails(all_jobs map[string]Job) {
 
 func print_human(all_jobs map[string]Job) {
 	for _, my_job := range all_jobs {
-		fmt.Printf("%+v\n", my_job)
+		fmt.Printf("%+v\n\n\n", my_job)
 	}
 }
 
@@ -326,7 +444,7 @@ func print_db(all_jobs map[string]Job) {
 			break
 		}
 
-		if my_job.state_int == 4 {
+		if my_job.state_int == 10 {
 			// job state not known.
 			// this also causes duplicate entries for build_id
 			// the state is eventually written by prow and the job in question
