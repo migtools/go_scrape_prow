@@ -275,8 +275,9 @@ func getJobDetails(all_jobs map[string]Job) {
 
 // if build-log.txt does not exist, then failure is FLAKE.
 func isFlake(job Job) bool {
-	if job.job_type == PERIODIC {
-		buid_log_url := job.log_artifacts + "artifacts/operator-e2e-" + job.cloud_profile + "-periodic-slack/e2e"
+
+	if job.job_type == PERIODIC || strings.Contains(job.name, "periodic") {
+		buid_log_url := job.log_artifacts + "artifacts/operator-e2e-" + job.cloud_profile + "-periodic-slack/e2e/"
 		buildlog_response, err := http.Get(buid_log_url)
 		if err != nil {
 			print_human_row(job)
@@ -290,7 +291,7 @@ func isFlake(job Job) bool {
 		if strings.Contains(string(buidlog), "build-log.txt") {
 			return false
 		}
-	} else if job.job_type == PULL {
+	} else if job.job_type == PULL || strings.Contains(job.name, "pull") {
 		//artifacts/operator-e2e/e2e/
 		buid_log_url := job.log_artifacts + "artifacts/operator-e2e/e2e/"
 		buildlog_response, err := http.Get(buid_log_url)
