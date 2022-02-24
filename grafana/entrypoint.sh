@@ -20,6 +20,6 @@ fi
 
 ./import-grafana.py --host http://$host --key $api_key_path
 
-./grafana-alert-notification-server.py \
-                        --grafana-host http://$host \
-                        --grafana-key $(cat $api_key_path)
+#./grafana-alert-notification-server.py \
+#                        --grafana-host http://$host \
+#                        --grafana-key $(cat $api_key_path)
