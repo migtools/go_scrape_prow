@@ -1,0 +1,166 @@
+metadata:
+  annotations:
+    prow.k8s.io/context: ci/prow/4.8-operator-e2e
+    prow.k8s.io/job: pull-ci-openshift-oadp-operator-master-4.8-operator-e2e
+  creationTimestamp: "2022-03-29T17:05:00Z"
+  generation: 6
+  labels:
+    ci-operator.openshift.io/cloud: aws
+    ci-operator.openshift.io/cloud-cluster-profile: aws
+    ci-operator.openshift.io/variant: "4.8"
+    ci.openshift.io/generator: prowgen
+    created-by-prow: "true"
+    event-GUID: 5d4efe30-af82-11ec-841a-ffa9f7823f0a
+    pj-rehearse.openshift.io/can-be-rehearsed: "true"
+    prow.k8s.io/build-id: "1508852737524109312"
+    prow.k8s.io/context: 4.8-operator-e2e
+    prow.k8s.io/id: 5e44e3d8-af82-11ec-b39b-0a580a832a11
+    prow.k8s.io/is-optional: "false"
+    prow.k8s.io/job: pull-ci-openshift-oadp-operator-master-4.8-operator-e2e
+    prow.k8s.io/refs.base_ref: master
+    prow.k8s.io/refs.org: openshift
+    prow.k8s.io/refs.pull: "582"
+    prow.k8s.io/refs.repo: oadp-operator
+    prow.k8s.io/type: presubmit
+  name: 5e44e3d8-af82-11ec-b39b-0a580a832a11
+  namespace: ci
+  resourceVersion: "1875549454"
+  uid: 8850ef8a-b578-413b-b5d3-f8a9fd3f8b7f
+spec:
+  agent: kubernetes
+  cluster: build01
+  context: ci/prow/4.8-operator-e2e
+  decoration_config:
+    censor_secrets: true
+    gcs_configuration:
+      bucket: origin-ci-test
+      default_org: openshift
+      default_repo: origin
+      mediaTypes:
+        log: text/plain
+      path_strategy: single
+    gcs_credentials_secret: gce-sa-credentials-gcs-publisher
+    grace_period: 1h0m0s
+    resources:
+      clonerefs:
+        limits:
+          memory: 3Gi
+        requests:
+          cpu: 100m
+          memory: 500Mi
+      initupload:
+        limits:
+          memory: 200Mi
+        requests:
+          cpu: 100m
+          memory: 50Mi
+      place_entrypoint:
+        limits:
+          memory: 100Mi
+        requests:
+          cpu: 100m
+          memory: 25Mi
+      sidecar:
+        limits:
+          memory: 2Gi
+        requests:
+          cpu: 100m
+          memory: 250Mi
+    skip_cloning: true
+    timeout: 4h0m0s
+    utility_images:
+      clonerefs: gcr.io/k8s-prow/clonerefs:v20220328-67f0ba830a
+      entrypoint: gcr.io/k8s-prow/entrypoint:v20220328-67f0ba830a
+      initupload: gcr.io/k8s-prow/initupload:v20220328-67f0ba830a
+      sidecar: gcr.io/k8s-prow/sidecar:v20220328-67f0ba830a
+  job: pull-ci-openshift-oadp-operator-master-4.8-operator-e2e
+  namespace: ci
+  pod_spec:
+    containers:
+    - args:
+      - --gcs-upload-secret=/secrets/gcs/service-account.json
+      - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
+      - --lease-server-credentials-file=/etc/boskos/credentials
+      - --report-credentials-file=/etc/report/credentials
+      - --secret-dir=/secrets/ci-pull-credentials
+      - --secret-dir=/usr/local/operator-e2e-cluster-profile
+      - --target=operator-e2e
+      - --variant=4.8
+      command:
+      - ci-operator
+      image: ci-operator:latest
+      imagePullPolicy: Always
+      name: ""
+      resources:
+        requests:
+          cpu: 10m
+      volumeMounts:
+      - mountPath: /etc/boskos
+        name: boskos
+        readOnly: true
+      - mountPath: /secrets/ci-pull-credentials
+        name: ci-pull-credentials
+        readOnly: true
+      - mountPath: /usr/local/operator-e2e-cluster-profile
+        name: cluster-profile
+      - mountPath: /secrets/gcs
+        name: gcs-credentials
+        readOnly: true
+      - mountPath: /etc/pull-secret
+        name: pull-secret
+        readOnly: true
+      - mountPath: /etc/report
+        name: result-aggregator
+        readOnly: true
+    serviceAccountName: ci-operator
+    volumes:
+    - name: boskos
+      secret:
+        items:
+        - key: credentials
+          path: credentials
+        secretName: boskos-credentials
+    - name: ci-pull-credentials
+      secret:
+        secretName: ci-pull-credentials
+    - name: cluster-profile
+      secret:
+        secretName: cluster-secrets-aws
+    - name: pull-secret
+      secret:
+        secretName: registry-pull-credentials
+    - name: result-aggregator
+      secret:
+        secretName: result-aggregator
+  prowjob_defaults:
+    tenant_id: GlobalDefaultID
+  refs:
+    base_link: https://github.com/openshift/oadp-operator/commit/a11ebf587c261b7a2a9dda06439ddeeb907cda5f
+    base_ref: master
+    base_sha: a11ebf587c261b7a2a9dda06439ddeeb907cda5f
+    org: openshift
+    pulls:
+    - author: deepakraj1997
+      author_link: https://github.com/deepakraj1997
+      commit_link: https://github.com/openshift/oadp-operator/pull/582/commits/f4941d7068f27ff39875bcecc2bd33e194797e8e
+      link: https://github.com/openshift/oadp-operator/pull/582
+      number: 582
+      sha: f4941d7068f27ff39875bcecc2bd33e194797e8e
+      title: '[WIP] Handling Azure Parameters in CI Env using templates.'
+    repo: oadp-operator
+    repo_link: https://github.com/openshift/oadp-operator
+  report: true
+  rerun_command: /test 4.8-operator-e2e
+  type: presubmit
+status:
+  build_id: "1508852737524109312"
+  description: Job triggered.
+  pendingTime: "2022-03-29T17:05:00Z"
+  pod_name: 5e44e3d8-af82-11ec-b39b-0a580a832a11
+  prev_report_states:
+    gcsk8sreporter: pending
+    gcsreporter: pending
+    github-reporter: pending
+  startTime: "2022-03-29T17:05:00Z"
+  state: pending
+  url: https://prow.ci.openshift.org/view/gs/origin-ci-test/pr-logs/pull/openshift_oadp-operator/582/pull-ci-openshift-oadp-operator-master-4.8-operator-e2e/1508852737524109312
