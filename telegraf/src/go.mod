@@ -1,4 +1,4 @@
-module geziyor
+module prow
 
 go 1.16
 
