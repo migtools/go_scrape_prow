@@ -63,8 +63,8 @@ func isFlake(job Job) bool {
 			return false
 		}
 	} else if job.job_type == PULL || strings.Contains(job.name, "pull") {
-		//artifacts/operator-e2e/e2e/
-		buid_log_url := job.log_artifacts + "artifacts/operator-e2e/e2e/"
+		//artifacts/operator-e2e-gcp/e2e/
+		buid_log_url := job.log_artifacts + "artifacts/operator-e2e-" + job.cloud_profile + "/e2e/"
 		buildlog_response, err := http.Get(buid_log_url)
 		if err != nil {
 			print_human_row(job)
@@ -110,14 +110,12 @@ func getClusterProfile(yaml *simpleyaml.Yaml, job Job) string {
 }
 
 func nameJob(yaml *simpleyaml.Yaml, job Job) string {
-
 	name, _ := yaml.Get("metadata").Get("annotations").Get("prow.k8s.io/job").String()
 
 	if len(name) < 1 {
 		print_human_row(job)
 	}
 	return name
-
 }
 
 func getEndTime(yaml *simpleyaml.Yaml, job Job) string {
@@ -149,33 +147,28 @@ func getStatus(yaml *simpleyaml.Yaml, job Job) string {
 			status = "flake"
 		}
 	}
-	// get state
-	//  0 = success, 1 = pending, 2 = failure 3 = aborted, 4 = unknown
+
+	return status
+}
+
+func getStateInt(status string) int {
 	state_int := 10
-	state := ""
+
 	switch status {
 	case "success":
 		state_int = 0
-		state = "success"
 	case "pending":
 		state_int = 1
-		state = "pending"
 	case "failure":
 		state_int = 2
-		state = "failure"
 	case "aborted":
 		state_int = 3
-		state = "aborted"
 	case "flake":
 		state_int = 4
-		state = "flake"
 	default:
 		state_int = 10
-		state = "unknown"
 	}
-
-	job.state_int = state_int
-	return state
+	return state_int
 }
 
 func getJobDetails(all_jobs map[string]Job) {
@@ -281,18 +274,20 @@ func getYAMLDetails(all_jobs map[string]Job) {
 		//set name
 		job.name = nameJob(yaml, job)
 
+		//get cluster profile
+		job.cloud_profile = getClusterProfile(yaml, job)
+
 		//set Start and End Time
 		job.start_time = getStartTime(yaml, job)
 		job.end_time = getEndTime(yaml, job)
-
-		//get cluster profile
-		job.cloud_profile = getClusterProfile(yaml, job)
 
 		//setting job_type = periodic, pull, rehearse
 		job.job_type = getJobType(job)
 
 		//get status
 		job.state = getStatus(yaml, job)
+
+		job.state_int = getStateInt(job.state)
 
 		all_jobs[id] = job
 	}

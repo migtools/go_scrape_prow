@@ -19,7 +19,7 @@ func Test_start_geziyor(t *testing.T) {
 		{
 			name: "Postive test test",
 			arg:  "https://prow.ci.openshift.org/?type=periodic&job=*oadp*",
-			want: 11,
+			want: 15,
 		},
 	}
 	for _, tt := range tests {
