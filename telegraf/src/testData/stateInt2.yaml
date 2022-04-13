@@ -1,0 +1,142 @@
+metadata:
+  annotations:
+    prow.k8s.io/context: ci/prow/4.8-ci-index
+    prow.k8s.io/job: pull-ci-openshift-oadp-operator-master-4.8-ci-index
+  creationTimestamp: "2022-04-07T14:32:30Z"
+  generation: 10
+  labels:
+    ci-operator.openshift.io/variant: "4.8"
+    ci.openshift.io/generator: prowgen
+    created-by-prow: "true"
+    event-GUID: f3a05bb0-b67e-11ec-996a-5ce091799a4c
+    pj-rehearse.openshift.io/can-be-rehearsed: "true"
+    prow.k8s.io/build-id: "1512075851804446720"
+    prow.k8s.io/context: 4.8-ci-index
+    prow.k8s.io/id: 8e5b4017-b67f-11ec-af0e-0a580a820647
+    prow.k8s.io/is-optional: "false"
+    prow.k8s.io/job: pull-ci-openshift-oadp-operator-master-4.8-ci-index
+    prow.k8s.io/refs.base_ref: master
+    prow.k8s.io/refs.org: openshift
+    prow.k8s.io/refs.pull: "627"
+    prow.k8s.io/refs.repo: oadp-operator
+    prow.k8s.io/type: presubmit
+  name: 8e5b4017-b67f-11ec-af0e-0a580a820647
+  namespace: ci
+  resourceVersion: "1898091779"
+  uid: db4724f4-0e43-4e54-b662-b46b83574e36
+spec:
+  agent: kubernetes
+  cluster: build01
+  context: ci/prow/4.8-ci-index
+  decoration_config:
+    censor_secrets: true
+    gcs_configuration:
+      bucket: origin-ci-test
+      default_org: openshift
+      default_repo: origin
+      mediaTypes:
+        log: text/plain
+      path_strategy: single
+    gcs_credentials_secret: gce-sa-credentials-gcs-publisher
+    grace_period: 1h0m0s
+    resources:
+      clonerefs:
+        limits:
+          memory: 3Gi
+        requests:
+          cpu: 100m
+          memory: 500Mi
+      initupload:
+        limits:
+          memory: 200Mi
+        requests:
+          cpu: 100m
+          memory: 50Mi
+      place_entrypoint:
+        limits:
+          memory: 100Mi
+        requests:
+          cpu: 100m
+          memory: 25Mi
+      sidecar:
+        limits:
+          memory: 2Gi
+        requests:
+          cpu: 100m
+          memory: 250Mi
+    skip_cloning: true
+    timeout: 4h0m0s
+    utility_images:
+      clonerefs: gcr.io/k8s-prow/clonerefs:v20220406-c970747fbb
+      entrypoint: gcr.io/k8s-prow/entrypoint:v20220406-c970747fbb
+      initupload: gcr.io/k8s-prow/initupload:v20220406-c970747fbb
+      sidecar: gcr.io/k8s-prow/sidecar:v20220406-c970747fbb
+  job: pull-ci-openshift-oadp-operator-master-4.8-ci-index
+  namespace: ci
+  pod_spec:
+    containers:
+    - args:
+      - --gcs-upload-secret=/secrets/gcs/service-account.json
+      - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
+      - --report-credentials-file=/etc/report/credentials
+      - --target=ci-index
+      - --variant=4.8
+      command:
+      - ci-operator
+      image: ci-operator:latest
+      imagePullPolicy: Always
+      name: ""
+      resources:
+        requests:
+          cpu: 10m
+      volumeMounts:
+      - mountPath: /secrets/gcs
+        name: gcs-credentials
+        readOnly: true
+      - mountPath: /etc/pull-secret
+        name: pull-secret
+        readOnly: true
+      - mountPath: /etc/report
+        name: result-aggregator
+        readOnly: true
+    serviceAccountName: ci-operator
+    volumes:
+    - name: pull-secret
+      secret:
+        secretName: registry-pull-credentials
+    - name: result-aggregator
+      secret:
+        secretName: result-aggregator
+  prowjob_defaults:
+    tenant_id: GlobalDefaultID
+  refs:
+    base_link: https://github.com/openshift/oadp-operator/commit/85973e648ea89eb9806fbc68c0c7450e551ab05e
+    base_ref: master
+    base_sha: 85973e648ea89eb9806fbc68c0c7450e551ab05e
+    org: openshift
+    pulls:
+    - author: weshayutin
+      author_link: https://github.com/weshayutin
+      commit_link: https://github.com/openshift/oadp-operator/pull/627/commits/45c6cc495c4248f638c5505072642fc0a7c41f07
+      link: https://github.com/openshift/oadp-operator/pull/627
+      number: 627
+      sha: 45c6cc495c4248f638c5505072642fc0a7c41f07
+      title: update docs/examples, use ci templates and mysql
+    repo: oadp-operator
+    repo_link: https://github.com/openshift/oadp-operator
+  report: true
+  rerun_command: /test 4.8-ci-index
+  type: presubmit
+status:
+  build_id: "1512075851804446720"
+  completionTime: "2022-04-07T14:41:23Z"
+  description: Job succeeded.
+  pendingTime: "2022-04-07T14:32:30Z"
+  pod_name: 8e5b4017-b67f-11ec-af0e-0a580a820647
+  prev_report_states:
+    gcsk8sreporter: success
+    gcsreporter: success
+    github-reporter: success
+  startTime: "2022-04-07T14:32:30Z"
+  state: success
+  url: https://prow.ci.openshift.org/view/gs/origin-ci-test/pr-logs/pull/openshift_oadp-operator/627/pull-ci-openshift-oadp-operator-master-4.8-ci-index/1512075851804446720

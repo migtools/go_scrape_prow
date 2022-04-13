@@ -1,0 +1,167 @@
+metadata:
+  annotations:
+    prow.k8s.io/context: ci/prow/4.9-operator-e2e
+    prow.k8s.io/job: pull-ci-openshift-oadp-operator-master-4.9-operator-e2e
+  creationTimestamp: "2022-04-06T20:20:55Z"
+  generation: 10
+  labels:
+    ci-operator.openshift.io/cloud: aws
+    ci-operator.openshift.io/cloud-cluster-profile: aws
+    ci-operator.openshift.io/variant: "4.9"
+    ci.openshift.io/generator: prowgen
+    created-by-prow: "true"
+    event-GUID: 0efd8010-b5e7-11ec-8b94-f1942f50ea5b
+    pj-rehearse.openshift.io/can-be-rehearsed: "true"
+    prow.k8s.io/build-id: "1511801143959752704"
+    prow.k8s.io/context: 4.9-operator-e2e
+    prow.k8s.io/id: 0ff10daa-b5e7-11ec-863f-0a580a820933
+    prow.k8s.io/is-optional: "false"
+    prow.k8s.io/job: pull-ci-openshift-oadp-operator-master-4.9-operator-e2e
+    prow.k8s.io/refs.base_ref: master
+    prow.k8s.io/refs.org: openshift
+    prow.k8s.io/refs.pull: "625"
+    prow.k8s.io/refs.repo: oadp-operator
+    prow.k8s.io/type: presubmit
+  name: 0ff10daa-b5e7-11ec-863f-0a580a820933
+  namespace: ci
+  resourceVersion: "1896134838"
+  uid: 6cfbc4e5-d7d0-42b0-b4af-3b5816270598
+spec:
+  agent: kubernetes
+  cluster: build01
+  context: ci/prow/4.9-operator-e2e
+  decoration_config:
+    censor_secrets: true
+    gcs_configuration:
+      bucket: origin-ci-test
+      default_org: openshift
+      default_repo: origin
+      mediaTypes:
+        log: text/plain
+      path_strategy: single
+    gcs_credentials_secret: gce-sa-credentials-gcs-publisher
+    grace_period: 1h0m0s
+    resources:
+      clonerefs:
+        limits:
+          memory: 3Gi
+        requests:
+          cpu: 100m
+          memory: 500Mi
+      initupload:
+        limits:
+          memory: 200Mi
+        requests:
+          cpu: 100m
+          memory: 50Mi
+      place_entrypoint:
+        limits:
+          memory: 100Mi
+        requests:
+          cpu: 100m
+          memory: 25Mi
+      sidecar:
+        limits:
+          memory: 2Gi
+        requests:
+          cpu: 100m
+          memory: 250Mi
+    skip_cloning: true
+    timeout: 4h0m0s
+    utility_images:
+      clonerefs: gcr.io/k8s-prow/clonerefs:v20220405-6413c474e9
+      entrypoint: gcr.io/k8s-prow/entrypoint:v20220405-6413c474e9
+      initupload: gcr.io/k8s-prow/initupload:v20220405-6413c474e9
+      sidecar: gcr.io/k8s-prow/sidecar:v20220405-6413c474e9
+  job: pull-ci-openshift-oadp-operator-master-4.9-operator-e2e
+  namespace: ci
+  pod_spec:
+    containers:
+    - args:
+      - --gcs-upload-secret=/secrets/gcs/service-account.json
+      - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
+      - --lease-server-credentials-file=/etc/boskos/credentials
+      - --report-credentials-file=/etc/report/credentials
+      - --secret-dir=/secrets/ci-pull-credentials
+      - --secret-dir=/usr/local/operator-e2e-cluster-profile
+      - --target=operator-e2e
+      - --variant=4.9
+      command:
+      - ci-operator
+      image: ci-operator:latest
+      imagePullPolicy: Always
+      name: ""
+      resources:
+        requests:
+          cpu: 10m
+      volumeMounts:
+      - mountPath: /etc/boskos
+        name: boskos
+        readOnly: true
+      - mountPath: /secrets/ci-pull-credentials
+        name: ci-pull-credentials
+        readOnly: true
+      - mountPath: /usr/local/operator-e2e-cluster-profile
+        name: cluster-profile
+      - mountPath: /secrets/gcs
+        name: gcs-credentials
+        readOnly: true
+      - mountPath: /etc/pull-secret
+        name: pull-secret
+        readOnly: true
+      - mountPath: /etc/report
+        name: result-aggregator
+        readOnly: true
+    serviceAccountName: ci-operator
+    volumes:
+    - name: boskos
+      secret:
+        items:
+        - key: credentials
+          path: credentials
+        secretName: boskos-credentials
+    - name: ci-pull-credentials
+      secret:
+        secretName: ci-pull-credentials
+    - name: cluster-profile
+      secret:
+        secretName: cluster-secrets-aws
+    - name: pull-secret
+      secret:
+        secretName: registry-pull-credentials
+    - name: result-aggregator
+      secret:
+        secretName: result-aggregator
+  prowjob_defaults:
+    tenant_id: GlobalDefaultID
+  refs:
+    base_link: https://github.com/openshift/oadp-operator/commit/58077a49d86fbb2e0376b21282edaf05b9252199
+    base_ref: master
+    base_sha: 58077a49d86fbb2e0376b21282edaf05b9252199
+    org: openshift
+    pulls:
+    - author: shubham-pampattiwar
+      author_link: https://github.com/shubham-pampattiwar
+      commit_link: https://github.com/openshift/oadp-operator/pull/625/commits/571275d3e1ca2a4e18452c1574a4b3cb4f06df52
+      link: https://github.com/openshift/oadp-operator/pull/625
+      number: 625
+      sha: 571275d3e1ca2a4e18452c1574a4b3cb4f06df52
+      title: 'Fix OADP-425 '
+    repo: oadp-operator
+    repo_link: https://github.com/openshift/oadp-operator
+  report: true
+  rerun_command: /test 4.9-operator-e2e
+  type: presubmit
+status:
+  build_id: "1511801143959752704"
+  completionTime: "2022-04-06T21:41:21Z"
+  description: Job succeeded.
+  pendingTime: "2022-04-06T20:20:55Z"
+  pod_name: 0ff10daa-b5e7-11ec-863f-0a580a820933
+  prev_report_states:
+    gcsk8sreporter: success
+    gcsreporter: success
+    github-reporter: success
+  startTime: "2022-04-06T20:20:55Z"
+  state: success
+  url: https://prow.ci.openshift.org/view/gs/origin-ci-test/pr-logs/pull/openshift_oadp-operator/625/pull-ci-openshift-oadp-operator-master-4.9-operator-e2e/1511801143959752704

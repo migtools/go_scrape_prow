@@ -40,25 +40,18 @@ func Test_isFlake(t *testing.T) {
 			want: false,
 		},
 		{
-			name: "Positive Test not a Flake - pull ",
-			arg: Job{"1498704078740393984", "", 0, "https://prow.ci.openshift.org/view/gs/origin-ci-test/pr-logs/pull/openshift_oadp-operator/581/pull-ci-openshift-oadp-operator-master-4.8-operator-e2e/1498704078740393984",
-				"https://prow.ci.openshift.org/prowjob?prowjob=bb1e831b-9980-11ec-ae97-0a580a831ded", "https://gcsweb-ci.apps.ci.l2s4.p1.openshiftapps.com/gcs/origin-ci-test/pr-logs/pull/openshift_oadp-operator/581/pull-ci-openshift-oadp-operator-master-4.8-operator-e2e/1498704078740393984/",
-				"2022-03-01T16:57:51Z", "2022-03-01T18:17:36Z", "pull-ci-openshift-oadp-operator-master-4.8-operator-e2e ", "https://github.com/openshift/oadp-operator/pull/581 ", "pull", "aws", ""},
+			name: "Positive data Test is not a Flake - pull-name-update",
+			arg: Job{"1513678249626963968", "failure", 0, "https://prow.ci.openshift.org/view/gs/origin-ci-test/pr-logs/pull/openshift_oadp-operator/566/pull-ci-openshift-oadp-operator-master-4.7-operator-e2e-gcp/1513678249626963968",
+				"", "https://gcsweb-ci.apps.ci.l2s4.p1.openshiftapps.com/gcs/origin-ci-test/pr-logs/pull/openshift_oadp-operator/566/pull-ci-openshift-oadp-operator-master-4.7-operator-e2e-gcp/1513678249626963968/",
+				"2022-03-01T18:12:34Z", "2022-03-01T18:34:41Z", "pull-ci-openshift-oadp-operator-master-4.7-operator-e2e-gcp", "", "pull", "gcp", ""},
 			want: false,
 		},
 		{
-			name: "Positive data Test is not a Flake - pull",
-			arg: Job{"1506330636531535872", "failure", 0, "https://prow.ci.openshift.org/view/gs/origin-ci-test/pr-logs/pull/openshift_oadp-operator/608/pull-ci-openshift-oadp-operator-master-4.8-operator-e2e/1506330636531535872",
-				"", "https://gcsweb-ci.apps.ci.l2s4.p1.openshiftapps.com/gcs/origin-ci-test/pr-logs/pull/openshift_oadp-operator/608/pull-ci-openshift-oadp-operator-master-4.8-operator-e2e/1506330636531535872/",
-				"2022-03-01T18:12:34Z", "2022-03-01T18:34:41Z", "pull-ci-openshift-oadp-operator-master-4.8-operator-e2e", "https://github.com/openshift/oadp-operator/pull/608", "pull", "aws", ""},
-			want: false,
-		},
-		{
-			name: "Negative data test for Flakes - pull",
-			arg: Job{"1498704078740393984", "", 0, "https://prow.ci.openshift.org/view/gs/origin-ci-test/pr-logs/pull/openshift_oadp-operator/581/pull-ci-openshift-oadp-operator-master-4.8-operator-e2e/1498704078740393984",
-				"https://prow.ci.openshift.org/prowjob?prowjob=bb1e831b-9980-11ec-ae97-0a580a831ded", "abc",
-				"2022-03-01T16:57:51Z", "2022-03-01T18:17:36Z", "pull-ci-openshift-oadp-operator-master-4.8-operator-e2e ", "https://github.com/openshift/oadp-operator/pull/581 ", "pull", "aws", ""},
-			want: false,
+			name: "Positive data Test is a Flake - pull-name-update",
+			arg: Job{"1505907147571990528", "failure", 0, "https://prow.ci.openshift.org/view/gs/origin-ci-test/pr-logs/pull/openshift_release/27052/rehearse-27052-pull-ci-openshift-oadp-operator-master-4.9-operator-e2e-azure/1505907147571990528",
+				"", "https://gcsweb-ci.apps.ci.l2s4.p1.openshiftapps.com/gcs/origin-ci-test/pr-logs/pull/openshift_release/27052/rehearse-27052-pull-ci-openshift-oadp-operator-master-4.9-operator-e2e-azure/1505907147571990528/",
+				"2022-03-01T18:12:34Z", "2022-03-01T18:34:41Z", "rehearse-27052-pull-ci-openshift-oadp-operator-master-4.9-operator-e2e-azure", "", "rehearse", "azure", ""},
+			want: true,
 		},
 	}
 	for _, tt := range tests {
@@ -405,6 +398,53 @@ func Test_cluster_profile(t *testing.T) {
 				}
 			}
 
+		})
+	}
+}
+
+func Test_getStateInt(t *testing.T) {
+
+	tests := []struct {
+		name   string
+		status string
+		want   int
+	}{
+		{
+			name:   "success state int",
+			status: "success",
+			want:   0,
+		},
+		{
+			name:   "failure state int",
+			status: "failure",
+			want:   2,
+		},
+		{
+			name:   "aborted state int",
+			status: "aborted",
+			want:   3,
+		},
+		{
+			name:   "flake state int",
+			status: "flake",
+			want:   4,
+		},
+		{
+			name:   "pending state int",
+			status: "pending",
+			want:   1,
+		},
+		{
+			name:   "unknown state int",
+			status: "unknown",
+			want:   10,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := getStateInt(tt.status); got != tt.want {
+				t.Errorf("getStateInt() = %v, want %v", got, tt.want)
+			}
 		})
 	}
 }
