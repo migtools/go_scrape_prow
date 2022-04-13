@@ -1,0 +1,32 @@
+# This file is a template, and might need editing before it works on your project.
+# To contribute improvements to CI/CD templates, please follow the Development guide at:
+# https://docs.gitlab.com/ee/development/cicd/templates.html
+# This specific template is located at:
+# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Python.gitlab-ci.yml
+
+# Change pip's cache directory to be inside the project directory since we can
+# only cache local items.
+variables:
+  GIT_DEPTH: 1
+  # GIT_CLONE_PATH: $CI_BUILDS_DIR/$CI_CONCURRENT_ID/$CI_PROJECT_NAME
+  GIT_FETCH_EXTRA_FLAGS: " --no-tags"
+
+stages:
+  - "test"
+  - "integration"
+
+.common: &common
+  image: quay.io/redhat-aqe/tox:latest
+  tags: [docker]
+
+before_script:
+  - go version
+
+unit_test:
+  stage: "test"
+  script:
+    - ./unit_test.sh
+  only:
+    - merge_requests
+  allow_failure: False
+  tags: [py39]
