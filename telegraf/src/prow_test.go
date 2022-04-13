@@ -16,11 +16,11 @@ func Test_start_geziyor(t *testing.T) {
 			arg:  "https://google1.com/",
 			want: 0,
 		},
-		{
-			name: "Postive test test",
-			arg:  "https://prow.ci.openshift.org/?type=periodic&job=*oadp*",
-			want: 15,
-		},
+//		{
+//			name: "Postive test test",
+//			arg:  "https://prow.ci.openshift.org/?type=periodic&job=*oadp*",
+//			want: 15,
+//		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
