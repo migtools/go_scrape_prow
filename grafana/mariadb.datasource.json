@@ -16,6 +16,7 @@
     "secureJsonFields":{},
     "type":"mysql",
     "typeLogoUrl":"",
+    "uid":"1Oi2QL87k",
     "url":"mariadb:3306",
     "user":"rrcockpit",
     "withCredentials":false

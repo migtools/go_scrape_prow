@@ -15,6 +15,7 @@
     "secureJsonFields":{},
     "type":"grafana-googlesheets-datasource",
     "typeLogoUrl":"",
+    "uid":"HKmhwL8nk",
     "url":"",
     "user":"",
     "withCredentials":false
