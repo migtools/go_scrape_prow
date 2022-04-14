@@ -1259,7 +1259,7 @@
                                         {
                                             "targetBlank":true,
                                             "title":"link to logs",
-                                            "url":"${__data.fields.log}"
+                                            "url":"${__data.fields.log::raw::raw}"
                                         }
                                     ]
                                 }
@@ -1535,7 +1535,7 @@
                                         {
                                             "targetBlank":true,
                                             "title":"link to logs",
-                                            "url":"${__data.fields.log}"
+                                            "url":"${__data.fields.log::raw::raw}"
                                         }
                                     ]
                                 }
@@ -1811,7 +1811,7 @@
                                         {
                                             "targetBlank":true,
                                             "title":"link to logs",
-                                            "url":"${__data.fields.log}"
+                                            "url":"${__data.fields.log::raw::raw}"
                                         }
                                     ]
                                 }
@@ -2549,7 +2549,7 @@
                                         {
                                             "targetBlank":true,
                                             "title":"link to logs",
-                                            "url":"${__data.fields.log}"
+                                            "url":"${__data.fields.log::raw}"
                                         }
                                     ]
                                 }
@@ -2825,7 +2825,7 @@
                                         {
                                             "targetBlank":true,
                                             "title":"link to logs",
-                                            "url":"${__data.fields.log}"
+                                            "url":"${__data.fields.log::raw}"
                                         }
                                     ]
                                 }
@@ -3101,7 +3101,7 @@
                                         {
                                             "targetBlank":true,
                                             "title":"link to logs",
-                                            "url":"${__data.fields.log}"
+                                            "url":"${__data.fields.log::raw}"
                                         }
                                     ]
                                 }
@@ -3823,7 +3823,7 @@
                                         {
                                             "targetBlank":true,
                                             "title":"link to logs",
-                                            "url":"${__data.fields.log}"
+                                            "url":"${__data.fields.log::raw}"
                                         }
                                     ]
                                 },
@@ -4080,7 +4080,7 @@
                                         {
                                             "targetBlank":true,
                                             "title":"link to logs",
-                                            "url":"${__data.fields.log}"
+                                            "url":"${__data.fields.log::raw}"
                                         }
                                     ]
                                 },
@@ -4337,7 +4337,7 @@
                                         {
                                             "targetBlank":true,
                                             "title":"link to logs",
-                                            "url":"${__data.fields.log}"
+                                            "url":"${__data.fields.log::raw}"
                                         }
                                     ]
                                 },
