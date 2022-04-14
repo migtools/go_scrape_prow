@@ -56,6 +56,7 @@
                 "fieldConfig":{
                     "defaults":{
                         "custom":{
+                            "align":"auto",
                             "displayMode":"auto",
                             "filterable":false
                         },
@@ -2034,7 +2035,7 @@
                             "properties":[
                                 {
                                     "id":"custom.width",
-                                    "value":466
+                                    "value":474
                                 }
                             ]
                         },
@@ -2146,7 +2147,7 @@
                             "properties":[
                                 {
                                     "id":"custom.width",
-                                    "value":1
+                                    "value":195
                                 }
                             ]
                         },
@@ -2180,6 +2181,18 @@
                                             "url":"${__data.fields.pull_request::raw}"
                                         }
                                     ]
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"state"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.width",
+                                    "value":186
                                 }
                             ]
                         }
@@ -2278,10 +2291,20 @@
                 "fieldConfig":{
                     "defaults":{
                         "custom":{
+                            "align":"auto",
                             "displayMode":"auto",
                             "filterable":true
                         },
-                        "mappings":[],
+                        "mappings":[
+                            {
+                                "options":{
+                                    "":{
+                                        "text":""
+                                    }
+                                },
+                                "type":"value"
+                            }
+                        ],
                         "thresholds":{
                             "mode":"absolute",
                             "steps":[
@@ -2294,7 +2317,7 @@
                                     "value":0
                                 },
                                 {
-                                    "color":"super-light-blue",
+                                    "color":"yellow",
                                     "value":1
                                 },
                                 {
@@ -2302,8 +2325,16 @@
                                     "value":2
                                 },
                                 {
-                                    "color":"red",
+                                    "color":"purple",
                                     "value":3
+                                },
+                                {
+                                    "color":"orange",
+                                    "value":4
+                                },
+                                {
+                                    "color":"#959187",
+                                    "value":10
                                 }
                             ]
                         }
@@ -2312,41 +2343,44 @@
                         {
                             "matcher":{
                                 "id":"byName",
-                                "options":"state_int"
+                                "options":"job_name"
                             },
                             "properties":[
                                 {
-                                    "id":"custom.displayMode",
-                                    "value":"color-background"
+                                    "id":"custom.width",
+                                    "value":472
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"build_id"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.width",
+                                    "value":192
                                 },
                                 {
-                                    "id":"mappings",
-                                    "value":[
-                                        {
-                                            "options":{
-                                                "0 ":{
-                                                    "text":"success"
-                                                },
-                                                "1":{
-                                                    "text":"pending"
-                                                },
-                                                "2":{
-                                                    "text":"failure"
-                                                },
-                                                "3":{
-                                                    "text":"aborted"
-                                                },
-                                                "4":{
-                                                    "text":"unknown"
-                                                }
-                                            },
-                                            "type":"value"
-                                        }
-                                    ]
+                                    "id":"unit",
+                                    "value":"string"
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"duration"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.width",
+                                    "value":135
                                 },
                                 {
-                                    "id":"displayName",
-                                    "value":"state"
+                                    "id":"unit",
+                                    "value":"dthms"
                                 }
                             ]
                         },
@@ -2362,13 +2396,71 @@
                                         {
                                             "targetBlank":true,
                                             "title":"link to logs",
-                                            "url":"${__data.fields.log}"
+                                            "url":"${__data.fields.log::raw::raw}"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"state_int"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.displayMode",
+                                    "value":"color-background"
+                                },
+                                {
+                                    "id":"mappings",
+                                    "value":[
+                                        {
+                                            "options":{
+                                                "0":{
+                                                    "index":4,
+                                                    "text":"success"
+                                                },
+                                                "1":{
+                                                    "index":3,
+                                                    "text":"pending"
+                                                },
+                                                "10":{
+                                                    "index":0,
+                                                    "text":"unknown"
+                                                },
+                                                "2":{
+                                                    "index":2,
+                                                    "text":"failure"
+                                                },
+                                                "3":{
+                                                    "index":1,
+                                                    "text":"aborted"
+                                                },
+                                                "4":{
+                                                    "index":5,
+                                                    "text":"flake"
+                                                }
+                                            },
+                                            "type":"value"
                                         }
                                     ]
                                 },
                                 {
+                                    "id":"displayName",
+                                    "value":"state"
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"log"
+                            },
+                            "properties":[
+                                {
                                     "id":"custom.width",
-                                    "value":486
+                                    "value":228
                                 }
                             ]
                         },
@@ -2380,7 +2472,7 @@
                             "properties":[
                                 {
                                     "id":"custom.width",
-                                    "value":158
+                                    "value":159
                                 }
                             ]
                         },
@@ -2392,23 +2484,14 @@
                             "properties":[
                                 {
                                     "id":"custom.width",
-                                    "value":384
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"pull_request"
-                            },
-                            "properties":[
+                                    "value":365
+                                },
                                 {
                                     "id":"links",
                                     "value":[
                                         {
-                                            "targetBlank":true,
-                                            "title":"link to pull request",
-                                            "url":"${__data.fields.pull_request}"
+                                            "title":"Pull Request URL",
+                                            "url":"${__data.fields.pull_request::raw}"
                                         }
                                     ]
                                 }
@@ -2417,40 +2500,24 @@
                         {
                             "matcher":{
                                 "id":"byName",
-                                "options":"duration"
-                            },
-                            "properties":[
-                                {
-                                    "id":"unit",
-                                    "value":"dtdurations"
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"build_id"
+                                "options":"state"
                             },
                             "properties":[
                                 {
                                     "id":"custom.width",
-                                    "value":234
-                                },
-                                {
-                                    "id":"unit",
-                                    "value":"string"
+                                    "value":177
                                 }
                             ]
                         }
                     ]
                 },
                 "gridPos":{
-                    "h":10,
+                    "h":12,
                     "w":24,
                     "x":0,
                     "y":43
                 },
-                "id":21,
+                "id":36,
                 "options":{
                     "footer":{
                         "fields":"",
@@ -2470,6 +2537,10 @@
                 "pluginVersion":"8.4.6",
                 "targets":[
                     {
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
                         "groupBy":[
                             {
                                 "params":[
@@ -2486,7 +2557,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT \"job_name\", \"state_int\",  \"pull_request\", \"duration\",   \"build_id\", \"log\" FROM \"build\" WHERE (\"job_name\" =~ /^pull.*e2e.*/  ) AND $timeFilter ",
+                        "query":"SELECT \"job_name\", \"state_int\",  \"pull_request\", \"duration\",   \"build_id\", \"log\" FROM \"build\" WHERE (\"job_name\" =~ /^pull.*e2e.*/  ) AND $timeFilter",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -2518,8 +2589,7 @@
                             },
                             "indexByName":{},
                             "renameByName":{
-                                "log":"",
-                                "state":""
+                                "log":""
                             }
                         }
                     }
@@ -2534,10 +2604,20 @@
                 "fieldConfig":{
                     "defaults":{
                         "custom":{
+                            "align":"auto",
                             "displayMode":"auto",
                             "filterable":true
                         },
-                        "mappings":[],
+                        "mappings":[
+                            {
+                                "options":{
+                                    "":{
+                                        "text":""
+                                    }
+                                },
+                                "type":"value"
+                            }
+                        ],
                         "thresholds":{
                             "mode":"absolute",
                             "steps":[
@@ -2550,7 +2630,7 @@
                                     "value":0
                                 },
                                 {
-                                    "color":"super-light-blue",
+                                    "color":"yellow",
                                     "value":1
                                 },
                                 {
@@ -2558,8 +2638,16 @@
                                     "value":2
                                 },
                                 {
-                                    "color":"red",
+                                    "color":"purple",
                                     "value":3
+                                },
+                                {
+                                    "color":"orange",
+                                    "value":4
+                                },
+                                {
+                                    "color":"#959187",
+                                    "value":10
                                 }
                             ]
                         }
@@ -2568,41 +2656,44 @@
                         {
                             "matcher":{
                                 "id":"byName",
-                                "options":"state_int"
+                                "options":"job_name"
                             },
                             "properties":[
                                 {
-                                    "id":"custom.displayMode",
-                                    "value":"color-background"
+                                    "id":"custom.width",
+                                    "value":472
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"build_id"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.width",
+                                    "value":192
                                 },
                                 {
-                                    "id":"mappings",
-                                    "value":[
-                                        {
-                                            "options":{
-                                                "0 ":{
-                                                    "text":"success"
-                                                },
-                                                "1":{
-                                                    "text":"pending"
-                                                },
-                                                "2":{
-                                                    "text":"failure"
-                                                },
-                                                "3":{
-                                                    "text":"aborted"
-                                                },
-                                                "4":{
-                                                    "text":"unknown"
-                                                }
-                                            },
-                                            "type":"value"
-                                        }
-                                    ]
+                                    "id":"unit",
+                                    "value":"string"
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"duration"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.width",
+                                    "value":135
                                 },
                                 {
-                                    "id":"displayName",
-                                    "value":"state"
+                                    "id":"unit",
+                                    "value":"dthms"
                                 }
                             ]
                         },
@@ -2618,13 +2709,71 @@
                                         {
                                             "targetBlank":true,
                                             "title":"link to logs",
-                                            "url":"${__data.fields.log}"
+                                            "url":"${__data.fields.log::raw::raw}"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"state_int"
+                            },
+                            "properties":[
+                                {
+                                    "id":"custom.displayMode",
+                                    "value":"color-background"
+                                },
+                                {
+                                    "id":"mappings",
+                                    "value":[
+                                        {
+                                            "options":{
+                                                "0":{
+                                                    "index":4,
+                                                    "text":"success"
+                                                },
+                                                "1":{
+                                                    "index":3,
+                                                    "text":"pending"
+                                                },
+                                                "10":{
+                                                    "index":0,
+                                                    "text":"unknown"
+                                                },
+                                                "2":{
+                                                    "index":2,
+                                                    "text":"failure"
+                                                },
+                                                "3":{
+                                                    "index":1,
+                                                    "text":"aborted"
+                                                },
+                                                "4":{
+                                                    "index":5,
+                                                    "text":"flake"
+                                                }
+                                            },
+                                            "type":"value"
                                         }
                                     ]
                                 },
                                 {
+                                    "id":"displayName",
+                                    "value":"state"
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"log"
+                            },
+                            "properties":[
+                                {
                                     "id":"custom.width",
-                                    "value":496
+                                    "value":228
                                 }
                             ]
                         },
@@ -2636,7 +2785,7 @@
                             "properties":[
                                 {
                                     "id":"custom.width",
-                                    "value":158
+                                    "value":159
                                 }
                             ]
                         },
@@ -2648,23 +2797,14 @@
                             "properties":[
                                 {
                                     "id":"custom.width",
-                                    "value":398
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"pull_request"
-                            },
-                            "properties":[
+                                    "value":365
+                                },
                                 {
                                     "id":"links",
                                     "value":[
                                         {
-                                            "targetBlank":true,
-                                            "title":"link to pull request",
-                                            "url":"${__data.fields.pull_request}"
+                                            "title":"Pull Request URL",
+                                            "url":"${__data.fields.pull_request::raw}"
                                         }
                                     ]
                                 }
@@ -2673,40 +2813,24 @@
                         {
                             "matcher":{
                                 "id":"byName",
-                                "options":"duration"
-                            },
-                            "properties":[
-                                {
-                                    "id":"unit",
-                                    "value":"dtdurations"
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"build_id"
+                                "options":"state"
                             },
                             "properties":[
                                 {
                                     "id":"custom.width",
-                                    "value":234
-                                },
-                                {
-                                    "id":"unit",
-                                    "value":"string"
+                                    "value":177
                                 }
                             ]
                         }
                     ]
                 },
                 "gridPos":{
-                    "h":10,
+                    "h":12,
                     "w":24,
                     "x":0,
-                    "y":53
+                    "y":55
                 },
-                "id":22,
+                "id":37,
                 "options":{
                     "footer":{
                         "fields":"",
@@ -2726,6 +2850,10 @@
                 "pluginVersion":"8.4.6",
                 "targets":[
                     {
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
                         "groupBy":[
                             {
                                 "params":[
@@ -2774,8 +2902,7 @@
                             },
                             "indexByName":{},
                             "renameByName":{
-                                "log":"",
-                                "state":""
+                                "log":""
                             }
                         }
                     }
