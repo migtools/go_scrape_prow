@@ -9,23 +9,23 @@
                     "hide":true,
                     "iconColor":"rgba(0, 211, 255, 1)",
                     "name":"Annotations & Alerts",
+                    "target":{
+                        "limit":100,
+                        "matchAny":false,
+                        "tags":[],
+                        "type":"dashboard"
+                    },
                     "type":"dashboard"
                 }
             ]
         },
         "editable":true,
-        "gnetId":null,
+        "fiscalYearStartMonth":0,
         "graphTooltip":0,
         "links":[],
+        "liveNow":false,
         "panels":[
             {
-                "datasource":null,
-                "fieldConfig":{
-                    "defaults":{
-                        "custom":{}
-                    },
-                    "overrides":[]
-                },
                 "gridPos":{
                     "h":16,
                     "w":24,
@@ -33,24 +33,29 @@
                     "y":0
                 },
                 "id":2,
+                "links":[
+                    {
+                        "targetBlank":true,
+                        "title":"Dashboard - OADP Prow Periodic CI",
+                        "url":"http://oadp-ci.usersys.redhat.com:8080/d/x6y6_EU7k/oadp-periodic?orgId=1"
+                    }
+                ],
                 "options":{
-                    "content":"## THIS IS STILL A WIP, validating data\n\n# OADP Contributors \n* [Contributors Guide](https://hackmd.io/@openshift-mig-eng/ryeFMHE6F/%2FSNA-S8FeTNu_1KmixvB7lQ)\n\n# OADP CI Dashboards\n\n* [Dashboard - OADP Prow Periodic CI](http://oadp-ci.usersys.redhat.com:8080/d/5bpw5n1nk/prow-periodic?orgId=1)\n* [Dashboard - OADP Prow Pull Test CI](http://oadp-ci.usersys.redhat.com:8080/d/2ApQc7Jnz/oadp-pull-test?orgId=1)\n\n\n## Useful links\n* Search for errors:  https://search.ci.openshift.org/  \n* Test Grid: https://testgrid.k8s.io/redhat\n* OADP CI Config: https://github.com/openshift/release/tree/master/ci-operator/config/openshift/oadp-operator\n      \n## builds\n* upstream: https://app.travis-ci.com/github/openshift/oadp-operator\n* downstream: https://jenkins-cpaas-oadp.apps.cpaas-poc.r6c9.p1.openshiftapps.com/\n* internal cvp: https://jenkins-cvp-5d6ccd93bed8bd3809ddcb5d.apps.ocp-c1.prod.psi.redhat.com/job/cvp-redhat-operator-bundle-image-validation-test/",
+                    "content":"## THIS IS STILL A WIP, validating data\n\n# OADP Contributors \n* [Contributors Guide](https://hackmd.io/@openshift-mig-eng/ryeFMHE6F/%2FSNA-S8FeTNu_1KmixvB7lQ)\n\n# OADP CI Dashboards\n\n* [Dashboard - OADP Prow Periodic CI](http://oadp-ci.usersys.redhat.com:8080/d/x6y6_EU7k/oadp-periodic?orgId=1)\n* [Dashboard - OADP Prow Pull Test CI](http://oadp-ci.usersys.redhat.com:8080/d/Di8elPU7k/oadp-pull-request?orgId=1)\n\n\n## Useful links\n* Search for errors:  https://search.ci.openshift.org/  \n* Test Grid: https://testgrid.k8s.io/redhat\n* OADP CI Config: https://github.com/openshift/release/tree/master/ci-operator/config/openshift/oadp-operator\n      \n## builds\n* upstream: https://app.travis-ci.com/github/openshift/oadp-operator\n* downstream: https://jenkins-cpaas-oadp.apps.cpaas-poc.r6c9.p1.openshiftapps.com/\n* internal cvp: https://jenkins-cvp-5d6ccd93bed8bd3809ddcb5d.apps.ocp-c1.prod.psi.redhat.com/job/cvp-redhat-operator-bundle-image-validation-test/",
                     "mode":"markdown"
                 },
-                "pluginVersion":"7.3.6",
+                "pluginVersion":"8.4.6",
                 "targets":[
                     {
                         "queryType":"randomWalk",
                         "refId":"A"
                     }
                 ],
-                "timeFrom":null,
-                "timeShift":null,
                 "title":"OADP CI Home",
                 "type":"text"
             }
         ],
-        "schemaVersion":26,
+        "schemaVersion":35,
         "style":"dark",
         "tags":[],
         "templating":{
@@ -62,6 +67,7 @@
         },
         "timepicker":{},
         "timezone":"",
-        "title":"OADP Home"
+        "title":"OADP Home",
+        "weekStart":""
     }
 }
