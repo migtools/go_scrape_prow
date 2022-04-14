@@ -9,24 +9,24 @@
                     "hide":true,
                     "iconColor":"rgba(0, 211, 255, 1)",
                     "name":"Annotations & Alerts",
+                    "target":{
+                        "limit":100,
+                        "matchAny":false,
+                        "tags":[],
+                        "type":"dashboard"
+                    },
                     "type":"dashboard"
                 }
             ]
         },
         "editable":true,
-        "gnetId":null,
+        "fiscalYearStartMonth":0,
         "graphTooltip":0,
         "links":[],
+        "liveNow":false,
         "panels":[
             {
-                "datasource":null,
                 "description":"",
-                "fieldConfig":{
-                    "defaults":{
-                        "custom":{}
-                    },
-                    "overrides":[]
-                },
                 "gridPos":{
                     "h":10,
                     "w":24,
@@ -38,20 +38,17 @@
                     "content":"# OADP Pull CI Dashboard\n# THIS IS STILL A WIP, validating data\n\n## Useful links\n* Search for errors:  https://search.ci.openshift.org/  \n* Test Grid: https://testgrid.k8s.io/redhat\n* OADP CI Config: https://github.com/openshift/release/tree/master/ci-operator/config/openshift/oadp-operator\n      \n## builds\n* upstream: https://app.travis-ci.com/github/openshift/oadp-operator\n* downstream: https://jenkins-cpaas-oadp.apps.cpaas-poc.r6c9.p1.openshiftapps.com/\n* internal cvp: https://jenkins-cvp-5d6ccd93bed8bd3809ddcb5d.apps.ocp-c1.prod.psi.redhat.com/view/Production%20Pipeline/job/cvp-product-test/",
                     "mode":"markdown"
                 },
-                "pluginVersion":"7.3.6",
+                "pluginVersion":"8.4.6",
                 "targets":[
                     {
                         "queryType":"randomWalk",
                         "refId":"A"
                     }
                 ],
-                "timeFrom":null,
-                "timeShift":null,
                 "title":"OADP CI Monitor",
                 "type":"text"
             },
             {
-                "datasource":null,
                 "gridPos":{
                     "h":1,
                     "w":24,
@@ -65,17 +62,13 @@
             {
                 "aliasColors":{},
                 "breakPoint":"50%",
-                "cacheTimeout":null,
                 "combine":{
                     "label":"Others",
                     "threshold":0
                 },
-                "datasource":"telegraf",
-                "fieldConfig":{
-                    "defaults":{
-                        "custom":{}
-                    },
-                    "overrides":[]
+                "datasource":{
+                    "type":"influxdb",
+                    "uid":"1vm2wY8nk"
                 },
                 "fontSize":"80%",
                 "format":"short",
@@ -86,7 +79,6 @@
                     "y":11
                 },
                 "id":16,
-                "interval":null,
                 "legend":{
                     "percentage":true,
                     "show":true,
@@ -217,8 +209,6 @@
                         "tags":[]
                     }
                 ],
-                "timeFrom":null,
-                "timeShift":null,
                 "title":"OpenShift 4.9 Pass / Fail",
                 "type":"grafana-piechart-panel",
                 "valueName":"current"
@@ -226,17 +216,13 @@
             {
                 "aliasColors":{},
                 "breakPoint":"50%",
-                "cacheTimeout":null,
                 "combine":{
                     "label":"Others",
                     "threshold":0
                 },
-                "datasource":"telegraf",
-                "fieldConfig":{
-                    "defaults":{
-                        "custom":{}
-                    },
-                    "overrides":[]
+                "datasource":{
+                    "type":"influxdb",
+                    "uid":"1vm2wY8nk"
                 },
                 "fontSize":"80%",
                 "format":"short",
@@ -247,7 +233,6 @@
                     "y":11
                 },
                 "id":35,
-                "interval":null,
                 "legend":{
                     "percentage":true,
                     "show":true,
@@ -378,8 +363,6 @@
                         "tags":[]
                     }
                 ],
-                "timeFrom":null,
-                "timeShift":null,
                 "title":"OpenShift 4.8 Pass / Fail",
                 "type":"grafana-piechart-panel",
                 "valueName":"current"
@@ -387,17 +370,13 @@
             {
                 "aliasColors":{},
                 "breakPoint":"50%",
-                "cacheTimeout":null,
                 "combine":{
                     "label":"Others",
                     "threshold":0
                 },
-                "datasource":"telegraf",
-                "fieldConfig":{
-                    "defaults":{
-                        "custom":{}
-                    },
-                    "overrides":[]
+                "datasource":{
+                    "type":"influxdb",
+                    "uid":"1vm2wY8nk"
                 },
                 "fontSize":"80%",
                 "format":"short",
@@ -408,7 +387,6 @@
                     "y":11
                 },
                 "id":36,
-                "interval":null,
                 "legend":{
                     "percentage":true,
                     "show":true,
@@ -539,8 +517,6 @@
                         "tags":[]
                     }
                 ],
-                "timeFrom":null,
-                "timeShift":null,
                 "title":"OpenShift 4.7 Pass / Fail",
                 "type":"grafana-piechart-panel",
                 "valueName":"current"
@@ -548,17 +524,13 @@
             {
                 "aliasColors":{},
                 "breakPoint":"50%",
-                "cacheTimeout":null,
                 "combine":{
                     "label":"Others",
                     "threshold":0
                 },
-                "datasource":"telegraf",
-                "fieldConfig":{
-                    "defaults":{
-                        "custom":{}
-                    },
-                    "overrides":[]
+                "datasource":{
+                    "type":"influxdb",
+                    "uid":"1vm2wY8nk"
                 },
                 "fontSize":"80%",
                 "format":"short",
@@ -569,7 +541,6 @@
                     "y":11
                 },
                 "id":37,
-                "interval":null,
                 "legend":{
                     "percentage":true,
                     "show":true,
@@ -700,15 +671,12 @@
                         "tags":[]
                     }
                 ],
-                "timeFrom":null,
-                "timeShift":null,
                 "title":"OpenShift 4.6 Pass / Fail",
                 "type":"grafana-piechart-panel",
                 "valueName":"current"
             },
             {
                 "collapsed":false,
-                "datasource":null,
                 "gridPos":{
                     "h":1,
                     "w":24,
@@ -723,17 +691,13 @@
             {
                 "aliasColors":{},
                 "breakPoint":"50%",
-                "cacheTimeout":null,
                 "combine":{
                     "label":"Others",
                     "threshold":0
                 },
-                "datasource":"telegraf",
-                "fieldConfig":{
-                    "defaults":{
-                        "custom":{}
-                    },
-                    "overrides":[]
+                "datasource":{
+                    "type":"influxdb",
+                    "uid":"1vm2wY8nk"
                 },
                 "fontSize":"80%",
                 "format":"short",
@@ -744,7 +708,6 @@
                     "y":20
                 },
                 "id":34,
-                "interval":null,
                 "legend":{
                     "percentage":true,
                     "show":true,
@@ -875,8 +838,6 @@
                         "tags":[]
                     }
                 ],
-                "timeFrom":null,
-                "timeShift":null,
                 "title":"OpenShift 4.9 AWS",
                 "type":"grafana-piechart-panel",
                 "valueName":"current"
@@ -884,17 +845,13 @@
             {
                 "aliasColors":{},
                 "breakPoint":"50%",
-                "cacheTimeout":null,
                 "combine":{
                     "label":"Others",
                     "threshold":0
                 },
-                "datasource":"telegraf",
-                "fieldConfig":{
-                    "defaults":{
-                        "custom":{}
-                    },
-                    "overrides":[]
+                "datasource":{
+                    "type":"influxdb",
+                    "uid":"1vm2wY8nk"
                 },
                 "fontSize":"80%",
                 "format":"short",
@@ -905,7 +862,6 @@
                     "y":20
                 },
                 "id":13,
-                "interval":null,
                 "legend":{
                     "percentage":true,
                     "show":true,
@@ -1036,8 +992,6 @@
                         "tags":[]
                     }
                 ],
-                "timeFrom":null,
-                "timeShift":null,
                 "title":"OpenShift 4.9 GCP",
                 "type":"grafana-piechart-panel",
                 "valueName":"current"
@@ -1045,17 +999,13 @@
             {
                 "aliasColors":{},
                 "breakPoint":"50%",
-                "cacheTimeout":null,
                 "combine":{
                     "label":"Others",
                     "threshold":0
                 },
-                "datasource":"telegraf",
-                "fieldConfig":{
-                    "defaults":{
-                        "custom":{}
-                    },
-                    "overrides":[]
+                "datasource":{
+                    "type":"influxdb",
+                    "uid":"1vm2wY8nk"
                 },
                 "fontSize":"80%",
                 "format":"short",
@@ -1066,7 +1016,6 @@
                     "y":20
                 },
                 "id":14,
-                "interval":null,
                 "legend":{
                     "percentage":true,
                     "show":true,
@@ -1197,28 +1146,29 @@
                         "tags":[]
                     }
                 ],
-                "timeFrom":null,
-                "timeShift":null,
                 "title":"OpenShift 4.9 Azure",
                 "type":"grafana-piechart-panel",
                 "valueName":"current"
             },
             {
-                "datasource":"telegraf",
+                "datasource":{
+                    "type":"influxdb",
+                    "uid":"1vm2wY8nk"
+                },
                 "fieldConfig":{
                     "defaults":{
                         "custom":{
-                            "align":null,
+                            "displayMode":"auto",
                             "filterable":true
                         },
                         "mappings":[
                             {
-                                "from":"",
-                                "id":1,
-                                "text":"",
-                                "to":"",
-                                "type":1,
-                                "value":""
+                                "options":{
+                                    "":{
+                                        "text":""
+                                    }
+                                },
+                                "type":"value"
                             }
                         ],
                         "thresholds":{
@@ -1320,44 +1270,24 @@
                                     "id":"mappings",
                                     "value":[
                                         {
-                                            "from":"",
-                                            "id":1,
-                                            "text":"success",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"0"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":2,
-                                            "text":"pending",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"1"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":3,
-                                            "text":"failure",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"2"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":4,
-                                            "text":"aborted",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"3"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":5,
-                                            "text":"unknown",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"4 "
+                                            "options":{
+                                                "0":{
+                                                    "text":"success"
+                                                },
+                                                "1":{
+                                                    "text":"pending"
+                                                },
+                                                "2":{
+                                                    "text":"failure"
+                                                },
+                                                "3":{
+                                                    "text":"aborted"
+                                                },
+                                                "4 ":{
+                                                    "text":"unknown"
+                                                }
+                                            },
+                                            "type":"value"
                                         }
                                     ]
                                 },
@@ -1401,6 +1331,13 @@
                 },
                 "id":9,
                 "options":{
+                    "footer":{
+                        "fields":"",
+                        "reducer":[
+                            "sum"
+                        ],
+                        "show":false
+                    },
                     "showHeader":true,
                     "sortBy":[
                         {
@@ -1409,7 +1346,7 @@
                         }
                     ]
                 },
-                "pluginVersion":"7.3.6",
+                "pluginVersion":"8.4.6",
                 "targets":[
                     {
                         "groupBy":[
@@ -1450,8 +1387,6 @@
                         "tags":[]
                     }
                 ],
-                "timeFrom":null,
-                "timeShift":null,
                 "title":"OADP -  OpenShift 4.9 AWS Periodic",
                 "transformations":[
                     {
@@ -1470,21 +1405,24 @@
                 "type":"table"
             },
             {
-                "datasource":"telegraf",
+                "datasource":{
+                    "type":"influxdb",
+                    "uid":"1vm2wY8nk"
+                },
                 "fieldConfig":{
                     "defaults":{
                         "custom":{
-                            "align":null,
+                            "displayMode":"auto",
                             "filterable":true
                         },
                         "mappings":[
                             {
-                                "from":"",
-                                "id":1,
-                                "text":"",
-                                "to":"",
-                                "type":1,
-                                "value":""
+                                "options":{
+                                    "":{
+                                        "text":""
+                                    }
+                                },
+                                "type":"value"
                             }
                         ],
                         "thresholds":{
@@ -1586,44 +1524,24 @@
                                     "id":"mappings",
                                     "value":[
                                         {
-                                            "from":"",
-                                            "id":1,
-                                            "text":"success",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"0"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":2,
-                                            "text":"pending",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"1"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":3,
-                                            "text":"failure",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"2"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":4,
-                                            "text":"aborted",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"3"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":5,
-                                            "text":"unknown",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"4 "
+                                            "options":{
+                                                "0":{
+                                                    "text":"success"
+                                                },
+                                                "1":{
+                                                    "text":"pending"
+                                                },
+                                                "2":{
+                                                    "text":"failure"
+                                                },
+                                                "3":{
+                                                    "text":"aborted"
+                                                },
+                                                "4 ":{
+                                                    "text":"unknown"
+                                                }
+                                            },
+                                            "type":"value"
                                         }
                                     ]
                                 },
@@ -1667,6 +1585,13 @@
                 },
                 "id":49,
                 "options":{
+                    "footer":{
+                        "fields":"",
+                        "reducer":[
+                            "sum"
+                        ],
+                        "show":false
+                    },
                     "showHeader":true,
                     "sortBy":[
                         {
@@ -1675,7 +1600,7 @@
                         }
                     ]
                 },
-                "pluginVersion":"7.3.6",
+                "pluginVersion":"8.4.6",
                 "targets":[
                     {
                         "groupBy":[
@@ -1716,9 +1641,7 @@
                         "tags":[]
                     }
                 ],
-                "timeFrom":null,
-                "timeShift":null,
-                "title":"OADP -  OpenShift 4.9 GCP Periodic",
+                "title":"OADP -  OpenShift 4.9 GCP Periodic foo",
                 "transformations":[
                     {
                         "id":"organize",
@@ -1736,21 +1659,24 @@
                 "type":"table"
             },
             {
-                "datasource":"telegraf",
+                "datasource":{
+                    "type":"influxdb",
+                    "uid":"1vm2wY8nk"
+                },
                 "fieldConfig":{
                     "defaults":{
                         "custom":{
-                            "align":null,
+                            "displayMode":"auto",
                             "filterable":true
                         },
                         "mappings":[
                             {
-                                "from":"",
-                                "id":1,
-                                "text":"",
-                                "to":"",
-                                "type":1,
-                                "value":""
+                                "options":{
+                                    "":{
+                                        "text":""
+                                    }
+                                },
+                                "type":"value"
                             }
                         ],
                         "thresholds":{
@@ -1864,52 +1790,27 @@
                                     "id":"mappings",
                                     "value":[
                                         {
-                                            "from":"",
-                                            "id":1,
-                                            "text":"success",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"0"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":2,
-                                            "text":"pending",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"1"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":3,
-                                            "text":"failure",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"2"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":4,
-                                            "text":"aborted",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"3"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":5,
-                                            "text":"flake",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"4"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":6,
-                                            "text":"unknown",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"10"
+                                            "options":{
+                                                "0":{
+                                                    "text":"success"
+                                                },
+                                                "1":{
+                                                    "text":"pending"
+                                                },
+                                                "10":{
+                                                    "text":"unknown"
+                                                },
+                                                "2":{
+                                                    "text":"failure"
+                                                },
+                                                "3":{
+                                                    "text":"aborted"
+                                                },
+                                                "4":{
+                                                    "text":"flake"
+                                                }
+                                            },
+                                            "type":"value"
                                         }
                                     ]
                                 }
@@ -1949,6 +1850,13 @@
                 },
                 "id":8,
                 "options":{
+                    "footer":{
+                        "fields":"",
+                        "reducer":[
+                            "sum"
+                        ],
+                        "show":false
+                    },
                     "showHeader":true,
                     "sortBy":[
                         {
@@ -1957,7 +1865,7 @@
                         }
                     ]
                 },
-                "pluginVersion":"7.3.6",
+                "pluginVersion":"8.4.6",
                 "targets":[
                     {
                         "groupBy":[
@@ -1998,8 +1906,6 @@
                         "tags":[]
                     }
                 ],
-                "timeFrom":null,
-                "timeShift":null,
                 "title":"OADP - OpenShift 4.9 Azure Periodic",
                 "transformations":[
                     {
@@ -2020,17 +1926,13 @@
             {
                 "aliasColors":{},
                 "breakPoint":"50%",
-                "cacheTimeout":null,
                 "combine":{
                     "label":"Others",
                     "threshold":0
                 },
-                "datasource":"telegraf",
-                "fieldConfig":{
-                    "defaults":{
-                        "custom":{}
-                    },
-                    "overrides":[]
+                "datasource":{
+                    "type":"influxdb",
+                    "uid":"1vm2wY8nk"
                 },
                 "fontSize":"80%",
                 "format":"short",
@@ -2041,7 +1943,6 @@
                     "y":46
                 },
                 "id":12,
-                "interval":null,
                 "legend":{
                     "percentage":true,
                     "show":true,
@@ -2172,8 +2073,6 @@
                         "tags":[]
                     }
                 ],
-                "timeFrom":null,
-                "timeShift":null,
                 "title":"OpenShift 4.8 AWS",
                 "type":"grafana-piechart-panel",
                 "valueName":"current"
@@ -2181,17 +2080,13 @@
             {
                 "aliasColors":{},
                 "breakPoint":"50%",
-                "cacheTimeout":null,
                 "combine":{
                     "label":"Others",
                     "threshold":0
                 },
-                "datasource":"telegraf",
-                "fieldConfig":{
-                    "defaults":{
-                        "custom":{}
-                    },
-                    "overrides":[]
+                "datasource":{
+                    "type":"influxdb",
+                    "uid":"1vm2wY8nk"
                 },
                 "fontSize":"80%",
                 "format":"short",
@@ -2202,7 +2097,6 @@
                     "y":46
                 },
                 "id":17,
-                "interval":null,
                 "legend":{
                     "percentage":true,
                     "show":true,
@@ -2333,8 +2227,6 @@
                         "tags":[]
                     }
                 ],
-                "timeFrom":null,
-                "timeShift":null,
                 "title":"OpenShift 4.8 GCP",
                 "type":"grafana-piechart-panel",
                 "valueName":"current"
@@ -2342,17 +2234,13 @@
             {
                 "aliasColors":{},
                 "breakPoint":"50%",
-                "cacheTimeout":null,
                 "combine":{
                     "label":"Others",
                     "threshold":0
                 },
-                "datasource":"telegraf",
-                "fieldConfig":{
-                    "defaults":{
-                        "custom":{}
-                    },
-                    "overrides":[]
+                "datasource":{
+                    "type":"influxdb",
+                    "uid":"1vm2wY8nk"
                 },
                 "fontSize":"80%",
                 "format":"short",
@@ -2363,7 +2251,6 @@
                     "y":46
                 },
                 "id":18,
-                "interval":null,
                 "legend":{
                     "percentage":true,
                     "show":true,
@@ -2494,18 +2381,19 @@
                         "tags":[]
                     }
                 ],
-                "timeFrom":null,
-                "timeShift":null,
                 "title":"OpenShift 4.8 Azure",
                 "type":"grafana-piechart-panel",
                 "valueName":"current"
             },
             {
-                "datasource":"telegraf",
+                "datasource":{
+                    "type":"influxdb",
+                    "uid":"1vm2wY8nk"
+                },
                 "fieldConfig":{
                     "defaults":{
                         "custom":{
-                            "align":null,
+                            "displayMode":"auto",
                             "filterable":true
                         },
                         "mappings":[],
@@ -2550,44 +2438,24 @@
                                     "id":"mappings",
                                     "value":[
                                         {
-                                            "from":"",
-                                            "id":1,
-                                            "text":"success",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"0 "
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":2,
-                                            "text":"pending",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"1"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":3,
-                                            "text":"failure",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"2"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":4,
-                                            "text":"aborted",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"3"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":5,
-                                            "text":"failure",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"4"
+                                            "options":{
+                                                "0 ":{
+                                                    "text":"success"
+                                                },
+                                                "1":{
+                                                    "text":"pending"
+                                                },
+                                                "2":{
+                                                    "text":"failure"
+                                                },
+                                                "3":{
+                                                    "text":"aborted"
+                                                },
+                                                "4":{
+                                                    "text":"failure"
+                                                }
+                                            },
+                                            "type":"value"
                                         }
                                     ]
                                 },
@@ -2699,6 +2567,13 @@
                 },
                 "id":43,
                 "options":{
+                    "footer":{
+                        "fields":"",
+                        "reducer":[
+                            "sum"
+                        ],
+                        "show":false
+                    },
                     "showHeader":true,
                     "sortBy":[
                         {
@@ -2707,7 +2582,7 @@
                         }
                     ]
                 },
-                "pluginVersion":"7.3.6",
+                "pluginVersion":"8.4.6",
                 "targets":[
                     {
                         "groupBy":[
@@ -2748,8 +2623,6 @@
                         "tags":[]
                     }
                 ],
-                "timeFrom":null,
-                "timeShift":null,
                 "title":"OADP -  OpenShift 4.8 AWS Periodic",
                 "transformations":[
                     {
@@ -2769,11 +2642,14 @@
                 "type":"table"
             },
             {
-                "datasource":"telegraf",
+                "datasource":{
+                    "type":"influxdb",
+                    "uid":"1vm2wY8nk"
+                },
                 "fieldConfig":{
                     "defaults":{
                         "custom":{
-                            "align":null,
+                            "displayMode":"auto",
                             "filterable":true
                         },
                         "mappings":[],
@@ -2818,44 +2694,24 @@
                                     "id":"mappings",
                                     "value":[
                                         {
-                                            "from":"",
-                                            "id":1,
-                                            "text":"success",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"0 "
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":2,
-                                            "text":"pending",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"1"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":3,
-                                            "text":"failure",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"2"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":4,
-                                            "text":"aborted",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"3"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":5,
-                                            "text":"failure",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"4"
+                                            "options":{
+                                                "0 ":{
+                                                    "text":"success"
+                                                },
+                                                "1":{
+                                                    "text":"pending"
+                                                },
+                                                "2":{
+                                                    "text":"failure"
+                                                },
+                                                "3":{
+                                                    "text":"aborted"
+                                                },
+                                                "4":{
+                                                    "text":"failure"
+                                                }
+                                            },
+                                            "type":"value"
                                         }
                                     ]
                                 },
@@ -2967,6 +2823,13 @@
                 },
                 "id":47,
                 "options":{
+                    "footer":{
+                        "fields":"",
+                        "reducer":[
+                            "sum"
+                        ],
+                        "show":false
+                    },
                     "showHeader":true,
                     "sortBy":[
                         {
@@ -2975,7 +2838,7 @@
                         }
                     ]
                 },
-                "pluginVersion":"7.3.6",
+                "pluginVersion":"8.4.6",
                 "targets":[
                     {
                         "groupBy":[
@@ -3016,8 +2879,6 @@
                         "tags":[]
                     }
                 ],
-                "timeFrom":null,
-                "timeShift":null,
                 "title":"OADP -  OpenShift 4.8 GCP Periodic",
                 "transformations":[
                     {
@@ -3037,11 +2898,14 @@
                 "type":"table"
             },
             {
-                "datasource":"telegraf",
+                "datasource":{
+                    "type":"influxdb",
+                    "uid":"1vm2wY8nk"
+                },
                 "fieldConfig":{
                     "defaults":{
                         "custom":{
-                            "align":null,
+                            "displayMode":"auto",
                             "filterable":true
                         },
                         "mappings":[],
@@ -3086,44 +2950,24 @@
                                     "id":"mappings",
                                     "value":[
                                         {
-                                            "from":"",
-                                            "id":1,
-                                            "text":"success",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"0 "
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":2,
-                                            "text":"pending",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"1"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":3,
-                                            "text":"failure",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"2"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":4,
-                                            "text":"aborted",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"3"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":5,
-                                            "text":"failure",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"4"
+                                            "options":{
+                                                "0 ":{
+                                                    "text":"success"
+                                                },
+                                                "1":{
+                                                    "text":"pending"
+                                                },
+                                                "2":{
+                                                    "text":"failure"
+                                                },
+                                                "3":{
+                                                    "text":"aborted"
+                                                },
+                                                "4":{
+                                                    "text":"failure"
+                                                }
+                                            },
+                                            "type":"value"
                                         }
                                     ]
                                 },
@@ -3235,6 +3079,13 @@
                 },
                 "id":48,
                 "options":{
+                    "footer":{
+                        "fields":"",
+                        "reducer":[
+                            "sum"
+                        ],
+                        "show":false
+                    },
                     "showHeader":true,
                     "sortBy":[
                         {
@@ -3243,7 +3094,7 @@
                         }
                     ]
                 },
-                "pluginVersion":"7.3.6",
+                "pluginVersion":"8.4.6",
                 "targets":[
                     {
                         "groupBy":[
@@ -3284,8 +3135,6 @@
                         "tags":[]
                     }
                 ],
-                "timeFrom":null,
-                "timeShift":null,
                 "title":"OADP -  OpenShift 4.8 Azure Periodic",
                 "transformations":[
                     {
@@ -3307,17 +3156,13 @@
             {
                 "aliasColors":{},
                 "breakPoint":"50%",
-                "cacheTimeout":null,
                 "combine":{
                     "label":"Others",
                     "threshold":0
                 },
-                "datasource":"telegraf",
-                "fieldConfig":{
-                    "defaults":{
-                        "custom":{}
-                    },
-                    "overrides":[]
+                "datasource":{
+                    "type":"influxdb",
+                    "uid":"1vm2wY8nk"
                 },
                 "fontSize":"80%",
                 "format":"short",
@@ -3328,7 +3173,6 @@
                     "y":84
                 },
                 "id":23,
-                "interval":null,
                 "legend":{
                     "percentage":true,
                     "show":true,
@@ -3459,8 +3303,6 @@
                         "tags":[]
                     }
                 ],
-                "timeFrom":null,
-                "timeShift":null,
                 "title":"OpenShift 4.7 AWS",
                 "type":"grafana-piechart-panel",
                 "valueName":"current"
@@ -3468,17 +3310,13 @@
             {
                 "aliasColors":{},
                 "breakPoint":"50%",
-                "cacheTimeout":null,
                 "combine":{
                     "label":"Others",
                     "threshold":0
                 },
-                "datasource":"telegraf",
-                "fieldConfig":{
-                    "defaults":{
-                        "custom":{}
-                    },
-                    "overrides":[]
+                "datasource":{
+                    "type":"influxdb",
+                    "uid":"1vm2wY8nk"
                 },
                 "fontSize":"80%",
                 "format":"short",
@@ -3489,7 +3327,6 @@
                     "y":84
                 },
                 "id":40,
-                "interval":null,
                 "legend":{
                     "percentage":true,
                     "show":true,
@@ -3620,8 +3457,6 @@
                         "tags":[]
                     }
                 ],
-                "timeFrom":null,
-                "timeShift":null,
                 "title":"OpenShift 4.7 GCP",
                 "type":"grafana-piechart-panel",
                 "valueName":"current"
@@ -3629,17 +3464,13 @@
             {
                 "aliasColors":{},
                 "breakPoint":"50%",
-                "cacheTimeout":null,
                 "combine":{
                     "label":"Others",
                     "threshold":0
                 },
-                "datasource":"telegraf",
-                "fieldConfig":{
-                    "defaults":{
-                        "custom":{}
-                    },
-                    "overrides":[]
+                "datasource":{
+                    "type":"influxdb",
+                    "uid":"1vm2wY8nk"
                 },
                 "fontSize":"80%",
                 "format":"short",
@@ -3650,7 +3481,6 @@
                     "y":84
                 },
                 "id":41,
-                "interval":null,
                 "legend":{
                     "percentage":true,
                     "show":true,
@@ -3781,18 +3611,19 @@
                         "tags":[]
                     }
                 ],
-                "timeFrom":null,
-                "timeShift":null,
                 "title":"OpenShift 4.7 Azure",
                 "type":"grafana-piechart-panel",
                 "valueName":"current"
             },
             {
-                "datasource":"telegraf",
+                "datasource":{
+                    "type":"influxdb",
+                    "uid":"1vm2wY8nk"
+                },
                 "fieldConfig":{
                     "defaults":{
                         "custom":{
-                            "align":null,
+                            "displayMode":"auto",
                             "filterable":true
                         },
                         "mappings":[],
@@ -3837,44 +3668,24 @@
                                     "id":"mappings",
                                     "value":[
                                         {
-                                            "from":"",
-                                            "id":1,
-                                            "text":"success",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"0 "
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":2,
-                                            "text":"pending",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"1"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":3,
-                                            "text":"failure",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"2"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":4,
-                                            "text":"aborted",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"3"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":5,
-                                            "text":"failure",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"4"
+                                            "options":{
+                                                "0 ":{
+                                                    "text":"success"
+                                                },
+                                                "1":{
+                                                    "text":"pending"
+                                                },
+                                                "2":{
+                                                    "text":"failure"
+                                                },
+                                                "3":{
+                                                    "text":"aborted"
+                                                },
+                                                "4":{
+                                                    "text":"failure"
+                                                }
+                                            },
+                                            "type":"value"
                                         }
                                     ]
                                 },
@@ -3986,6 +3797,13 @@
                 },
                 "id":46,
                 "options":{
+                    "footer":{
+                        "fields":"",
+                        "reducer":[
+                            "sum"
+                        ],
+                        "show":false
+                    },
                     "showHeader":true,
                     "sortBy":[
                         {
@@ -3994,7 +3812,7 @@
                         }
                     ]
                 },
-                "pluginVersion":"7.3.6",
+                "pluginVersion":"8.4.6",
                 "targets":[
                     {
                         "groupBy":[
@@ -4035,8 +3853,6 @@
                         "tags":[]
                     }
                 ],
-                "timeFrom":null,
-                "timeShift":null,
                 "title":"OADP -  OpenShift 4.7 AWS Periodic",
                 "transformations":[
                     {
@@ -4056,11 +3872,14 @@
                 "type":"table"
             },
             {
-                "datasource":"telegraf",
+                "datasource":{
+                    "type":"influxdb",
+                    "uid":"1vm2wY8nk"
+                },
                 "fieldConfig":{
                     "defaults":{
                         "custom":{
-                            "align":null,
+                            "displayMode":"auto",
                             "filterable":true
                         },
                         "mappings":[],
@@ -4105,44 +3924,24 @@
                                     "id":"mappings",
                                     "value":[
                                         {
-                                            "from":"",
-                                            "id":1,
-                                            "text":"success",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"0 "
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":2,
-                                            "text":"pending",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"1"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":3,
-                                            "text":"failure",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"2"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":4,
-                                            "text":"aborted",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"3"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":5,
-                                            "text":"failure",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"4"
+                                            "options":{
+                                                "0 ":{
+                                                    "text":"success"
+                                                },
+                                                "1":{
+                                                    "text":"pending"
+                                                },
+                                                "2":{
+                                                    "text":"failure"
+                                                },
+                                                "3":{
+                                                    "text":"aborted"
+                                                },
+                                                "4":{
+                                                    "text":"failure"
+                                                }
+                                            },
+                                            "type":"value"
                                         }
                                     ]
                                 },
@@ -4254,6 +4053,13 @@
                 },
                 "id":44,
                 "options":{
+                    "footer":{
+                        "fields":"",
+                        "reducer":[
+                            "sum"
+                        ],
+                        "show":false
+                    },
                     "showHeader":true,
                     "sortBy":[
                         {
@@ -4262,7 +4068,7 @@
                         }
                     ]
                 },
-                "pluginVersion":"7.3.6",
+                "pluginVersion":"8.4.6",
                 "targets":[
                     {
                         "groupBy":[
@@ -4303,8 +4109,6 @@
                         "tags":[]
                     }
                 ],
-                "timeFrom":null,
-                "timeShift":null,
                 "title":"OADP -  OpenShift 4.7 GCP Periodic",
                 "transformations":[
                     {
@@ -4324,11 +4128,14 @@
                 "type":"table"
             },
             {
-                "datasource":"telegraf",
+                "datasource":{
+                    "type":"influxdb",
+                    "uid":"1vm2wY8nk"
+                },
                 "fieldConfig":{
                     "defaults":{
                         "custom":{
-                            "align":null,
+                            "displayMode":"auto",
                             "filterable":true
                         },
                         "mappings":[],
@@ -4373,44 +4180,24 @@
                                     "id":"mappings",
                                     "value":[
                                         {
-                                            "from":"",
-                                            "id":1,
-                                            "text":"success",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"0 "
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":2,
-                                            "text":"pending",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"1"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":3,
-                                            "text":"failure",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"2"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":4,
-                                            "text":"aborted",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"3"
-                                        },
-                                        {
-                                            "from":"",
-                                            "id":5,
-                                            "text":"failure",
-                                            "to":"",
-                                            "type":1,
-                                            "value":"4"
+                                            "options":{
+                                                "0 ":{
+                                                    "text":"success"
+                                                },
+                                                "1":{
+                                                    "text":"pending"
+                                                },
+                                                "2":{
+                                                    "text":"failure"
+                                                },
+                                                "3":{
+                                                    "text":"aborted"
+                                                },
+                                                "4":{
+                                                    "text":"failure"
+                                                }
+                                            },
+                                            "type":"value"
                                         }
                                     ]
                                 },
@@ -4522,6 +4309,13 @@
                 },
                 "id":45,
                 "options":{
+                    "footer":{
+                        "fields":"",
+                        "reducer":[
+                            "sum"
+                        ],
+                        "show":false
+                    },
                     "showHeader":true,
                     "sortBy":[
                         {
@@ -4530,7 +4324,7 @@
                         }
                     ]
                 },
-                "pluginVersion":"7.3.6",
+                "pluginVersion":"8.4.6",
                 "targets":[
                     {
                         "groupBy":[
@@ -4571,8 +4365,6 @@
                         "tags":[]
                     }
                 ],
-                "timeFrom":null,
-                "timeShift":null,
                 "title":"OADP -  OpenShift 4.7 Azure Periodic",
                 "transformations":[
                     {
@@ -4592,14 +4384,16 @@
                 "type":"table"
             }
         ],
-        "schemaVersion":26,
+        "schemaVersion":35,
         "style":"dark",
         "tags":[],
         "templating":{
             "list":[
                 {
-                    "datasource":"telegraf",
-                    "error":null,
+                    "datasource":{
+                        "type":"influxdb",
+                        "uid":"1vm2wY8nk"
+                    },
                     "filters":[],
                     "hide":0,
                     "label":"filter",
@@ -4615,6 +4409,7 @@
         },
         "timepicker":{},
         "timezone":"",
-        "title":"OADP Prow Periodic"
+        "title":"OADP Prow Periodic",
+        "weekStart":""
     }
 }

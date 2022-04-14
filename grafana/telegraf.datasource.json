@@ -15,6 +15,7 @@
     "secureJsonFields":{},
     "type":"influxdb",
     "typeLogoUrl":"",
+    "uid":"1vm2wY8nk",
     "url":"http://influxdb:8086",
     "user":"",
     "withCredentials":false
