@@ -1251,36 +1251,122 @@
                 "type":"row"
             },
             {
-                "aliasColors":{},
-                "breakPoint":"50%",
-                "combine":{
-                    "label":"Others",
-                    "threshold":0
-                },
                 "datasource":{
                     "type":"influxdb",
                     "uid":"1vm2wY8nk"
                 },
-                "fontSize":"80%",
-                "format":"short",
+                "description":"",
+                "fieldConfig":{
+                    "defaults":{
+                        "color":{
+                            "mode":"palette-classic"
+                        },
+                        "custom":{
+                            "hideFrom":{
+                                "legend":false,
+                                "tooltip":false,
+                                "viz":false
+                            }
+                        },
+                        "decimals":0,
+                        "mappings":[],
+                        "unit":"short"
+                    },
+                    "overrides":[
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"SUCCESS"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"green",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"FAILURE"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"red",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"ABORTED"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"purple",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"FLAKE"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"orange",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
                 "gridPos":{
-                    "h":8,
+                    "h":9,
                     "w":6,
                     "x":0,
                     "y":23
                 },
-                "id":60,
-                "legend":{
-                    "percentage":true,
-                    "show":true,
-                    "values":true
-                },
-                "legendType":"Under graph",
+                "id":69,
                 "links":[],
-                "nullPointMode":"connected",
-                "pieType":"pie",
+                "options":{
+                    "legend":{
+                        "calcs":[],
+                        "displayMode":"table",
+                        "placement":"bottom",
+                        "values":[
+                            "value",
+                            "percent"
+                        ]
+                    },
+                    "pieType":"pie",
+                    "reduceOptions":{
+                        "calcs":[
+                            "lastNotNull"
+                        ],
+                        "fields":"",
+                        "values":false
+                    },
+                    "tooltip":{
+                        "mode":"single",
+                        "sort":"none"
+                    }
+                },
                 "pluginVersion":"7.3.6",
-                "strokeWidth":1,
                 "targets":[
                     {
                         "alias":"SUCCESS",
@@ -1304,7 +1390,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.10.*aws.*/  AND \"state\" = 'success' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*4.10.*aws.*/  AND \"state\" = 'success' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -1347,7 +1433,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.10.*aws.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*4.10.*aws.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -1390,10 +1476,54 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.10.*aws.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*4.10.*aws.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
+                        "resultFormat":"time_series",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
+                    },
+                    {
+                        "alias":"FLAKE",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "hide":false,
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*4.10.*aws.*/  AND \"state\" = 'flake' ) AND $timeFilter",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"D",
                         "resultFormat":"time_series",
                         "select":[
                             [
@@ -1413,40 +1543,125 @@
                     }
                 ],
                 "title":"OpenShift 4.10 AWS",
-                "type":"grafana-piechart-panel",
-                "valueName":"current"
+                "type":"piechart"
             },
             {
-                "aliasColors":{},
-                "breakPoint":"50%",
-                "combine":{
-                    "label":"Others",
-                    "threshold":0
-                },
                 "datasource":{
                     "type":"influxdb",
                     "uid":"1vm2wY8nk"
                 },
-                "fontSize":"80%",
-                "format":"short",
+                "description":"",
+                "fieldConfig":{
+                    "defaults":{
+                        "color":{
+                            "mode":"palette-classic"
+                        },
+                        "custom":{
+                            "hideFrom":{
+                                "legend":false,
+                                "tooltip":false,
+                                "viz":false
+                            }
+                        },
+                        "decimals":0,
+                        "mappings":[],
+                        "unit":"short"
+                    },
+                    "overrides":[
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"SUCCESS"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"green",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"FAILURE"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"red",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"ABORTED"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"purple",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"FLAKE"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"orange",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
                 "gridPos":{
-                    "h":8,
+                    "h":9,
                     "w":6,
                     "x":6,
                     "y":23
                 },
-                "id":61,
-                "legend":{
-                    "percentage":true,
-                    "show":true,
-                    "values":true
-                },
-                "legendType":"Under graph",
+                "id":70,
                 "links":[],
-                "nullPointMode":"connected",
-                "pieType":"pie",
+                "options":{
+                    "legend":{
+                        "calcs":[],
+                        "displayMode":"table",
+                        "placement":"bottom",
+                        "values":[
+                            "value",
+                            "percent"
+                        ]
+                    },
+                    "pieType":"pie",
+                    "reduceOptions":{
+                        "calcs":[
+                            "lastNotNull"
+                        ],
+                        "fields":"",
+                        "values":false
+                    },
+                    "tooltip":{
+                        "mode":"single",
+                        "sort":"none"
+                    }
+                },
                 "pluginVersion":"7.3.6",
-                "strokeWidth":1,
                 "targets":[
                     {
                         "alias":"SUCCESS",
@@ -1470,7 +1685,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.10.*gcp.*/  AND \"state\" = 'success' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*4.10.*gcp.*/  AND \"state\" = 'success' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -1513,7 +1728,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.10.*gcp.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*4.10.*gcp.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -1556,10 +1771,54 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.10.*gcp.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*4.10.*gcp.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
+                        "resultFormat":"time_series",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
+                    },
+                    {
+                        "alias":"FLAKE",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "hide":false,
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*4.10.*gcp.*/  AND \"state\" = 'flake' ) AND $timeFilter",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"D",
                         "resultFormat":"time_series",
                         "select":[
                             [
@@ -1579,40 +1838,125 @@
                     }
                 ],
                 "title":"OpenShift 4.10 GCP",
-                "type":"grafana-piechart-panel",
-                "valueName":"current"
+                "type":"piechart"
             },
             {
-                "aliasColors":{},
-                "breakPoint":"50%",
-                "combine":{
-                    "label":"Others",
-                    "threshold":0
-                },
                 "datasource":{
                     "type":"influxdb",
                     "uid":"1vm2wY8nk"
                 },
-                "fontSize":"80%",
-                "format":"short",
+                "description":"",
+                "fieldConfig":{
+                    "defaults":{
+                        "color":{
+                            "mode":"palette-classic"
+                        },
+                        "custom":{
+                            "hideFrom":{
+                                "legend":false,
+                                "tooltip":false,
+                                "viz":false
+                            }
+                        },
+                        "decimals":0,
+                        "mappings":[],
+                        "unit":"short"
+                    },
+                    "overrides":[
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"SUCCESS"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"green",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"FAILURE"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"red",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"ABORTED"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"purple",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"FLAKE"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"orange",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
                 "gridPos":{
-                    "h":8,
+                    "h":9,
                     "w":6,
                     "x":12,
                     "y":23
                 },
-                "id":62,
-                "legend":{
-                    "percentage":true,
-                    "show":true,
-                    "values":true
-                },
-                "legendType":"Under graph",
+                "id":71,
                 "links":[],
-                "nullPointMode":"connected",
-                "pieType":"pie",
+                "options":{
+                    "legend":{
+                        "calcs":[],
+                        "displayMode":"table",
+                        "placement":"bottom",
+                        "values":[
+                            "value",
+                            "percent"
+                        ]
+                    },
+                    "pieType":"pie",
+                    "reduceOptions":{
+                        "calcs":[
+                            "lastNotNull"
+                        ],
+                        "fields":"",
+                        "values":false
+                    },
+                    "tooltip":{
+                        "mode":"single",
+                        "sort":"none"
+                    }
+                },
                 "pluginVersion":"7.3.6",
-                "strokeWidth":1,
                 "targets":[
                     {
                         "alias":"SUCCESS",
@@ -1636,7 +1980,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.10.*azure.*/  AND \"state\" = 'success' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*4.10.*azure.*/  AND \"state\" = 'success' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -1679,7 +2023,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.10.*azure.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*4.10.*azure.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -1722,7 +2066,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.10.*azure.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*4.10.*azure.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
@@ -1742,11 +2086,54 @@
                             ]
                         ],
                         "tags":[]
+                    },
+                    {
+                        "alias":"FLAKE",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "hide":false,
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*4.10.*azure.*/  AND \"state\" = 'flake' ) AND $timeFilter",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"D",
+                        "resultFormat":"time_series",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
                     }
                 ],
                 "title":"OpenShift 4.10 Azure",
-                "type":"grafana-piechart-panel",
-                "valueName":"current"
+                "type":"piechart"
             },
             {
                 "datasource":{
@@ -1943,7 +2330,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":31
+                    "y":32
                 },
                 "id":63,
                 "options":{
@@ -2219,7 +2606,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":37
+                    "y":38
                 },
                 "id":64,
                 "options":{
@@ -2495,7 +2882,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":43
+                    "y":44
                 },
                 "id":65,
                 "options":{
@@ -2577,39 +2964,129 @@
                 "type":"table"
             },
             {
-                "aliasColors":{},
-                "breakPoint":"50%",
-                "combine":{
-                    "label":"Others",
-                    "threshold":0
-                },
                 "datasource":{
                     "type":"influxdb",
                     "uid":"1vm2wY8nk"
                 },
-                "fontSize":"80%",
-                "format":"short",
+                "description":"",
+                "fieldConfig":{
+                    "defaults":{
+                        "color":{
+                            "mode":"palette-classic"
+                        },
+                        "custom":{
+                            "hideFrom":{
+                                "legend":false,
+                                "tooltip":false,
+                                "viz":false
+                            }
+                        },
+                        "decimals":0,
+                        "mappings":[],
+                        "unit":"short"
+                    },
+                    "overrides":[
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"SUCCESS"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"green",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"FAILURE"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"red",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"ABORTED"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"purple",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"FLAKE"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"orange",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
                 "gridPos":{
-                    "h":8,
+                    "h":9,
                     "w":6,
                     "x":0,
-                    "y":49
+                    "y":50
                 },
-                "id":34,
-                "legend":{
-                    "percentage":true,
-                    "show":true,
-                    "values":true
-                },
-                "legendType":"Under graph",
+                "id":72,
                 "links":[],
-                "nullPointMode":"connected",
-                "pieType":"pie",
+                "options":{
+                    "legend":{
+                        "calcs":[],
+                        "displayMode":"table",
+                        "placement":"bottom",
+                        "values":[
+                            "value",
+                            "percent"
+                        ]
+                    },
+                    "pieType":"pie",
+                    "reduceOptions":{
+                        "calcs":[
+                            "lastNotNull"
+                        ],
+                        "fields":"",
+                        "values":false
+                    },
+                    "tooltip":{
+                        "mode":"single",
+                        "sort":"none"
+                    }
+                },
                 "pluginVersion":"7.3.6",
-                "strokeWidth":1,
                 "targets":[
                     {
                         "alias":"SUCCESS",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
                         "groupBy":[
                             {
                                 "params":[
@@ -2626,7 +3103,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.9.*aws.*/  AND \"state\" = 'success' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*4.9.*aws.*/  AND \"state\" = 'success' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -2649,6 +3126,10 @@
                     },
                     {
                         "alias":"FAILURE",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
                         "groupBy":[
                             {
                                 "params":[
@@ -2665,7 +3146,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.9.*aws.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*4.9.*aws.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -2688,6 +3169,10 @@
                     },
                     {
                         "alias":"ABORTED",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
                         "groupBy":[
                             {
                                 "params":[
@@ -2704,10 +3189,54 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.9.*aws.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*4.9.*aws.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
+                        "resultFormat":"time_series",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
+                    },
+                    {
+                        "alias":"FLAKE",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "hide":false,
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*4.9.*aws.*/  AND \"state\" = 'flake' ) AND $timeFilter",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"D",
                         "resultFormat":"time_series",
                         "select":[
                             [
@@ -2727,40 +3256,125 @@
                     }
                 ],
                 "title":"OpenShift 4.9 AWS",
-                "type":"grafana-piechart-panel",
-                "valueName":"current"
+                "type":"piechart"
             },
             {
-                "aliasColors":{},
-                "breakPoint":"50%",
-                "combine":{
-                    "label":"Others",
-                    "threshold":0
-                },
                 "datasource":{
                     "type":"influxdb",
                     "uid":"1vm2wY8nk"
                 },
-                "fontSize":"80%",
-                "format":"short",
+                "description":"",
+                "fieldConfig":{
+                    "defaults":{
+                        "color":{
+                            "mode":"palette-classic"
+                        },
+                        "custom":{
+                            "hideFrom":{
+                                "legend":false,
+                                "tooltip":false,
+                                "viz":false
+                            }
+                        },
+                        "decimals":0,
+                        "mappings":[],
+                        "unit":"short"
+                    },
+                    "overrides":[
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"SUCCESS"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"green",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"FAILURE"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"red",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"ABORTED"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"purple",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"FLAKE"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"orange",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
                 "gridPos":{
-                    "h":8,
+                    "h":9,
                     "w":6,
                     "x":6,
-                    "y":49
+                    "y":50
                 },
-                "id":59,
-                "legend":{
-                    "percentage":true,
-                    "show":true,
-                    "values":true
-                },
-                "legendType":"Under graph",
+                "id":73,
                 "links":[],
-                "nullPointMode":"connected",
-                "pieType":"pie",
+                "options":{
+                    "legend":{
+                        "calcs":[],
+                        "displayMode":"table",
+                        "placement":"bottom",
+                        "values":[
+                            "value",
+                            "percent"
+                        ]
+                    },
+                    "pieType":"pie",
+                    "reduceOptions":{
+                        "calcs":[
+                            "lastNotNull"
+                        ],
+                        "fields":"",
+                        "values":false
+                    },
+                    "tooltip":{
+                        "mode":"single",
+                        "sort":"none"
+                    }
+                },
                 "pluginVersion":"7.3.6",
-                "strokeWidth":1,
                 "targets":[
                     {
                         "alias":"SUCCESS",
@@ -2784,7 +3398,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.9.*gcp.*/  AND \"state\" = 'success' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*4.9.*gcp.*/  AND \"state\" = 'success' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -2827,7 +3441,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.9.*gcp.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*4.9.*gcp.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -2870,10 +3484,54 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.9.*gcp.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*4.9.*gcp.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
+                        "resultFormat":"time_series",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
+                    },
+                    {
+                        "alias":"FLAKE",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "hide":false,
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*4.9.*gcp.*/  AND \"state\" = 'flake' ) AND $timeFilter",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"D",
                         "resultFormat":"time_series",
                         "select":[
                             [
@@ -2893,43 +3551,132 @@
                     }
                 ],
                 "title":"OpenShift 4.9 GCP",
-                "type":"grafana-piechart-panel",
-                "valueName":"current"
+                "type":"piechart"
             },
             {
-                "aliasColors":{},
-                "breakPoint":"50%",
-                "combine":{
-                    "label":"Others",
-                    "threshold":0
-                },
                 "datasource":{
                     "type":"influxdb",
                     "uid":"1vm2wY8nk"
                 },
-                "fontSize":"80%",
-                "format":"short",
+                "description":"",
+                "fieldConfig":{
+                    "defaults":{
+                        "color":{
+                            "mode":"palette-classic"
+                        },
+                        "custom":{
+                            "hideFrom":{
+                                "legend":false,
+                                "tooltip":false,
+                                "viz":false
+                            }
+                        },
+                        "decimals":0,
+                        "mappings":[],
+                        "unit":"short"
+                    },
+                    "overrides":[
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"SUCCESS"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"green",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"FAILURE"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"red",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"ABORTED"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"purple",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"FLAKE"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"orange",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
                 "gridPos":{
-                    "h":8,
+                    "h":9,
                     "w":6,
                     "x":12,
-                    "y":49
+                    "y":50
                 },
-                "id":14,
-                "legend":{
-                    "percentage":true,
-                    "show":true,
-                    "values":true
-                },
-                "legendType":"Under graph",
+                "id":74,
                 "links":[],
-                "nullPointMode":"connected",
-                "pieType":"pie",
+                "options":{
+                    "legend":{
+                        "calcs":[],
+                        "displayMode":"table",
+                        "placement":"bottom",
+                        "values":[
+                            "value",
+                            "percent"
+                        ]
+                    },
+                    "pieType":"pie",
+                    "reduceOptions":{
+                        "calcs":[
+                            "lastNotNull"
+                        ],
+                        "fields":"",
+                        "values":false
+                    },
+                    "tooltip":{
+                        "mode":"single",
+                        "sort":"none"
+                    }
+                },
                 "pluginVersion":"7.3.6",
-                "strokeWidth":1,
                 "targets":[
                     {
                         "alias":"SUCCESS",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
                         "groupBy":[
                             {
                                 "params":[
@@ -2946,7 +3693,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.9.*azure.*/  AND \"state\" = 'success' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*4.9.*azure.*/  AND \"state\" = 'success' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -2969,6 +3716,10 @@
                     },
                     {
                         "alias":"FAILURE",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
                         "groupBy":[
                             {
                                 "params":[
@@ -2985,7 +3736,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.9.*azure.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*4.9.*azure.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -3008,6 +3759,10 @@
                     },
                     {
                         "alias":"ABORTED",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
                         "groupBy":[
                             {
                                 "params":[
@@ -3024,7 +3779,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.9.*azure.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*4.9.*azure.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
@@ -3044,11 +3799,54 @@
                             ]
                         ],
                         "tags":[]
+                    },
+                    {
+                        "alias":"FLAKE",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "hide":false,
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*4.9.*azure.*/  AND \"state\" = 'flake' ) AND $timeFilter",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"D",
+                        "resultFormat":"time_series",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
                     }
                 ],
                 "title":"OpenShift 4.9 Azure",
-                "type":"grafana-piechart-panel",
-                "valueName":"current"
+                "type":"piechart"
             },
             {
                 "datasource":{
@@ -3245,7 +4043,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":57
+                    "y":59
                 },
                 "id":9,
                 "options":{
@@ -3521,7 +4319,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":63
+                    "y":65
                 },
                 "id":50,
                 "options":{
@@ -3797,7 +4595,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":69
+                    "y":71
                 },
                 "id":51,
                 "options":{
@@ -3879,39 +4677,129 @@
                 "type":"table"
             },
             {
-                "aliasColors":{},
-                "breakPoint":"50%",
-                "combine":{
-                    "label":"Others",
-                    "threshold":0
-                },
                 "datasource":{
                     "type":"influxdb",
                     "uid":"1vm2wY8nk"
                 },
-                "fontSize":"80%",
-                "format":"short",
+                "description":"",
+                "fieldConfig":{
+                    "defaults":{
+                        "color":{
+                            "mode":"palette-classic"
+                        },
+                        "custom":{
+                            "hideFrom":{
+                                "legend":false,
+                                "tooltip":false,
+                                "viz":false
+                            }
+                        },
+                        "decimals":0,
+                        "mappings":[],
+                        "unit":"short"
+                    },
+                    "overrides":[
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"SUCCESS"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"green",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"FAILURE"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"red",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"ABORTED"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"purple",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"FLAKE"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"orange",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
                 "gridPos":{
-                    "h":8,
+                    "h":9,
                     "w":6,
                     "x":0,
-                    "y":75
+                    "y":77
                 },
-                "id":12,
-                "legend":{
-                    "percentage":true,
-                    "show":true,
-                    "values":true
-                },
-                "legendType":"Under graph",
+                "id":75,
                 "links":[],
-                "nullPointMode":"connected",
-                "pieType":"pie",
+                "options":{
+                    "legend":{
+                        "calcs":[],
+                        "displayMode":"table",
+                        "placement":"bottom",
+                        "values":[
+                            "value",
+                            "percent"
+                        ]
+                    },
+                    "pieType":"pie",
+                    "reduceOptions":{
+                        "calcs":[
+                            "lastNotNull"
+                        ],
+                        "fields":"",
+                        "values":false
+                    },
+                    "tooltip":{
+                        "mode":"single",
+                        "sort":"none"
+                    }
+                },
                 "pluginVersion":"7.3.6",
-                "strokeWidth":1,
                 "targets":[
                     {
                         "alias":"SUCCESS",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
                         "groupBy":[
                             {
                                 "params":[
@@ -3928,7 +4816,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.8.*aws.*/  AND \"state\" = 'success' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*4.8.*aws.*/  AND \"state\" = 'success' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -3951,6 +4839,10 @@
                     },
                     {
                         "alias":"FAILURE",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
                         "groupBy":[
                             {
                                 "params":[
@@ -3967,7 +4859,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.8.*aws.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*4.8.*aws.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -3990,6 +4882,10 @@
                     },
                     {
                         "alias":"ABORTED",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
                         "groupBy":[
                             {
                                 "params":[
@@ -4006,10 +4902,54 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.8.*aws.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*4.8.*aws.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
+                        "resultFormat":"time_series",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
+                    },
+                    {
+                        "alias":"FLAKE",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "hide":false,
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*4.8.*aws.*/  AND \"state\" = 'flake' ) AND $timeFilter",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"D",
                         "resultFormat":"time_series",
                         "select":[
                             [
@@ -4029,43 +4969,132 @@
                     }
                 ],
                 "title":"OpenShift 4.8 AWS",
-                "type":"grafana-piechart-panel",
-                "valueName":"current"
+                "type":"piechart"
             },
             {
-                "aliasColors":{},
-                "breakPoint":"50%",
-                "combine":{
-                    "label":"Others",
-                    "threshold":0
-                },
                 "datasource":{
                     "type":"influxdb",
                     "uid":"1vm2wY8nk"
                 },
-                "fontSize":"80%",
-                "format":"short",
+                "description":"",
+                "fieldConfig":{
+                    "defaults":{
+                        "color":{
+                            "mode":"palette-classic"
+                        },
+                        "custom":{
+                            "hideFrom":{
+                                "legend":false,
+                                "tooltip":false,
+                                "viz":false
+                            }
+                        },
+                        "decimals":0,
+                        "mappings":[],
+                        "unit":"short"
+                    },
+                    "overrides":[
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"SUCCESS"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"green",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"FAILURE"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"red",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"ABORTED"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"purple",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"FLAKE"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"orange",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
                 "gridPos":{
-                    "h":8,
+                    "h":9,
                     "w":6,
                     "x":6,
-                    "y":75
+                    "y":77
                 },
-                "id":17,
-                "legend":{
-                    "percentage":true,
-                    "show":true,
-                    "values":true
-                },
-                "legendType":"Under graph",
+                "id":76,
                 "links":[],
-                "nullPointMode":"connected",
-                "pieType":"pie",
+                "options":{
+                    "legend":{
+                        "calcs":[],
+                        "displayMode":"table",
+                        "placement":"bottom",
+                        "values":[
+                            "value",
+                            "percent"
+                        ]
+                    },
+                    "pieType":"pie",
+                    "reduceOptions":{
+                        "calcs":[
+                            "lastNotNull"
+                        ],
+                        "fields":"",
+                        "values":false
+                    },
+                    "tooltip":{
+                        "mode":"single",
+                        "sort":"none"
+                    }
+                },
                 "pluginVersion":"7.3.6",
-                "strokeWidth":1,
                 "targets":[
                     {
                         "alias":"SUCCESS",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
                         "groupBy":[
                             {
                                 "params":[
@@ -4082,7 +5111,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.8.*gcp.*/  AND \"state\" = 'success' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*4.8.*gcp.*/  AND \"state\" = 'success' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -4105,6 +5134,10 @@
                     },
                     {
                         "alias":"FAILURE",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
                         "groupBy":[
                             {
                                 "params":[
@@ -4121,7 +5154,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.8.*gcp.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*4.8.*gcp.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -4144,6 +5177,10 @@
                     },
                     {
                         "alias":"ABORTED",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
                         "groupBy":[
                             {
                                 "params":[
@@ -4160,10 +5197,54 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.8.*gcp.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*4.8.*gcp.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
+                        "resultFormat":"time_series",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
+                    },
+                    {
+                        "alias":"FLAKE",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "hide":false,
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*4.8.*gcp.*/  AND \"state\" = 'flake' ) AND $timeFilter",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"D",
                         "resultFormat":"time_series",
                         "select":[
                             [
@@ -4183,43 +5264,132 @@
                     }
                 ],
                 "title":"OpenShift 4.8 GCP",
-                "type":"grafana-piechart-panel",
-                "valueName":"current"
+                "type":"piechart"
             },
             {
-                "aliasColors":{},
-                "breakPoint":"50%",
-                "combine":{
-                    "label":"Others",
-                    "threshold":0
-                },
                 "datasource":{
                     "type":"influxdb",
                     "uid":"1vm2wY8nk"
                 },
-                "fontSize":"80%",
-                "format":"short",
+                "description":"",
+                "fieldConfig":{
+                    "defaults":{
+                        "color":{
+                            "mode":"palette-classic"
+                        },
+                        "custom":{
+                            "hideFrom":{
+                                "legend":false,
+                                "tooltip":false,
+                                "viz":false
+                            }
+                        },
+                        "decimals":0,
+                        "mappings":[],
+                        "unit":"short"
+                    },
+                    "overrides":[
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"SUCCESS"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"green",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"FAILURE"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"red",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"ABORTED"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"purple",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"FLAKE"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"orange",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
                 "gridPos":{
-                    "h":8,
+                    "h":9,
                     "w":6,
                     "x":12,
-                    "y":75
+                    "y":77
                 },
-                "id":18,
-                "legend":{
-                    "percentage":true,
-                    "show":true,
-                    "values":true
-                },
-                "legendType":"Under graph",
+                "id":80,
                 "links":[],
-                "nullPointMode":"connected",
-                "pieType":"pie",
+                "options":{
+                    "legend":{
+                        "calcs":[],
+                        "displayMode":"table",
+                        "placement":"bottom",
+                        "values":[
+                            "value",
+                            "percent"
+                        ]
+                    },
+                    "pieType":"pie",
+                    "reduceOptions":{
+                        "calcs":[
+                            "lastNotNull"
+                        ],
+                        "fields":"",
+                        "values":false
+                    },
+                    "tooltip":{
+                        "mode":"single",
+                        "sort":"none"
+                    }
+                },
                 "pluginVersion":"7.3.6",
-                "strokeWidth":1,
                 "targets":[
                     {
                         "alias":"SUCCESS",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
                         "groupBy":[
                             {
                                 "params":[
@@ -4236,7 +5406,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.8.*azure.*/  AND \"state\" = 'success' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*4.8.*azure.*/  AND \"state\" = 'success' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -4259,6 +5429,10 @@
                     },
                     {
                         "alias":"FAILURE",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
                         "groupBy":[
                             {
                                 "params":[
@@ -4275,7 +5449,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.8.*azure.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*4.8.*azure.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -4298,6 +5472,10 @@
                     },
                     {
                         "alias":"ABORTED",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
                         "groupBy":[
                             {
                                 "params":[
@@ -4314,7 +5492,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*4.8.*azure.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*4.8.*azure.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
@@ -4334,11 +5512,54 @@
                             ]
                         ],
                         "tags":[]
+                    },
+                    {
+                        "alias":"FLAKE",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "hide":false,
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*4.8.*azure.*/  AND \"state\" = 'flake' ) AND $timeFilter",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"D",
+                        "resultFormat":"time_series",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
                     }
                 ],
                 "title":"OpenShift 4.8 Azure",
-                "type":"grafana-piechart-panel",
-                "valueName":"current"
+                "type":"piechart"
             },
             {
                 "datasource":{
@@ -4535,7 +5756,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":83
+                    "y":86
                 },
                 "id":52,
                 "options":{
@@ -4811,7 +6032,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":89
+                    "y":92
                 },
                 "id":53,
                 "options":{
@@ -5087,7 +6308,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":95
+                    "y":98
                 },
                 "id":54,
                 "options":{
@@ -5169,39 +6390,129 @@
                 "type":"table"
             },
             {
-                "aliasColors":{},
-                "breakPoint":"50%",
-                "combine":{
-                    "label":"Others",
-                    "threshold":0
-                },
                 "datasource":{
                     "type":"influxdb",
                     "uid":"1vm2wY8nk"
                 },
-                "fontSize":"80%",
-                "format":"short",
+                "description":"",
+                "fieldConfig":{
+                    "defaults":{
+                        "color":{
+                            "mode":"palette-classic"
+                        },
+                        "custom":{
+                            "hideFrom":{
+                                "legend":false,
+                                "tooltip":false,
+                                "viz":false
+                            }
+                        },
+                        "decimals":0,
+                        "mappings":[],
+                        "unit":"short"
+                    },
+                    "overrides":[
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"SUCCESS"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"green",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"FAILURE"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"red",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"ABORTED"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"purple",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"FLAKE"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"orange",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
                 "gridPos":{
-                    "h":8,
+                    "h":9,
                     "w":6,
                     "x":0,
-                    "y":101
+                    "y":104
                 },
-                "id":23,
-                "legend":{
-                    "percentage":true,
-                    "show":true,
-                    "values":true
-                },
-                "legendType":"Under graph",
+                "id":78,
                 "links":[],
-                "nullPointMode":"connected",
-                "pieType":"pie",
+                "options":{
+                    "legend":{
+                        "calcs":[],
+                        "displayMode":"table",
+                        "placement":"bottom",
+                        "values":[
+                            "value",
+                            "percent"
+                        ]
+                    },
+                    "pieType":"pie",
+                    "reduceOptions":{
+                        "calcs":[
+                            "lastNotNull"
+                        ],
+                        "fields":"",
+                        "values":false
+                    },
+                    "tooltip":{
+                        "mode":"single",
+                        "sort":"none"
+                    }
+                },
                 "pluginVersion":"7.3.6",
-                "strokeWidth":1,
                 "targets":[
                     {
                         "alias":"SUCCESS",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
                         "groupBy":[
                             {
                                 "params":[
@@ -5218,7 +6529,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*4.7.*aws.*/  AND \"state_int\" = 0 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*4.7.*aws.*/  AND \"state\" = 'success' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -5241,6 +6552,10 @@
                     },
                     {
                         "alias":"FAILURE",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
                         "groupBy":[
                             {
                                 "params":[
@@ -5257,7 +6572,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*4.7.*aws.*/  AND \"state_int\"= 2 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*4.7.*aws.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -5280,6 +6595,10 @@
                     },
                     {
                         "alias":"ABORTED",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
                         "groupBy":[
                             {
                                 "params":[
@@ -5296,10 +6615,54 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*4.7.*aws.*/  AND \"state_int\" = 4 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*4.7.*aws.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
+                        "resultFormat":"time_series",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
+                    },
+                    {
+                        "alias":"FLAKE",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "hide":false,
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*4.7.*aws.*/  AND \"state\" = 'flake' ) AND $timeFilter",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"D",
                         "resultFormat":"time_series",
                         "select":[
                             [
@@ -5319,43 +6682,132 @@
                     }
                 ],
                 "title":"OpenShift 4.7 AWS",
-                "type":"grafana-piechart-panel",
-                "valueName":"current"
+                "type":"piechart"
             },
             {
-                "aliasColors":{},
-                "breakPoint":"50%",
-                "combine":{
-                    "label":"Others",
-                    "threshold":0
-                },
                 "datasource":{
                     "type":"influxdb",
                     "uid":"1vm2wY8nk"
                 },
-                "fontSize":"80%",
-                "format":"short",
+                "description":"",
+                "fieldConfig":{
+                    "defaults":{
+                        "color":{
+                            "mode":"palette-classic"
+                        },
+                        "custom":{
+                            "hideFrom":{
+                                "legend":false,
+                                "tooltip":false,
+                                "viz":false
+                            }
+                        },
+                        "decimals":0,
+                        "mappings":[],
+                        "unit":"short"
+                    },
+                    "overrides":[
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"SUCCESS"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"green",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"FAILURE"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"red",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"ABORTED"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"purple",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"FLAKE"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"orange",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
                 "gridPos":{
-                    "h":8,
+                    "h":9,
                     "w":6,
                     "x":6,
-                    "y":101
+                    "y":104
                 },
-                "id":40,
-                "legend":{
-                    "percentage":true,
-                    "show":true,
-                    "values":true
-                },
-                "legendType":"Under graph",
+                "id":79,
                 "links":[],
-                "nullPointMode":"connected",
-                "pieType":"pie",
+                "options":{
+                    "legend":{
+                        "calcs":[],
+                        "displayMode":"table",
+                        "placement":"bottom",
+                        "values":[
+                            "value",
+                            "percent"
+                        ]
+                    },
+                    "pieType":"pie",
+                    "reduceOptions":{
+                        "calcs":[
+                            "lastNotNull"
+                        ],
+                        "fields":"",
+                        "values":false
+                    },
+                    "tooltip":{
+                        "mode":"single",
+                        "sort":"none"
+                    }
+                },
                 "pluginVersion":"7.3.6",
-                "strokeWidth":1,
                 "targets":[
                     {
                         "alias":"SUCCESS",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
                         "groupBy":[
                             {
                                 "params":[
@@ -5372,7 +6824,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*4.7.*gcp.*/  AND \"state_int\" = 0 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*4.7.*gcp.*/  AND \"state\" = 'success' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -5395,6 +6847,10 @@
                     },
                     {
                         "alias":"FAILURE",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
                         "groupBy":[
                             {
                                 "params":[
@@ -5411,7 +6867,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*4.7.*gcp.*/  AND \"state_int\"= 2 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*4.7.*gcp.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -5434,6 +6890,10 @@
                     },
                     {
                         "alias":"ABORTED",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
                         "groupBy":[
                             {
                                 "params":[
@@ -5450,10 +6910,54 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*4.7.*gcp.*/  AND \"state_int\" = 4 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*4.7.*gcp.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
+                        "resultFormat":"time_series",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
+                    },
+                    {
+                        "alias":"FLAKE",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "hide":false,
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*4.7.*gcp.*/  AND \"state\" = 'flake' ) AND $timeFilter",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"D",
                         "resultFormat":"time_series",
                         "select":[
                             [
@@ -5473,43 +6977,132 @@
                     }
                 ],
                 "title":"OpenShift 4.7 GCP",
-                "type":"grafana-piechart-panel",
-                "valueName":"current"
+                "type":"piechart"
             },
             {
-                "aliasColors":{},
-                "breakPoint":"50%",
-                "combine":{
-                    "label":"Others",
-                    "threshold":0
-                },
                 "datasource":{
                     "type":"influxdb",
                     "uid":"1vm2wY8nk"
                 },
-                "fontSize":"80%",
-                "format":"short",
+                "description":"",
+                "fieldConfig":{
+                    "defaults":{
+                        "color":{
+                            "mode":"palette-classic"
+                        },
+                        "custom":{
+                            "hideFrom":{
+                                "legend":false,
+                                "tooltip":false,
+                                "viz":false
+                            }
+                        },
+                        "decimals":0,
+                        "mappings":[],
+                        "unit":"short"
+                    },
+                    "overrides":[
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"SUCCESS"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"green",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"FAILURE"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"red",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"ABORTED"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"purple",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"FLAKE"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"orange",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
                 "gridPos":{
-                    "h":8,
+                    "h":9,
                     "w":6,
                     "x":12,
-                    "y":101
+                    "y":104
                 },
-                "id":41,
-                "legend":{
-                    "percentage":true,
-                    "show":true,
-                    "values":true
-                },
-                "legendType":"Under graph",
+                "id":81,
                 "links":[],
-                "nullPointMode":"connected",
-                "pieType":"pie",
+                "options":{
+                    "legend":{
+                        "calcs":[],
+                        "displayMode":"table",
+                        "placement":"bottom",
+                        "values":[
+                            "value",
+                            "percent"
+                        ]
+                    },
+                    "pieType":"pie",
+                    "reduceOptions":{
+                        "calcs":[
+                            "lastNotNull"
+                        ],
+                        "fields":"",
+                        "values":false
+                    },
+                    "tooltip":{
+                        "mode":"single",
+                        "sort":"none"
+                    }
+                },
                 "pluginVersion":"7.3.6",
-                "strokeWidth":1,
                 "targets":[
                     {
                         "alias":"SUCCESS",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
                         "groupBy":[
                             {
                                 "params":[
@@ -5526,7 +7119,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*4.7.*.azure*/  AND \"state_int\" = 0 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*4.7.*azure.*/  AND \"state\" = 'success' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -5549,6 +7142,10 @@
                     },
                     {
                         "alias":"FAILURE",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
                         "groupBy":[
                             {
                                 "params":[
@@ -5565,7 +7162,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*4.7.*.azure*/  AND \"state_int\"= 2 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*4.7.*azure.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -5588,6 +7185,10 @@
                     },
                     {
                         "alias":"ABORTED",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
                         "groupBy":[
                             {
                                 "params":[
@@ -5604,7 +7205,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*4.7.*azure.*/  AND \"state_int\" = 4 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*4.7.*azure.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
@@ -5624,11 +7225,54 @@
                             ]
                         ],
                         "tags":[]
+                    },
+                    {
+                        "alias":"FLAKE",
+                        "datasource":{
+                            "type":"influxdb",
+                            "uid":"1vm2wY8nk"
+                        },
+                        "groupBy":[
+                            {
+                                "params":[
+                                    "$__interval"
+                                ],
+                                "type":"time"
+                            },
+                            {
+                                "params":[
+                                    "null"
+                                ],
+                                "type":"fill"
+                            }
+                        ],
+                        "hide":false,
+                        "orderByTime":"ASC",
+                        "policy":"default",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*4.7.*azure.*/  AND \"state\" = 'flake' ) AND $timeFilter",
+                        "queryType":"randomWalk",
+                        "rawQuery":true,
+                        "refId":"D",
+                        "resultFormat":"time_series",
+                        "select":[
+                            [
+                                {
+                                    "params":[
+                                        "value"
+                                    ],
+                                    "type":"field"
+                                },
+                                {
+                                    "params":[],
+                                    "type":"mean"
+                                }
+                            ]
+                        ],
+                        "tags":[]
                     }
                 ],
                 "title":"OpenShift 4.7 Azure",
-                "type":"grafana-piechart-panel",
-                "valueName":"current"
+                "type":"piechart"
             },
             {
                 "datasource":{
@@ -5825,7 +7469,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":109
+                    "y":113
                 },
                 "id":55,
                 "options":{
@@ -6101,7 +7745,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":115
+                    "y":119
                 },
                 "id":56,
                 "options":{
@@ -6377,7 +8021,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":121
+                    "y":125
                 },
                 "id":57,
                 "options":{
