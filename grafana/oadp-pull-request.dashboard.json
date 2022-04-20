@@ -46,7 +46,53 @@
                         "mappings":[],
                         "unit":"short"
                     },
-                    "overrides":[]
+                    "overrides":[
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"SUCCESS"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"green",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"ABORTED"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"purple",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"FLAKE"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"orange",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
                 },
                 "gridPos":{
                     "h":10,
@@ -230,6 +276,7 @@
                                 "type":"fill"
                             }
                         ],
+                        "hide":false,
                         "orderByTime":"ASC",
                         "policy":"default",
                         "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*4.10.*unit.*/  AND \"state_int\" = 4 ) AND $timeFilter ",
@@ -696,7 +743,38 @@
                         "mappings":[],
                         "unit":"short"
                     },
-                    "overrides":[]
+                    "overrides":[
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"SUCCESS"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"green",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"ABORTED"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"purple",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
                 },
                 "gridPos":{
                     "h":10,
@@ -1549,7 +1627,38 @@
                         "mappings":[],
                         "unit":"short"
                     },
-                    "overrides":[]
+                    "overrides":[
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"SUCCESS"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"green",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"ABORTED"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"purple",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
                 },
                 "gridPos":{
                     "h":10,
@@ -2078,7 +2187,38 @@
                         "mappings":[],
                         "unit":"short"
                     },
-                    "overrides":[]
+                    "overrides":[
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"SUCCESS"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"green",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"ABORTED"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"purple",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
                 },
                 "gridPos":{
                     "h":10,
