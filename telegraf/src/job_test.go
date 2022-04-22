@@ -53,6 +53,27 @@ func Test_isFlake(t *testing.T) {
 				"2022-03-01T18:12:34Z", "2022-03-01T18:34:41Z", "rehearse-27052-pull-ci-openshift-oadp-operator-master-4.9-operator-e2e-azure", "", "rehearse", "azure", ""},
 			want: true,
 		},
+		{
+			name: "Positive for Unit Test - periodic-unit-test",
+			arg: Job{"1517352534933508096", "failure", 0, "https://prow.ci.openshift.org/view/gs/origin-ci-test/logs/periodic-ci-openshift-oadp-operator-master-4.8-operator-unit-test-periodic/1517352534933508096",
+				"", "https://gcsweb-ci.apps.ci.l2s4.p1.openshiftapps.com/gcs/origin-ci-test/logs/periodic-ci-openshift-oadp-operator-master-4.8-operator-unit-test-periodic/1517352534933508096/",
+				"", "", "periodic-ci-openshift-oadp-operator-master-4.8-operator-unit-test-periodic", "", "periodic", "", ""},
+			want: false,
+		},
+		{
+			name: "Positive for Index Test - pull-index-test",
+			arg: Job{"1514611520795840512", "failure", 0, "https://prow.ci.openshift.org/view/gs/origin-ci-test/pr-logs/pull/openshift_oadp-operator/639/pull-ci-openshift-oadp-operator-master-4.9-ci-index/1514611520795840512",
+				"", "https://gcsweb-ci.apps.ci.l2s4.p1.openshiftapps.com/gcs/origin-ci-test/pr-logs/pull/openshift_oadp-operator/639/pull-ci-openshift-oadp-operator-master-4.9-ci-index/1514611520795840512/",
+				"", "", "pull-ci-openshift-oadp-operator-master-4.9-ci-index", "", "pull", "", ""},
+			want: false,
+		},
+		{
+			name: "Positive for Unit Test - pull-unit-test",
+			arg: Job{"1517182064560967680", "failure", 0, "https://prow.ci.openshift.org/view/gs/origin-ci-test/pr-logs/pull/openshift_oadp-operator/624/pull-ci-openshift-oadp-operator-master-4.7-operator-unit-test/1517182064560967680",
+				"", "https://gcsweb-ci.apps.ci.l2s4.p1.openshiftapps.com/gcs/origin-ci-test/pr-logs/pull/openshift_oadp-operator/624/pull-ci-openshift-oadp-operator-master-4.7-operator-unit-test/1517182064560967680/",
+				"", "", "pull-ci-openshift-oadp-operator-master-4.7-operator-unit-test", "", "pull", "", ""},
+			want: false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
