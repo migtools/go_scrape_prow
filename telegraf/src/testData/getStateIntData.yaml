@@ -1,0 +1,20 @@
+Data_to_Test:
+  - name: "success state int "
+    status: "success"
+    want: 0
+  - name: "pending state int "
+    status: "pending"
+    want: 1
+  - name: "failure state int "
+    status: "failure"
+    want: 2
+  - name: "aborted state int "
+    status: "aborted"
+    want: 3
+  - name: "flake state int "
+    status: "flake"
+    want: 4
+  - name: "unknown state int "
+    status: "unknown"
+    want: 10
+

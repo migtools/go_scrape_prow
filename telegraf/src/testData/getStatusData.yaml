@@ -1,0 +1,39 @@
+Data_to_Test:
+  - name: "Negative status test"
+    arg:
+      jobId: "1506481143975776256"
+    filename: "testData/badData.yaml"
+  - name: "Positive success status test"
+    arg:
+      jobId: "1506481143975776256"
+    want: "success"
+    filename: "testData/positive.yaml"
+  - name: "Positive failure-flake status test"
+    arg:
+      jobId: "1508830368151638016"
+      jobState: ""
+      jobState_int: 0
+      jobLog_url: "https://prow.ci.openshift.org/view/gs/origin-ci-test/pr-logs/pull/openshift_release/27052/rehearse-27052-pull-ci-openshift-oadp-operator-master-4.8-operator-e2e-azure/1508830368151638016"
+      jobLog_yaml: ""
+      jobLog_artifacts: "https://gcsweb-ci.apps.ci.l2s4.p1.openshiftapps.com/gcs/origin-ci-test/pr-logs/pull/openshift_release/27052/rehearse-27052-pull-ci-openshift-oadp-operator-master-4.8-operator-e2e-azure/1508830368151638016/"
+      jobStart_time: ""
+      jobEnd_time: ""
+      jobName: "rehearse-27052-pull-ci-openshift-oadp-operator-master-4.8-operator-e2e-azure"
+      jobCloud_profile: "azure"
+    want: "flake"
+    filename: "testData/statusFailure.yaml"
+  - name: "Positive Pending status test"
+    arg:
+      jobId: "1506481143975776256"
+    want: "pending"
+    filename: "testData/statusPending.yaml"
+
+
+
+
+
+
+
+
+
+
