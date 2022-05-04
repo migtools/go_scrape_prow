@@ -1,0 +1,17 @@
+Data_to_Test:
+  - name: "Periodic job type test"
+    arg:
+      jobName: "periodic-ci-openshift-oadp-operator-master-4.8-operator-e2e-gcp-periodic-slack"
+    want: "periodic"
+  - name: "Pull job type test"
+    arg:
+      jobName: "pull-ci-openshift-oadp-operator-master-4.8-operator-e2e-gcp-periodic-slack"
+    want: "pull"
+  - name: "Rehearse job type test"
+    arg:
+      jobName: "rehearse-25366-pull-ci-openshift-oadp-operator-master-4.9-operator-unit-test"
+    want: "rehearse"
+  - name: "Unknown job type test"
+    arg:
+      jobName: "sdfgh"
+    want: "unknown"

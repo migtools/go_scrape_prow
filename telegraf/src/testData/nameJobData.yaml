@@ -1,0 +1,10 @@
+Data_to_Test:
+  - name: "Negative Name test"
+    arg:
+      jobId: "1506481143975776256"
+    filename: "testData/negative.yaml"
+  - name: "Positive success status test"
+    arg:
+      jobId: "1506481143975776256"
+    want: "periodic-ci-openshift-oadp-operator-master-4.9-operator-e2e-aws-periodic-slack"
+    filename: "testData/positive.yaml"

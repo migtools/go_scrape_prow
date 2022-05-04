@@ -1,0 +1,150 @@
+metadata:
+  annotations:
+    prow.k8s.io/context: ""
+    prow.k8s.io/job: periodic-ci-openshift-oadp-operator-master-4.8-operator-e2e-azure-periodic-slack
+  creationTimestamp: "2022-04-29T04:00:59Z"
+  generation: 7
+  labels:
+    ci-operator.openshift.io/cloud: azure4
+    ci-operator.openshift.io/cloud-cluster-profile: azure4
+    ci-operator.openshift.io/variant: "4.8"
+    ci.openshift.io/generator: prowgen
+    created-by-prow: "true"
+    pj-rehearse.openshift.io/can-be-rehearsed: "true"
+    prow.k8s.io/build-id: "1519889461062668288"
+    prow.k8s.io/context: ""
+    prow.k8s.io/id: fa728fa8-c770-11ec-a544-0a580a830952
+    prow.k8s.io/job: periodic-ci-openshift-oadp-operator-master-4.8-operator-e2e-azu
+    prow.k8s.io/refs.base_ref: master
+    prow.k8s.io/refs.org: openshift
+    prow.k8s.io/refs.repo: oadp-operator
+    prow.k8s.io/type: periodic
+  name: fa728fa8-c770-11ec-a544-0a580a830952
+  namespace: ci
+  resourceVersion: "1955010375"
+  uid: 34740e73-019a-418e-84a6-8d51ff34643b
+spec:
+  agent: kubernetes
+  cluster: build02
+  decoration_config:
+    censor_secrets: true
+    gcs_configuration:
+      bucket: origin-ci-test
+      default_org: openshift
+      default_repo: origin
+      mediaTypes:
+        log: text/plain
+      path_strategy: single
+    gcs_credentials_secret: gce-sa-credentials-gcs-publisher
+    grace_period: 1h0m0s
+    resources:
+      clonerefs:
+        limits:
+          memory: 3Gi
+        requests:
+          cpu: 100m
+          memory: 500Mi
+      initupload:
+        limits:
+          memory: 200Mi
+        requests:
+          cpu: 100m
+          memory: 50Mi
+      place_entrypoint:
+        limits:
+          memory: 100Mi
+        requests:
+          cpu: 100m
+          memory: 25Mi
+      sidecar:
+        limits:
+          memory: 2Gi
+        requests:
+          cpu: 100m
+          memory: 250Mi
+    skip_cloning: true
+    timeout: 4h0m0s
+    utility_images:
+      clonerefs: gcr.io/k8s-prow/clonerefs:v20220427-c2db0f69b7
+      entrypoint: gcr.io/k8s-prow/entrypoint:v20220427-c2db0f69b7
+      initupload: gcr.io/k8s-prow/initupload:v20220427-c2db0f69b7
+      sidecar: gcr.io/k8s-prow/sidecar:v20220427-c2db0f69b7
+  extra_refs:
+    - base_ref: master
+      org: openshift
+      repo: oadp-operator
+  job: periodic-ci-openshift-oadp-operator-master-4.8-operator-e2e-azure-periodic-slack
+  namespace: ci
+  pod_spec:
+    containers:
+      - args:
+          - --gcs-upload-secret=/secrets/gcs/service-account.json
+          - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
+          - --lease-server-credentials-file=/etc/boskos/credentials
+          - --report-credentials-file=/etc/report/credentials
+          - --secret-dir=/secrets/ci-pull-credentials
+          - --secret-dir=/usr/local/operator-e2e-azure-periodic-slack-cluster-profile
+          - --target=operator-e2e-azure-periodic-slack
+          - --variant=4.8
+        command:
+          - ci-operator
+        image: ci-operator:latest
+        imagePullPolicy: Always
+        name: ""
+        resources:
+          requests:
+            cpu: 10m
+        volumeMounts:
+          - mountPath: /etc/boskos
+            name: boskos
+            readOnly: true
+          - mountPath: /secrets/ci-pull-credentials
+            name: ci-pull-credentials
+            readOnly: true
+          - mountPath: /usr/local/operator-e2e-azure-periodic-slack-cluster-profile
+            name: cluster-profile
+          - mountPath: /secrets/gcs
+            name: gcs-credentials
+            readOnly: true
+          - mountPath: /etc/pull-secret
+            name: pull-secret
+            readOnly: true
+          - mountPath: /etc/report
+            name: result-aggregator
+            readOnly: true
+    serviceAccountName: ci-operator
+    volumes:
+      - name: boskos
+        secret:
+          items:
+            - key: credentials
+              path: credentials
+          secretName: boskos-credentials
+      - name: ci-pull-credentials
+        secret:
+          secretName: ci-pull-credentials
+      - name: cluster-profile
+        secret:
+          secretName: cluster-secrets-azure4
+      - name: pull-secret
+        secret:
+          secretName: registry-pull-credentials
+      - name: result-aggregator
+        secret:
+          secretName: result-aggregator
+  prowjob_defaults:
+    tenant_id: GlobalDefaultID
+  report: true
+  type: periodic
+status:
+  build_id: "1519889461062668288"
+  completionTime: "2022-04-29T05:42:04Z"
+  description: Job succeeded.
+  pendingTime: "2022-04-29T04:01:00Z"
+  pod_name: fa728fa8-c770-11ec-a544-0a580a830952
+  prev_report_states:
+    gcsk8sreporter: success
+    gcsreporter: success
+  startTime: "2022-04-29T04:00:59Z"
+  state: success
+  url: https://prow.ci.openshift.org/view/gs/origin-ci-test/logs/periodic-ci-openshift-oadp-operator-master-4.8-operator-e2e-azure-periodic-slack/1519889461062668288

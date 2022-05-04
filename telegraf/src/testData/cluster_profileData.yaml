@@ -1,0 +1,19 @@
+Data_to_Test:
+  - name: "Negative cluster_profile test"
+    arg:
+      jobId: "12345"
+    filename: "testData/badData.yaml"
+  - name: "Positive cluster_profile aws test"
+    arg:
+      jobId: "1506481143975776256"
+    want: "aws"
+    filename: "testData/positive.yaml"
+  - name: "Positive cluster_profile azure test"
+    arg:
+      jobId: "1519889461062668288"
+    want: "azure"
+    filename: "testData/azureTest.yaml"
+  - name: "Negative cluster_profile test"
+    arg:
+      jobId: "67890"
+    filename: "testData/negative.yaml"

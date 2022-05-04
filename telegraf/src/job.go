@@ -111,7 +111,6 @@ func getJobType(job Job) JobType {
 }
 
 func getClusterProfile(yaml *simpleyaml.Yaml, job Job) string {
-
 	clusterProfile, err := yaml.Get("metadata").Get("labels").Get("ci-operator.openshift.io/cloud").String()
 	if err != nil {
 		print_human_row(job)
