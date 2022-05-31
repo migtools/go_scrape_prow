@@ -95,7 +95,7 @@ func getProwJobs(g *geziyor.Geziyor, r *client.Response) {
 		id := u.Path[strings.LastIndex(u.Path, "/")+1:]
 		//log.Printf(id)
 
-		this_job := Job{id, "", 4, u.String(), "", "", "", "", "", "not_found", "", "", ""}
+		this_job := Job{id, "", 4, u.String(), "", "", "", "", "", "not_found", "", "", "", ""}
 		all_jobs[id] = this_job
 
 	})

@@ -2,16 +2,18 @@ package main
 
 import (
 	"fmt"
+	"github.com/PuerkitoBio/goquery"
+
 	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
+	yaml3 "sigs.k8s.io/yaml"
 	"strconv"
 	"strings"
 	"time"
 
-	"github.com/PuerkitoBio/goquery"
-	"github.com/smallfish/simpleyaml"
+	"k8s.io/test-infra/prow/apis/prowjobs/v1"
 )
 
 type Job struct {
@@ -28,6 +30,7 @@ type Job struct {
 	job_type      JobType
 	cloud_profile string // Supposed to remove this; however, it can help differentiate tests by cluster profiles
 	test_type     string
+	targetName    string
 }
 
 var ErrorLogger *log.Logger
@@ -47,9 +50,9 @@ func isFlake(job Job) bool {
 	if job.job_type == PERIODIC || strings.Contains(job.name, "periodic") {
 		buid_log_url := ""
 		if strings.Contains(job.name, "e2e") {
-			buid_log_url = job.log_artifacts + "artifacts/operator-e2e-" + job.cloud_profile + "-periodic-slack/e2e/"
+			buid_log_url = job.log_artifacts + "artifacts/" + job.targetName + "/e2e/"
 		} else if strings.Contains(job.name, "unit") {
-			buid_log_url = job.log_artifacts + "artifacts/operator-unit-test-periodic/unit-periodic/"
+			buid_log_url = job.log_artifacts + "artifacts/" + job.targetName + "/unit-periodic/"
 		} else {
 			return false
 		}
@@ -72,9 +75,9 @@ func isFlake(job Job) bool {
 		//artifacts/operator-e2e-gcp/e2e/
 		buid_log_url := ""
 		if strings.Contains(job.name, "e2e") {
-			buid_log_url = job.log_artifacts + "artifacts/operator-e2e-" + job.cloud_profile + "/e2e/"
+			buid_log_url = job.log_artifacts + "artifacts/" + job.targetName + "/e2e/"
 		} else if strings.Contains(job.name, "unit") {
-			buid_log_url = job.log_artifacts + "artifacts/operator-unit-test/unit/"
+			buid_log_url = job.log_artifacts + "artifacts/" + job.targetName + "/unit/"
 		} else {
 			return false
 		}
@@ -97,6 +100,26 @@ func isFlake(job Job) bool {
 	return true
 }
 
+//get test name give in openshift release repo with tag "as"
+func getTargetTestName(prowJob v1.ProwJob, job Job) string {
+
+	podspec := prowJob.Spec.PodSpec
+	targetName := ""
+	if podspec != nil {
+		argArray := prowJob.Spec.PodSpec.Containers[0].Args
+		for _, tname := range argArray {
+			if strings.HasPrefix(tname, "--target=") {
+				targetName = strings.TrimPrefix(tname, "--target=")
+				break
+			}
+		}
+	} else {
+		print_human_row(job)
+	}
+
+	return targetName
+}
+
 //get JobType by passing job as argument
 func getJobType(job Job) JobType {
 	if strings.HasPrefix(job.name, "pull") {
@@ -110,9 +133,10 @@ func getJobType(job Job) JobType {
 	}
 }
 
-func getClusterProfile(yaml *simpleyaml.Yaml, job Job) string {
-	clusterProfile, err := yaml.Get("metadata").Get("labels").Get("ci-operator.openshift.io/cloud").String()
-	if err != nil {
+func getClusterProfile(prowJob v1.ProwJob, job Job) string {
+	labels := prowJob.Labels
+	clusterProfile := labels["ci-operator.openshift.io/cloud-cluster-profile"]
+	if len(clusterProfile) < 1 {
 		print_human_row(job)
 	}
 	if clusterProfile == "azure4" {
@@ -121,38 +145,42 @@ func getClusterProfile(yaml *simpleyaml.Yaml, job Job) string {
 	return clusterProfile
 }
 
-func nameJob(yaml *simpleyaml.Yaml, job Job) string {
-	name, _ := yaml.Get("metadata").Get("annotations").Get("prow.k8s.io/job").String()
-
+func nameJob(prowJob v1.ProwJob, job Job) string {
+	name := prowJob.Annotations["prow.k8s.io/job"]
 	if len(name) < 1 {
 		print_human_row(job)
 	}
 	return name
 }
 
-func getEndTime(yaml *simpleyaml.Yaml, job Job) string {
-	// Get Start / Stop time
-
-	end, err := yaml.Get("status").Get("completionTime").String()
-	if err != nil {
+func getEndTime(prowJob v1.ProwJob, job Job) string {
+	end := ""
+	prowJobStatus := prowJob.Status.CompletionTime
+	if prowJobStatus != nil {
+		end = prowJobStatus.UTC().Format(time.RFC3339)
+	}
+	if len(end) < 1 || strings.Contains(end, "0001-01-01") {
 		print_human_row(job)
 	}
 	return end
 }
 
-func getStartTime(yaml *simpleyaml.Yaml, job Job) string {
-	start, err := yaml.Get("status").Get("startTime").String()
-	if err != nil {
+func getStartTime(prowJob v1.ProwJob, job Job) string {
+	start := prowJob.Status.StartTime.Time.UTC().Format(time.RFC3339)
+	if len(start) < 1 || strings.Contains(start, "0001-01-01") {
 		print_human_row(job)
 	}
 	return start
 }
 
-func getStatus(yaml *simpleyaml.Yaml, job Job) string {
-	status, err := yaml.Get("status").Get("state").String()
-	if err != nil {
+func getStatus(prowJob v1.ProwJob, job Job) string {
+
+	var status v1.ProwJobState
+	status = prowJob.Status.State
+	if len(status) < 1 {
 		print_human_row(job)
 	}
+
 	//checking if failure is flake.
 	if status == "failure" {
 		if isFlake(job) {
@@ -160,7 +188,7 @@ func getStatus(yaml *simpleyaml.Yaml, job Job) string {
 		}
 	}
 
-	return status
+	return string(status)
 }
 
 func getStateInt(status string) int {
@@ -277,27 +305,30 @@ func getYAMLDetails(all_jobs map[string]Job) {
 		if readErr != nil {
 			print_human_row(job)
 		}
-
-		yaml, err := simpleyaml.NewYaml(yaml_data)
-		if err != nil {
+		prow := v1.ProwJob{}
+		unmarshalErr := yaml3.Unmarshal(yaml_data, &prow)
+		if unmarshalErr != nil {
 			print_human_row(job)
 		}
 
 		//set name
-		job.name = nameJob(yaml, job)
+		job.name = nameJob(prow, job)
+
+		//name of the job(target) given in openshift/release
+		job.targetName = getTargetTestName(prow, job)
 
 		//get cluster profile
-		job.cloud_profile = getClusterProfile(yaml, job)
+		job.cloud_profile = getClusterProfile(prow, job)
 
 		//set Start and End Time
-		job.start_time = getStartTime(yaml, job)
-		job.end_time = getEndTime(yaml, job)
+		job.start_time = getStartTime(prow, job)
+		job.end_time = getEndTime(prow, job)
 
 		//setting job_type = periodic, pull, rehearse
 		job.job_type = getJobType(job)
 
 		//get status
-		job.state = getStatus(yaml, job)
+		job.state = getStatus(prow, job)
 
 		job.state_int = getStateInt(job.state)
 

@@ -1,0 +1,167 @@
+metadata:
+  annotations:
+    prow.k8s.io/context: ci/prow/4.9-e2e-openshift
+    prow.k8s.io/job: pull-ci-konveyor-pelorus-master-4.9-e2e-openshift
+  creationTimestamp: "2022-05-12T11:30:08Z"
+  generation: 10
+  labels:
+    ci-operator.openshift.io/cloud: aws
+    ci-operator.openshift.io/cloud-cluster-profile: aws
+    ci-operator.openshift.io/variant: "4.9"
+    ci.openshift.io/generator: prowgen
+    created-by-prow: "true"
+    event-GUID: db94fb60-d1e6-11ec-8c08-d5fb6454889d
+    pj-rehearse.openshift.io/can-be-rehearsed: "true"
+    prow.k8s.io/build-id: "1524713533084798976"
+    prow.k8s.io/context: 4.9-e2e-openshift
+    prow.k8s.io/id: e0e42da9-d1e6-11ec-8d07-0a580a830893
+    prow.k8s.io/is-optional: "true"
+    prow.k8s.io/job: pull-ci-konveyor-pelorus-master-4.9-e2e-openshift
+    prow.k8s.io/refs.base_ref: master
+    prow.k8s.io/refs.org: konveyor
+    prow.k8s.io/refs.pull: "453"
+    prow.k8s.io/refs.repo: pelorus
+    prow.k8s.io/type: presubmit
+  name: e0e42da9-d1e6-11ec-8d07-0a580a830893
+  namespace: ci
+  resourceVersion: "1989324154"
+  uid: 714dd261-6c04-479c-b4e3-73bebe12b9c7
+spec:
+  agent: kubernetes
+  cluster: build03
+  context: ci/prow/4.9-e2e-openshift
+  decoration_config:
+    censor_secrets: true
+    gcs_configuration:
+      bucket: origin-ci-test
+      default_org: openshift
+      default_repo: origin
+      mediaTypes:
+        log: text/plain
+      path_strategy: single
+    gcs_credentials_secret: gce-sa-credentials-gcs-publisher
+    grace_period: 1h0m0s
+    resources:
+      clonerefs:
+        limits:
+          memory: 3Gi
+        requests:
+          cpu: 100m
+          memory: 500Mi
+      initupload:
+        limits:
+          memory: 200Mi
+        requests:
+          cpu: 100m
+          memory: 50Mi
+      place_entrypoint:
+        limits:
+          memory: 100Mi
+        requests:
+          cpu: 100m
+          memory: 25Mi
+      sidecar:
+        limits:
+          memory: 2Gi
+        requests:
+          cpu: 100m
+          memory: 250Mi
+    skip_cloning: true
+    timeout: 4h0m0s
+    utility_images:
+      clonerefs: gcr.io/k8s-prow/clonerefs:v20220511-a855e15670
+      entrypoint: gcr.io/k8s-prow/entrypoint:v20220511-a855e15670
+      initupload: gcr.io/k8s-prow/initupload:v20220511-a855e15670
+      sidecar: gcr.io/k8s-prow/sidecar:v20220511-a855e15670
+  job: pull-ci-konveyor-pelorus-master-4.9-e2e-openshift
+  namespace: ci
+  pod_spec:
+    containers:
+      - args:
+          - --gcs-upload-secret=/secrets/gcs/service-account.json
+          - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
+          - --lease-server-credentials-file=/etc/boskos/credentials
+          - --report-credentials-file=/etc/report/credentials
+          - --secret-dir=/secrets/ci-pull-credentials
+          - --secret-dir=/usr/local/e2e-openshift-cluster-profile
+          - --target=e2e-openshift
+          - --variant=4.9
+        command:
+          - ci-operator
+        image: ci-operator:latest
+        imagePullPolicy: Always
+        name: ""
+        resources:
+          requests:
+            cpu: 10m
+        volumeMounts:
+          - mountPath: /etc/boskos
+            name: boskos
+            readOnly: true
+          - mountPath: /secrets/ci-pull-credentials
+            name: ci-pull-credentials
+            readOnly: true
+          - mountPath: /usr/local/e2e-openshift-cluster-profile
+            name: cluster-profile
+          - mountPath: /secrets/gcs
+            name: gcs-credentials
+            readOnly: true
+          - mountPath: /etc/pull-secret
+            name: pull-secret
+            readOnly: true
+          - mountPath: /etc/report
+            name: result-aggregator
+            readOnly: true
+    serviceAccountName: ci-operator
+    volumes:
+      - name: boskos
+        secret:
+          items:
+            - key: credentials
+              path: credentials
+          secretName: boskos-credentials
+      - name: ci-pull-credentials
+        secret:
+          secretName: ci-pull-credentials
+      - name: cluster-profile
+        secret:
+          secretName: cluster-secrets-aws
+      - name: pull-secret
+        secret:
+          secretName: registry-pull-credentials
+      - name: result-aggregator
+        secret:
+          secretName: result-aggregator
+  prowjob_defaults:
+    tenant_id: GlobalDefaultID
+  refs:
+    base_link: https://github.com/konveyor/pelorus/commit/16a0fc499de54eaf2fa03510f02268de6e73dee2
+    base_ref: master
+    base_sha: 16a0fc499de54eaf2fa03510f02268de6e73dee2
+    org: konveyor
+    pulls:
+      - author: mpryc
+        author_link: https://github.com/mpryc
+        commit_link: https://github.com/konveyor/pelorus/pull/453/commits/4f508e564165db1d2d1eeb9b6237973c98351762
+        link: https://github.com/konveyor/pelorus/pull/453
+        number: 453
+        sha: 4f508e564165db1d2d1eeb9b6237973c98351762
+        title: Fix JIRA query string to accept project FIRST
+    repo: pelorus
+    repo_link: https://github.com/konveyor/pelorus
+  report: true
+  rerun_command: /test 4.9-e2e-openshift
+  type: presubmit
+status:
+  build_id: "1524713533084798976"
+  completionTime: "2022-05-12T12:14:25Z"
+  description: Job succeeded.
+  pendingTime: "2022-05-12T11:30:08Z"
+  pod_name: e0e42da9-d1e6-11ec-8d07-0a580a830893
+  prev_report_states:
+    gcsk8sreporter: success
+    gcsreporter: success
+    github-reporter: success
+  startTime: "2022-05-12T11:30:08Z"
+  state: success
+  url: https://prow.ci.openshift.org/view/gs/origin-ci-test/pr-logs/pull/konveyor_pelorus/453/pull-ci-konveyor-pelorus-master-4.9-e2e-openshift/1524713533084798976

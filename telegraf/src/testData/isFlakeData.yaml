@@ -6,6 +6,7 @@ Data_to_Test:
       jobLog_artifacts: "https://gcsweb-ci.apps.ci.l2s4.p1.openshiftapps.com/gcs/origin-ci-test/pr-logs/pull/openshift_release/25366/rehearse-25366-periodic-ci-openshift-oadp-operator-master-4.9-operator-e2e-aws-periodic-slack/1498722881352241152/"
       jobState: "failure"
       jobCloud_profile: "aws"
+      targetName: "operator-e2e-aws-periodic-slack"
     want: true
   - name: "Positive Test is not a Flake - periodic"
     arg:
@@ -14,6 +15,7 @@ Data_to_Test:
       jobLog_artifacts: "https://gcsweb-ci.apps.ci.l2s4.p1.openshiftapps.com/gcs/origin-ci-test/logs/periodic-ci-openshift-oadp-operator-master-4.9-operator-e2e-azure-periodic-slack/1504306580781273088/"
       jobState: "failure"
       jobCloud_profile: "azure"
+      targetName: "operator-e2e-azure-periodic-slack"
     want: false
   - name: "Negative data Test for Flake - periodic"
     arg:
@@ -22,6 +24,7 @@ Data_to_Test:
       jobLog_artifacts: "abcd"
       jobState: "failure"
       jobCloud_profile: "aws"
+      targetName: "abc"
     want: false
   - name: "Positive data Test is not a Flake - pull-name-update"
     arg:
@@ -30,6 +33,7 @@ Data_to_Test:
       jobLog_artifacts: "https://gcsweb-ci.apps.ci.l2s4.p1.openshiftapps.com/gcs/origin-ci-test/pr-logs/pull/openshift_oadp-operator/566/pull-ci-openshift-oadp-operator-master-4.7-operator-e2e-gcp/1513678249626963968/"
       jobState: "failure"
       jobCloud_profile: "gcp"
+      targetName: "operator-e2e-gcp"
     want: false
   - name: "Positive data Test is a Flake - pull-name-update"
     arg:
@@ -38,6 +42,7 @@ Data_to_Test:
       jobLog_artifacts: "https://gcsweb-ci.apps.ci.l2s4.p1.openshiftapps.com/gcs/origin-ci-test/pr-logs/pull/openshift_release/27052/rehearse-27052-pull-ci-openshift-oadp-operator-master-4.9-operator-e2e-azure/1505907147571990528/"
       jobState: "failure"
       jobCloud_profile: "azure"
+      targetName: "operator-e2e-azure"
     want: true
   - name: "Positive for Unit Test - periodic-unit-test"
     arg:
@@ -45,6 +50,7 @@ Data_to_Test:
       jobType: "periodic"
       jobLog_artifacts: "https://gcsweb-ci.apps.ci.l2s4.p1.openshiftapps.com/gcs/origin-ci-test/logs/periodic-ci-openshift-oadp-operator-master-4.8-operator-unit-test-periodic/1517352534933508096/"
       jobState: "failure"
+      targetName: "operator-unit-test-periodic"
     want: false
   - name: "Positive for Index Test - pull-index-test"
     arg:
@@ -52,6 +58,7 @@ Data_to_Test:
       jobType: "pull"
       jobLog_artifacts: "https://gcsweb-ci.apps.ci.l2s4.p1.openshiftapps.com/gcs/origin-ci-test/pr-logs/pull/openshift_oadp-operator/639/pull-ci-openshift-oadp-operator-master-4.9-ci-index/1514611520795840512/"
       jobState: "failure"
+      targetName: "operator-master-4.9-ci-index"
     want: false
   - name: "Positive for Unit Test - pull-unit-test"
     arg:
@@ -59,7 +66,22 @@ Data_to_Test:
       jobType: "pull"
       jobLog_artifacts: "https://gcsweb-ci.apps.ci.l2s4.p1.openshiftapps.com/gcs/origin-ci-test/pr-logs/pull/openshift_oadp-operator/624/pull-ci-openshift-oadp-operator-master-4.7-operator-unit-test/1517182064560967680/"
       jobState: "failure"
+      targetName: "operator-unit-test"
     want: false
-
-
-
+  - name: "Positive Test is not a Flake - pull-konveyor-pelorus "
+    arg:
+      jobName: "pull-ci-konveyor-pelorus-master-4.9-e2e-openshift"
+      jobType: "pull"
+      jobLog_artifacts: "https://gcsweb-ci.apps.ci.l2s4.p1.openshiftapps.com/gcs/origin-ci-test/pr-logs/pull/konveyor_pelorus/442/pull-ci-konveyor-pelorus-master-4.9-e2e-openshift/1523713287487754240/"
+      jobState: "failure"
+      jobCloud_profile: "azure"
+      targetName: "e2e-openshift"
+    want: false
+  - name: "Positive for Unit Test - pelorus-unit-test"
+    arg:
+      jobName: "Positive for Unit Test - pull-unit-test"
+      jobType: "pull"
+      jobLog_artifacts: "https://gcsweb-ci.apps.ci.l2s4.p1.openshiftapps.com/gcs/origin-ci-test/pr-logs/pull/openshift_release/28498/rehearse-28498-pull-ci-konveyor-pelorus-master-4.8-unit/1524741329479798784/"
+      jobState: "failure"
+      targetName: "unit"
+    want: false
