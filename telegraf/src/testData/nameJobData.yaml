@@ -8,3 +8,8 @@ Data_to_Test:
       jobId: "1506481143975776256"
     want: "periodic-ci-openshift-oadp-operator-master-4.9-operator-e2e-aws-periodic-slack"
     filename: "testData/positive.yaml"
+  - name: "Positive success status test - pelorus"
+    arg:
+      jobId: "1506481143975776256"
+    want: "pull-ci-konveyor-pelorus-master-4.9-e2e-openshift"
+    filename: "testData/positive_pelorus.yaml"

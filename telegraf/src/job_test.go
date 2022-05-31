@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
+	"gopkg.in/yaml.v2"
 	"io/ioutil"
+	v1 "k8s.io/test-infra/prow/apis/prowjobs/v1"
 	"log"
 	"os"
+	yaml3 "sigs.k8s.io/yaml"
 	"strings"
 	"testing"
-
-	"github.com/smallfish/simpleyaml"
-	"gopkg.in/yaml.v2"
 )
 
 func Test_isFlake(t *testing.T) {
@@ -123,10 +123,10 @@ func Test_nameJob(t *testing.T) {
 		if err != nil {
 			fmt.Println("err in file  ")
 		}
-		yaml, err := simpleyaml.NewYaml(yaml_data)
-
-		if err != nil {
-			fmt.Println("err in yaml ")
+		prow := v1.ProwJob{}
+		unmarshalErr := yaml3.Unmarshal(yaml_data, &prow)
+		if unmarshalErr != nil {
+			fmt.Println("error in unmarshal")
 		}
 		t.Run(tt.Name, func(t *testing.T) {
 			if strings.HasPrefix(tt.Name, "Negative") {
@@ -136,7 +136,7 @@ func Test_nameJob(t *testing.T) {
 				}
 				ErrorLogger = log.New(unitTestfile, "ERROR: ", log.Ldate|log.Ltime|log.Lshortfile)
 				job := TestJobTOJob(tt.Mockjob)
-				nameJob(yaml, job)
+				nameJob(prow, job)
 				if _, err := os.Stat("testData/logs.txt"); err != nil {
 					t.Errorf("Error log failed for Empty name")
 				} else {
@@ -144,7 +144,7 @@ func Test_nameJob(t *testing.T) {
 				}
 			} else {
 				job := TestJobTOJob(tt.Mockjob)
-				if got := nameJob(yaml, job); got != tt.Want {
+				if got := nameJob(prow, job); got != tt.Want {
 					t.Errorf("nameJob() = %v, want %v", got, tt.Want)
 				}
 			}
@@ -181,10 +181,10 @@ func Test_startTime(t *testing.T) {
 		if err != nil {
 			fmt.Println("err in file  ")
 		}
-		yaml, err := simpleyaml.NewYaml(yaml_data)
-
-		if err != nil {
-			fmt.Println("err in yaml ")
+		prow := v1.ProwJob{}
+		unmarshalErr := yaml3.Unmarshal(yaml_data, &prow)
+		if unmarshalErr != nil {
+			fmt.Println("error in unmarshal")
 		}
 		t.Run(tt.Name, func(t *testing.T) {
 			if strings.HasPrefix(tt.Name, "Negative") {
@@ -194,7 +194,7 @@ func Test_startTime(t *testing.T) {
 				}
 				ErrorLogger = log.New(unitTestfile, "ERROR: ", log.Ldate|log.Ltime|log.Lshortfile)
 				job := TestJobTOJob(tt.Mockjob)
-				getStartTime(yaml, job)
+				getStartTime(prow, job)
 				if _, err := os.Stat("testData/badData_logs.txt"); err != nil {
 					t.Errorf("Error log failed for start Time")
 				} else {
@@ -202,7 +202,7 @@ func Test_startTime(t *testing.T) {
 				}
 			} else {
 				job := TestJobTOJob(tt.Mockjob)
-				if got := getStartTime(yaml, job); got != tt.Want {
+				if got := getStartTime(prow, job); got != tt.Want {
 					t.Errorf("getstartTime() = %v, want %v", got, tt.Want)
 				}
 			}
@@ -239,10 +239,10 @@ func Test_getStatus(t *testing.T) {
 		if err != nil {
 			fmt.Println("err in file  ")
 		}
-		yaml, err := simpleyaml.NewYaml(yaml_data)
-
-		if err != nil {
-			fmt.Println("err in yaml ")
+		prow := v1.ProwJob{}
+		unmarshalErr := yaml3.Unmarshal(yaml_data, &prow)
+		if unmarshalErr != nil {
+			fmt.Println("error in unmarshal")
 		}
 		t.Run(tt.Name, func(t *testing.T) {
 			if strings.HasPrefix(tt.Name, "Negative") {
@@ -252,7 +252,7 @@ func Test_getStatus(t *testing.T) {
 				}
 				ErrorLogger = log.New(unitTestfile, "ERROR: ", log.Ldate|log.Ltime|log.Lshortfile)
 				job := TestJobTOJob(tt.Mockjob)
-				getStatus(yaml, job)
+				getStatus(prow, job)
 				if _, err := os.Stat("testData/badData_logs.txt"); err != nil {
 					t.Errorf("Error log failed for geStatus")
 				} else {
@@ -260,7 +260,7 @@ func Test_getStatus(t *testing.T) {
 				}
 			} else {
 				job := TestJobTOJob(tt.Mockjob)
-				if got := getStatus(yaml, job); got != tt.Want {
+				if got := getStatus(prow, job); got != tt.Want {
 					t.Errorf("getStatus() = %v, want %v", got, tt.Want)
 				}
 			}
@@ -292,36 +292,34 @@ func Test_endTime(t *testing.T) {
 	if err != nil {
 		log.Fatalf("Unmarshal: %v", err)
 	}
-
 	for _, tt := range testdata.ATest {
 		yaml_data, err := ioutil.ReadFile(tt.FileName)
 		if err != nil {
 			fmt.Println("err in file  ")
 		}
-		yaml, err := simpleyaml.NewYaml(yaml_data)
-
-		if err != nil {
-			fmt.Println("err in yaml ")
+		prow := v1.ProwJob{}
+		unmarshalErr := yaml3.Unmarshal(yaml_data, &prow)
+		if unmarshalErr != nil {
+			fmt.Println("error in unmarshal")
 		}
 		t.Run(tt.Name, func(t *testing.T) {
 			if strings.HasPrefix(tt.Name, "Negative") {
 				unitTestfile, err := os.OpenFile("testData/badData_logs.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 				if err != nil {
-					fmt.Println("err in making badData_logs.txt for endTime  ")
+					fmt.Println("err in making badData_logs.txt for endTime")
 				}
 				ErrorLogger = log.New(unitTestfile, "ERROR: ", log.Ldate|log.Ltime|log.Lshortfile)
 				job := TestJobTOJob(tt.Mockjob)
-				getEndTime(yaml, job)
+				getEndTime(prow, job)
 				if _, err := os.Stat("testData/badData_logs.txt"); err != nil {
-					t.Errorf("Error log failed for End Time")
+					t.Errorf("Error log failed for end Time")
 				} else {
 					os.Remove("testData/badData_logs.txt")
 				}
-
 			} else {
 				job := TestJobTOJob(tt.Mockjob)
-				if got := getEndTime(yaml, job); got != tt.Want {
-					t.Errorf("getEndTime() = %v, want %v", got, tt.Want)
+				if got := getEndTime(prow, job); got != tt.Want {
+					t.Errorf("getstartTime() = %v, want %v", got, tt.Want)
 				}
 			}
 
@@ -358,11 +356,12 @@ func Test_cluster_profile(t *testing.T) {
 		if err != nil {
 			fmt.Println("err in file  ")
 		}
-		yaml, err := simpleyaml.NewYaml(yaml_data)
-
-		if err != nil {
-			fmt.Println("err in yaml ")
+		prow := v1.ProwJob{}
+		unmarshalErr := yaml3.Unmarshal(yaml_data, &prow)
+		if unmarshalErr != nil {
+			fmt.Println("error in unmarshal")
 		}
+
 		t.Run(tt.Name, func(t *testing.T) {
 			if strings.HasPrefix(tt.Name, "Negative") {
 				unitTestfile, err := os.OpenFile("testData/badData_logs.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
@@ -371,7 +370,7 @@ func Test_cluster_profile(t *testing.T) {
 				}
 				ErrorLogger = log.New(unitTestfile, "ERROR: ", log.Ldate|log.Ltime|log.Lshortfile)
 				job := TestJobTOJob(tt.Mockjob)
-				getEndTime(yaml, job)
+				getClusterProfile(prow, job)
 				if _, err := os.Stat("testData/badData_logs.txt"); err != nil {
 					t.Errorf("Error log failed for cluster Profile")
 				} else {
@@ -380,7 +379,7 @@ func Test_cluster_profile(t *testing.T) {
 
 			} else {
 				job := TestJobTOJob(tt.Mockjob)
-				if got := getClusterProfile(yaml, job); got != tt.Want {
+				if got := getClusterProfile(prow, job); got != tt.Want {
 					t.Errorf("getClusterProfile() = %v, want %v", got, tt.Want)
 				}
 			}
@@ -418,5 +417,62 @@ func Test_getStateInt(t *testing.T) {
 				t.Errorf("getStateInt() = %v, want %v", got, tt.Want)
 			}
 		})
+	}
+}
+
+func Test_getTargetTestName(t *testing.T) {
+	type test struct {
+		Name     string  `yaml:"name"`
+		FileName string  `yaml:"filename"`
+		Mockjob  TestJob `yaml:"arg"`
+		Want     string  `yaml:"want"`
+	}
+	type Tests struct {
+		ATest []test `yaml:"Data_to_Test"`
+	}
+
+	yamlFile, err := ioutil.ReadFile("testData/getTargetTestName.yaml")
+	if err != nil {
+		log.Printf("yamlFile.Get err   #%v ", err)
+	}
+
+	var testdata Tests
+	err = yaml.Unmarshal(yamlFile, &testdata)
+	if err != nil {
+		log.Fatalf("Unmarshal: %v", err)
+	}
+
+	for _, tt := range testdata.ATest {
+		yaml_data, err := ioutil.ReadFile(tt.FileName)
+		if err != nil {
+			fmt.Println("err in file for yaml_data ")
+		}
+		prow := v1.ProwJob{}
+		unmarshalErr := yaml3.Unmarshal(yaml_data, &prow)
+		if unmarshalErr != nil {
+			fmt.Println("error in unmarshal")
+		}
+		t.Run(tt.Name, func(t *testing.T) {
+			if strings.HasPrefix(tt.Name, "Negative") {
+				unitTestfile, err := os.OpenFile("testData/logs.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+				if err != nil {
+					fmt.Println("err in making logs.txt ")
+				}
+				ErrorLogger = log.New(unitTestfile, "ERROR: ", log.Ldate|log.Ltime|log.Lshortfile)
+				job := TestJobTOJob(tt.Mockjob)
+				getTargetTestName(prow, job)
+				if _, err := os.Stat("testData/logs.txt"); err != nil {
+					t.Errorf("Error log failed for getTargetTestName ")
+				} else {
+					os.Remove("testData/logs.txt")
+				}
+			} else {
+				job := TestJobTOJob(tt.Mockjob)
+				if got := getTargetTestName(prow, job); got != tt.Want {
+					t.Errorf("getTargetTestName() = %v, want %v", got, tt.Want)
+				}
+			}
+		})
+
 	}
 }

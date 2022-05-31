@@ -12,7 +12,6 @@ metadata:
     created-by-prow: "true"
     pj-rehearse.openshift.io/can-be-rehearsed: "true"
     prow.k8s.io/build-id: "1506481143975776256"
-    prow.k8s.io/context: ""
     prow.k8s.io/id: ddff68ae-aa5d-11ec-bada-0a580a800238
     prow.k8s.io/job: periodic-ci-openshift-oadp-operator-master-4.9-operator-e2e-aws
     prow.k8s.io/refs.base_ref: master

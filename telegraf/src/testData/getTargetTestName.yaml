@@ -1,0 +1,24 @@
+Data_to_Test:
+  - name: "Negative target name test"
+    arg:
+      jobId: "12345"
+    filename: "testData/badData.yaml"
+  - name: "Positive target name aws test"
+    arg:
+      jobId: "1506481143975776256"
+    want: "operator-e2e-aws-periodic-slack"
+    filename: "testData/positive.yaml"
+  - name: "Positive target name azure test"
+    arg:
+      jobId: "1519889461062668288"
+    want: "operator-e2e-azure-periodic-slack"
+    filename: "testData/azureTest.yaml"
+  - name: "Negative target name test"
+    arg:
+      jobId: "67890"
+    filename: "testData/negative.yaml"
+  - name: "Positive target name aws test-pelorus"
+    arg:
+      jobId: "1506481143975776256"
+    want: "e2e-openshift"
+    filename: "testData/positive_pelorus.yaml"
