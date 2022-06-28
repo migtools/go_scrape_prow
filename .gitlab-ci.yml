@@ -19,13 +19,19 @@ stages:
   image: quay.io/redhat-aqe/tox:latest
   tags: [docker]
 
+cache:
+  paths:
+    - .cache/pip
+    - .venv/
+
 before_script:
-  - go version
+  - make get-common-ci-tools
+  - make dev-env
 
 unit_test:
   stage: "test"
   script:
-    - ./unit_test.sh
+    - make unit-tests
   only:
     - merge_requests
   allow_failure: False
