@@ -3,3 +3,8 @@ cover.out
 cover.html
 geziyor
 .vscode
+
+# Common CI config symlink and git repo files
+.konveyor
+.konveyor_repo/
+.venv
