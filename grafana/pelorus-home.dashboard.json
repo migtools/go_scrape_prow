@@ -1,0 +1,73 @@
+{
+    "dashboard":{
+        "annotations":{
+            "list":[
+                {
+                    "builtIn":1,
+                    "datasource":"-- Grafana --",
+                    "enable":true,
+                    "hide":true,
+                    "iconColor":"rgba(0, 211, 255, 1)",
+                    "name":"Annotations & Alerts",
+                    "target":{
+                        "limit":100,
+                        "matchAny":false,
+                        "tags":[],
+                        "type":"dashboard"
+                    },
+                    "type":"dashboard"
+                }
+            ]
+        },
+        "editable":true,
+        "fiscalYearStartMonth":0,
+        "graphTooltip":0,
+        "links":[],
+        "liveNow":false,
+        "panels":[
+            {
+                "gridPos":{
+                    "h":16,
+                    "w":24,
+                    "x":0,
+                    "y":0
+                },
+                "id":4,
+                "links":[
+                    {
+                        "targetBlank":true,
+                        "title":"Dashboard - OADP Prow Periodic CI",
+                        "url":"http://oadp-ci.usersys.redhat.com:8080/d/x6y6_EU7k/oadp-periodic?orgId=1"
+                    }
+                ],
+                "options":{
+                    "content":"## THIS IS STILL A WIP, validating data\n\n# Pelorus Contributors \n* [Contributors Guide](https://github.com/konveyor/pelorus/blob/master/CONTRIBUTING.md)\n\n# OADP CI Dashboards\n\n* [Dashboard - OADP Prow Periodic CI](http://oadp-ci.usersys.redhat.com:8080/d/x6y6_EU7k/oadp-periodic?orgId=1)\n* [Dashboard - OADP Prow Pull Test CI](http://oadp-ci.usersys.redhat.com:8080/d/Di8elPU7k/oadp-pull-request?orgId=1)\n\n\n## Useful links\n* Search for general CI errors:  https://search.ci.openshift.org/  \n* Test Grid: https://testgrid.k8s.io/redhat\n* Pelorus CI Config: https://github.com/openshift/release/tree/master/ci-operator/config/konveyor/pelorus\n      \n## builds\n",
+                    "mode":"markdown"
+                },
+                "pluginVersion":"8.4.6",
+                "targets":[
+                    {
+                        "queryType":"randomWalk",
+                        "refId":"A"
+                    }
+                ],
+                "title":"OADP CI Home",
+                "type":"text"
+            }
+        ],
+        "schemaVersion":35,
+        "style":"dark",
+        "tags":[],
+        "templating":{
+            "list":[]
+        },
+        "time":{
+            "from":"now-6h",
+            "to":"now"
+        },
+        "timepicker":{},
+        "timezone":"",
+        "title":"Pelorus Home",
+        "weekStart":""
+    }
+}
