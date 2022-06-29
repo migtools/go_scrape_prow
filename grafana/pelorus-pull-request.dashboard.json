@@ -100,7 +100,7 @@
                     "x":0,
                     "y":0
                 },
-                "id":38,
+                "id":6,
                 "links":[],
                 "options":{
                     "legend":{
@@ -149,7 +149,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*oadp.*4.10.*unit.*/  AND \"state_int\" = 0 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*pelorus-master-4.10.*unit.*/  AND \"state_int\" = 0 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -192,7 +192,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*oadp.*4.10.*unit*/  AND \"state_int\" = 2 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*pelorus-master-4.10.*unit*/  AND \"state_int\" = 2 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -235,7 +235,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*oadp.*4.10.*unit.*/  AND \"state_int\" = 3 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*pelorus-master-4.10.*unit.*/  AND \"state_int\" = 3 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"D",
@@ -279,7 +279,7 @@
                         "hide":false,
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*oadp.*4.10.*unit.*/  AND \"state_int\" = 4 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*.*pelorus-master-4.10.*unit.*/  AND \"state_int\" = 4 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
@@ -301,7 +301,7 @@
                         "tags":[]
                     }
                 ],
-                "title":"OpenShift 4.10 Unit Test",
+                "title":"OpenShift 4.10 Pelorus Unit Test",
                 "type":"piechart"
             },
             {
@@ -394,7 +394,7 @@
                     "x":6,
                     "y":0
                 },
-                "id":39,
+                "id":8,
                 "links":[],
                 "options":{
                     "legend":{
@@ -445,7 +445,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^pull.*oadp.*4.10.*e2e.*/  AND \"state_int\" = 0 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^pull.*pelorus.*4.10.*e2e.*/  AND \"state_int\" = 0 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -488,7 +488,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^pull.*oadp.*4.10.*e2e.*/  AND \"state_int\" = 2 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^pull.*pelorus.*4.10.*e2e.*/  AND \"state_int\" = 2 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -532,7 +532,7 @@
                         "hide":false,
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^pull.*oadp.*4.10.*e2e.*/  AND \"state_int\" = 3 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^pull.*pelorus.*4.10.*e2e.*/  AND \"state_int\" = 3 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"D",
@@ -576,7 +576,7 @@
                         "hide":false,
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^pull.*oadp.*4.10.*e2e.*/  AND \"state_int\" = 4 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^pull.*pelorus.*4.10.*e2e.*/  AND \"state_int\" = 4 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
@@ -598,7 +598,7 @@
                         "tags":[]
                     }
                 ],
-                "title":"OpenShift 4.10 E2E Test",
+                "title":"OpenShift 4.10 Pelorus E2E Test",
                 "type":"piechart"
             },
             {
@@ -649,7 +649,7 @@
                     "x":12,
                     "y":0
                 },
-                "id":15,
+                "id":4,
                 "options":{
                     "footer":{
                         "fields":"",
@@ -689,7 +689,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"autogen",
-                        "query":"SELECT count(\"state\") FROM \"autogen\".\"build\" WHERE (\"job_name\" =~ /^pull.*oadp.*/) AND $timeFilter GROUP BY \"job_name\"\n",
+                        "query":"SELECT count(\"state\") FROM \"autogen\".\"build\" WHERE (\"job_name\" =~ /^pull.*pelorus.*/) AND $timeFilter GROUP BY \"job_name\"\n",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -777,6 +777,21 @@
                                     }
                                 }
                             ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"FLAKE"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"orange",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
                         }
                     ]
                 },
@@ -786,7 +801,7 @@
                     "x":0,
                     "y":10
                 },
-                "id":30,
+                "id":11,
                 "links":[],
                 "options":{
                     "legend":{
@@ -835,7 +850,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*oadp.*4.9.*unit.*/  AND \"state_int\" = 0 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*pelorus-master-4.9.*unit.*/  AND \"state_int\" = 0 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -878,7 +893,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*oadp..*4.9.*unit*/  AND \"state_int\" = 2 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*pelorus-master-4.9.*unit*/  AND \"state_int\" = 2 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -921,7 +936,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*oadp..*4.9.*unit.*/  AND \"state_int\" = 3 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*pelorus-master-4.9.*unit.*/  AND \"state_int\" = 3 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"D",
@@ -962,9 +977,10 @@
                                 "type":"fill"
                             }
                         ],
+                        "hide":false,
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*oadp..*4.9.*unit.*/  AND \"state_int\" = 4 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*.*pelorus-master-4.9.*unit.*/  AND \"state_int\" = 4 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
@@ -986,7 +1002,7 @@
                         "tags":[]
                     }
                 ],
-                "title":"OpenShift 4.9 Unit Test",
+                "title":"OpenShift 4.9 Pelorus Unit Test",
                 "type":"piechart"
             },
             {
@@ -1079,7 +1095,7 @@
                     "x":6,
                     "y":10
                 },
-                "id":40,
+                "id":12,
                 "links":[],
                 "options":{
                     "legend":{
@@ -1130,7 +1146,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^pull.*oadp..*4.9.*e2e.*/  AND \"state_int\" = 0 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^pull.*pelorus.*4.9.*e2e.*/  AND \"state_int\" = 0 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -1173,7 +1189,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^pull.*oadp..*4.9.*e2e.*/  AND \"state_int\" = 2 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^pull.*pelorus.*4.9.*e2e.*/  AND \"state_int\" = 2 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -1217,7 +1233,7 @@
                         "hide":false,
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^pull.*oadp..*4.9.*e2e.*/  AND \"state_int\" = 3 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^pull.*pelorus.*4.9.*e2e.*/  AND \"state_int\" = 3 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"D",
@@ -1261,7 +1277,7 @@
                         "hide":false,
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^pull.*oadp..*4.9.*e2e.*/  AND \"state_int\" = 4 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^pull.*pelorus.*4.9.*e2e.*/  AND \"state_int\" = 4 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
@@ -1283,7 +1299,7 @@
                         "tags":[]
                     }
                 ],
-                "title":"OpenShift 4.9 E2E Test",
+                "title":"OpenShift 4.9 Pelorus E2E Test",
                 "type":"piechart"
             },
             {
@@ -1389,13 +1405,13 @@
                     ]
                 },
                 "gridPos":{
-                    "h":27,
-                    "w":12,
+                    "h":17,
+                    "w":11,
                     "x":12,
                     "y":13
                 },
                 "hideTimeOverride":false,
-                "id":29,
+                "id":10,
                 "options":{
                     "footer":{
                         "fields":"",
@@ -1435,7 +1451,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"autogen",
-                        "query":"select count(\"state_int\") as \"passed\"  FROM \"build\" WHERE (\"job_name\" =~ /^pull.*.oadp.*e2e.*/ and \"state_int\" = 0 ) GROUP BY pull_request\n",
+                        "query":"select count(\"state_int\") as \"passed\"  FROM \"build\" WHERE (\"job_name\" =~ /^pull.*pelorus-master.*.e2e.*/ and \"state_int\" = 0 ) GROUP BY pull_request\n",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -1477,7 +1493,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"autogen",
-                        "query":"select count(\"state_int\") as \"failed\"  FROM \"build\" WHERE (\"job_name\" =~ /^pull.*.oadp.*e2e.*/ and \"state_int\" = 2) GROUP BY pull_request",
+                        "query":"select count(\"state_int\") as \"failed\"  FROM \"build\" WHERE (\"job_name\" =~ /^pull.*pelorus-master.*.e2e.*/ and \"state_int\" = 2) GROUP BY pull_request",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -1519,7 +1535,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"autogen",
-                        "query":"select count(\"state_int\") as \"aborted\"  FROM \"build\" WHERE (\"job_name\" =~ /^pull.*.oadp.*e2e.*/ and \"state_int\" = 3) GROUP BY pull_request",
+                        "query":"select count(\"state_int\") as \"aborted\"  FROM \"build\" WHERE (\"job_name\" =~ /^pull.*pelorus-master.*.e2e.*/ and \"state_int\" = 3) GROUP BY pull_request",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
@@ -1562,7 +1578,7 @@
                         "hide":false,
                         "orderByTime":"ASC",
                         "policy":"autogen",
-                        "query":"select count(\"state_int\") as \"flake\"  FROM \"build\" WHERE (\"job_name\" =~ /^pull.*oadp.*e2e.*/ and \"state_int\" = 4) GROUP BY pull_request",
+                        "query":"select count(\"state_int\") as \"flake\"  FROM \"build\" WHERE (\"job_name\" =~ /^pull.*pelorus-master.*.e2e.*/ and \"state_int\" = 4) GROUP BY pull_request",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"D",
@@ -1584,7 +1600,7 @@
                         "tags":[]
                     }
                 ],
-                "title":"End to End ( E2E ) Pass / Fail Rate ",
+                "title":"Pelorus End to End ( E2E ) Pass / Fail Rate ",
                 "transformations":[
                     {
                         "id":"organize",
@@ -1661,6 +1677,21 @@
                                     }
                                 }
                             ]
+                        },
+                        {
+                            "matcher":{
+                                "id":"byName",
+                                "options":"FLAKE"
+                            },
+                            "properties":[
+                                {
+                                    "id":"color",
+                                    "value":{
+                                        "fixedColor":"orange",
+                                        "mode":"fixed"
+                                    }
+                                }
+                            ]
                         }
                     ]
                 },
@@ -1670,7 +1701,7 @@
                     "x":0,
                     "y":20
                 },
-                "id":25,
+                "id":13,
                 "links":[],
                 "options":{
                     "legend":{
@@ -1719,7 +1750,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*oadp..*4.8.*unit.*/  AND \"state_int\" = 0 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*pelorus-master-4.8.*unit.*/  AND \"state_int\" = 0 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -1762,7 +1793,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*oadp.*4.8.*unit*/  AND \"state_int\" = 2 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*pelorus-master-4.8.*unit*/  AND \"state_int\" = 2 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -1805,7 +1836,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*oadp..*4.8.*unit.*/  AND \"state_int\" = 3 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*pelorus-master-4.8.*unit.*/  AND \"state_int\" = 3 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"D",
@@ -1846,9 +1877,10 @@
                                 "type":"fill"
                             }
                         ],
+                        "hide":false,
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*oadp..*4.8.*unit.*/  AND \"state_int\" = 4 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*pelorus-master-4.8.*unit.*/  AND \"state_int\" = 4 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
@@ -1870,7 +1902,7 @@
                         "tags":[]
                     }
                 ],
-                "title":"OpenShift 4.8 Unit Test",
+                "title":"OpenShift 4.8 Pelorus Unit Test",
                 "type":"piechart"
             },
             {
@@ -1963,7 +1995,7 @@
                     "x":6,
                     "y":20
                 },
-                "id":42,
+                "id":14,
                 "links":[],
                 "options":{
                     "legend":{
@@ -2014,7 +2046,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^pull.*oadp.*4.8.*e2e.*/  AND \"state_int\" = 0 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^pull.*pelorus.*4.8.*e2e.*/  AND \"state_int\" = 0 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -2057,7 +2089,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^pull.*oadp.*4.8.*e2e.*/  AND \"state_int\" = 2 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^pull.*pelorus.*4.8.*e2e.*/  AND \"state_int\" = 2 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -2101,7 +2133,7 @@
                         "hide":false,
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^pull.*oadp.*4.8.*e2e.*/  AND \"state_int\" = 3 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^pull.*pelorus.*4.8.*e2e.*/  AND \"state_int\" = 3 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"D",
@@ -2145,7 +2177,7 @@
                         "hide":false,
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^pull.*oadp.*4.8.*e2e.*/  AND \"state_int\" = 4 ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^pull.*pelorus.*4.8.*e2e.*/  AND \"state_int\" = 4 ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
@@ -2167,568 +2199,7 @@
                         "tags":[]
                     }
                 ],
-                "title":"OpenShift 4.8 E2E Test",
-                "type":"piechart"
-            },
-            {
-                "datasource":{
-                    "type":"influxdb",
-                    "uid":"1vm2wY8nk"
-                },
-                "fieldConfig":{
-                    "defaults":{
-                        "color":{
-                            "mode":"palette-classic"
-                        },
-                        "custom":{
-                            "hideFrom":{
-                                "legend":false,
-                                "tooltip":false,
-                                "viz":false
-                            }
-                        },
-                        "decimals":0,
-                        "mappings":[],
-                        "unit":"short"
-                    },
-                    "overrides":[
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"SUCCESS"
-                            },
-                            "properties":[
-                                {
-                                    "id":"color",
-                                    "value":{
-                                        "fixedColor":"green",
-                                        "mode":"fixed"
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"ABORTED"
-                            },
-                            "properties":[
-                                {
-                                    "id":"color",
-                                    "value":{
-                                        "fixedColor":"purple",
-                                        "mode":"fixed"
-                                    }
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "gridPos":{
-                    "h":10,
-                    "w":6,
-                    "x":0,
-                    "y":30
-                },
-                "id":32,
-                "links":[],
-                "options":{
-                    "legend":{
-                        "calcs":[],
-                        "displayMode":"table",
-                        "placement":"bottom",
-                        "values":[
-                            "value",
-                            "percent"
-                        ]
-                    },
-                    "pieType":"pie",
-                    "reduceOptions":{
-                        "calcs":[
-                            "lastNotNull"
-                        ],
-                        "fields":"",
-                        "values":false
-                    },
-                    "tooltip":{
-                        "mode":"single",
-                        "sort":"none"
-                    }
-                },
-                "pluginVersion":"7.3.6",
-                "targets":[
-                    {
-                        "alias":"SUCCESS",
-                        "datasource":{
-                            "type":"influxdb",
-                            "uid":"1vm2wY8nk"
-                        },
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "orderByTime":"ASC",
-                        "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /.*oadp.*4.7.*unit.*/  AND \"state_int\" = 0 ) AND $timeFilter ",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"A",
-                        "resultFormat":"time_series",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    },
-                    {
-                        "alias":"FAILURE",
-                        "datasource":{
-                            "type":"influxdb",
-                            "uid":"1vm2wY8nk"
-                        },
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "orderByTime":"ASC",
-                        "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*oadp.*4.7.*unit*/  AND \"state_int\" = 2 ) AND $timeFilter ",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"B",
-                        "resultFormat":"time_series",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    },
-                    {
-                        "alias":"ABORTED",
-                        "datasource":{
-                            "type":"influxdb",
-                            "uid":"1vm2wY8nk"
-                        },
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "orderByTime":"ASC",
-                        "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*oadp.*4.7.*unit.*/  AND \"state_int\" = 3 ) AND $timeFilter ",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"D",
-                        "resultFormat":"time_series",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    },
-                    {
-                        "alias":"FLAKE",
-                        "datasource":{
-                            "type":"influxdb",
-                            "uid":"1vm2wY8nk"
-                        },
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "orderByTime":"ASC",
-                        "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /.*oadp.*4.7.*unit.*/  AND \"state_int\" = 4 ) AND $timeFilter ",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"C",
-                        "resultFormat":"time_series",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    }
-                ],
-                "title":"OpenShift 4.7 Unit Test",
-                "type":"piechart"
-            },
-            {
-                "datasource":{
-                    "type":"influxdb",
-                    "uid":"1vm2wY8nk"
-                },
-                "description":"",
-                "fieldConfig":{
-                    "defaults":{
-                        "color":{
-                            "mode":"palette-classic"
-                        },
-                        "custom":{
-                            "hideFrom":{
-                                "legend":false,
-                                "tooltip":false,
-                                "viz":false
-                            }
-                        },
-                        "decimals":0,
-                        "mappings":[],
-                        "unit":"short"
-                    },
-                    "overrides":[
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"SUCCESS"
-                            },
-                            "properties":[
-                                {
-                                    "id":"color",
-                                    "value":{
-                                        "fixedColor":"green",
-                                        "mode":"fixed"
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"FAILURE"
-                            },
-                            "properties":[
-                                {
-                                    "id":"color",
-                                    "value":{
-                                        "fixedColor":"red",
-                                        "mode":"fixed"
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"ABORTED"
-                            },
-                            "properties":[
-                                {
-                                    "id":"color",
-                                    "value":{
-                                        "fixedColor":"purple",
-                                        "mode":"fixed"
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"FLAKE"
-                            },
-                            "properties":[
-                                {
-                                    "id":"color",
-                                    "value":{
-                                        "fixedColor":"orange",
-                                        "mode":"fixed"
-                                    }
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "gridPos":{
-                    "h":10,
-                    "w":6,
-                    "x":6,
-                    "y":30
-                },
-                "id":41,
-                "links":[],
-                "options":{
-                    "legend":{
-                        "calcs":[],
-                        "displayMode":"table",
-                        "placement":"bottom",
-                        "sortBy":"Percent",
-                        "sortDesc":true,
-                        "values":[
-                            "value",
-                            "percent"
-                        ]
-                    },
-                    "pieType":"pie",
-                    "reduceOptions":{
-                        "calcs":[
-                            "lastNotNull"
-                        ],
-                        "fields":"",
-                        "values":false
-                    },
-                    "tooltip":{
-                        "mode":"single",
-                        "sort":"none"
-                    }
-                },
-                "pluginVersion":"7.3.6",
-                "targets":[
-                    {
-                        "alias":"SUCCESS",
-                        "datasource":{
-                            "type":"influxdb",
-                            "uid":"1vm2wY8nk"
-                        },
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "orderByTime":"ASC",
-                        "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^pull.*oadp.*4.7.*e2e.*/  AND \"state_int\" = 0 ) AND $timeFilter ",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"A",
-                        "resultFormat":"time_series",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    },
-                    {
-                        "alias":"FAILURE",
-                        "datasource":{
-                            "type":"influxdb",
-                            "uid":"1vm2wY8nk"
-                        },
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "orderByTime":"ASC",
-                        "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^pull.*oadp.*4.7.*e2e.*/   AND \"state_int\" = 2 ) AND $timeFilter ",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"B",
-                        "resultFormat":"time_series",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    },
-                    {
-                        "alias":"ABORTED",
-                        "datasource":{
-                            "type":"influxdb",
-                            "uid":"1vm2wY8nk"
-                        },
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "hide":false,
-                        "orderByTime":"ASC",
-                        "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^pull.*oadp.*4.7.*e2e.*/   AND \"state_int\" = 3 ) AND $timeFilter ",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"D",
-                        "resultFormat":"time_series",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    },
-                    {
-                        "alias":"FLAKE",
-                        "datasource":{
-                            "type":"influxdb",
-                            "uid":"1vm2wY8nk"
-                        },
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "hide":false,
-                        "orderByTime":"ASC",
-                        "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^pull.*oadp.*4.7.*e2e.*/   AND \"state_int\" = 4 ) AND $timeFilter ",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"C",
-                        "resultFormat":"time_series",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    }
-                ],
-                "title":"OpenShift 4.7 E2E Test",
+                "title":"OpenShift 4.8 Pelorus E2E Test",
                 "type":"piechart"
             },
             {
@@ -2963,9 +2434,9 @@
                     "h":12,
                     "w":24,
                     "x":0,
-                    "y":40
+                    "y":30
                 },
-                "id":35,
+                "id":16,
                 "options":{
                     "footer":{
                         "fields":"",
@@ -3005,7 +2476,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT \"job_name\", \"state_int\",  \"pull_request\", \"duration\",   \"build_id\", \"log\" FROM \"build\" WHERE (\"job_name\" =~ /^pull.*oadp.*unit.*/  ) AND $timeFilter ",
+                        "query":"SELECT \"job_name\", \"state_int\",  \"pull_request\", \"duration\",   \"build_id\", \"log\" FROM \"build\" WHERE (\"job_name\" =~ /^pull.*pelorus-master.*unit.*/  ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -3027,7 +2498,7 @@
                         "tags":[]
                     }
                 ],
-                "title":"OADP - Upstream - unit",
+                "title":"Pelorus - Upstream - unit",
                 "transformations":[
                     {
                         "id":"organize",
@@ -3276,9 +2747,9 @@
                     "h":12,
                     "w":24,
                     "x":0,
-                    "y":52
+                    "y":42
                 },
-                "id":36,
+                "id":18,
                 "options":{
                     "footer":{
                         "fields":"",
@@ -3318,7 +2789,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT \"job_name\", \"state_int\",  \"pull_request\", \"duration\",   \"build_id\", \"log\" FROM \"build\" WHERE (\"job_name\" =~ /^pull.*oadp.*e2e.*/  ) AND $timeFilter",
+                        "query":"SELECT \"job_name\", \"state_int\",  \"pull_request\", \"duration\",   \"build_id\", \"log\" FROM \"build\" WHERE (\"job_name\" =~ /^pull.*pelorus-master.*e2e.*/  ) AND $timeFilter",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -3340,320 +2811,7 @@
                         "tags":[]
                     }
                 ],
-                "title":"OADP - Upstream - e2e",
-                "transformations":[
-                    {
-                        "id":"organize",
-                        "options":{
-                            "excludeByName":{
-                                "log":false
-                            },
-                            "indexByName":{},
-                            "renameByName":{
-                                "log":""
-                            }
-                        }
-                    }
-                ],
-                "type":"table"
-            },
-            {
-                "datasource":{
-                    "type":"influxdb",
-                    "uid":"1vm2wY8nk"
-                },
-                "fieldConfig":{
-                    "defaults":{
-                        "custom":{
-                            "align":"auto",
-                            "displayMode":"auto",
-                            "filterable":true
-                        },
-                        "mappings":[
-                            {
-                                "options":{
-                                    "":{
-                                        "text":""
-                                    }
-                                },
-                                "type":"value"
-                            }
-                        ],
-                        "thresholds":{
-                            "mode":"absolute",
-                            "steps":[
-                                {
-                                    "color":"green",
-                                    "value":null
-                                },
-                                {
-                                    "color":"green",
-                                    "value":0
-                                },
-                                {
-                                    "color":"yellow",
-                                    "value":1
-                                },
-                                {
-                                    "color":"red",
-                                    "value":2
-                                },
-                                {
-                                    "color":"purple",
-                                    "value":3
-                                },
-                                {
-                                    "color":"orange",
-                                    "value":4
-                                },
-                                {
-                                    "color":"#959187",
-                                    "value":10
-                                }
-                            ]
-                        }
-                    },
-                    "overrides":[
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"job_name"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":472
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"build_id"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":192
-                                },
-                                {
-                                    "id":"unit",
-                                    "value":"string"
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"duration"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":135
-                                },
-                                {
-                                    "id":"unit",
-                                    "value":"dthms"
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"job_name"
-                            },
-                            "properties":[
-                                {
-                                    "id":"links",
-                                    "value":[
-                                        {
-                                            "targetBlank":true,
-                                            "title":"link to logs",
-                                            "url":"${__data.fields.log::raw::raw}"
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"state_int"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.displayMode",
-                                    "value":"color-background"
-                                },
-                                {
-                                    "id":"mappings",
-                                    "value":[
-                                        {
-                                            "options":{
-                                                "0":{
-                                                    "index":4,
-                                                    "text":"success"
-                                                },
-                                                "1":{
-                                                    "index":3,
-                                                    "text":"pending"
-                                                },
-                                                "10":{
-                                                    "index":0,
-                                                    "text":"unknown"
-                                                },
-                                                "2":{
-                                                    "index":2,
-                                                    "text":"failure"
-                                                },
-                                                "3":{
-                                                    "index":1,
-                                                    "text":"aborted"
-                                                },
-                                                "4":{
-                                                    "index":5,
-                                                    "text":"flake"
-                                                }
-                                            },
-                                            "type":"value"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "id":"displayName",
-                                    "value":"state"
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"log"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":228
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"Time"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":159
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"pull_request"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":365
-                                },
-                                {
-                                    "id":"links",
-                                    "value":[
-                                        {
-                                            "title":"Pull Request URL",
-                                            "url":"${__data.fields.pull_request::raw}"
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"state"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":177
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "gridPos":{
-                    "h":12,
-                    "w":24,
-                    "x":0,
-                    "y":64
-                },
-                "id":37,
-                "options":{
-                    "footer":{
-                        "fields":"",
-                        "reducer":[
-                            "sum"
-                        ],
-                        "show":false
-                    },
-                    "showHeader":true,
-                    "sortBy":[
-                        {
-                            "desc":true,
-                            "displayName":"Time"
-                        }
-                    ]
-                },
-                "pluginVersion":"8.4.6",
-                "targets":[
-                    {
-                        "datasource":{
-                            "type":"influxdb",
-                            "uid":"1vm2wY8nk"
-                        },
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "orderByTime":"ASC",
-                        "policy":"default",
-                        "query":"SELECT \"job_name\", \"state_int\",  \"pull_request\", \"duration\",   \"build_id\", \"log\" FROM \"build\" WHERE (\"job_name\" =~ /.*pull.*/  ) AND $timeFilter ",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"A",
-                        "resultFormat":"table",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    }
-                ],
-                "title":"OADP - Upstream - All Pull Request Jobs",
+                "title":"Pelorus - Upstream - e2e",
                 "transformations":[
                     {
                         "id":"organize",
@@ -3671,33 +2829,19 @@
                 "type":"table"
             }
         ],
-        "refresh":false,
         "schemaVersion":35,
         "style":"dark",
         "tags":[],
         "templating":{
-            "list":[
-                {
-                    "datasource":{
-                        "type":"influxdb",
-                        "uid":"1vm2wY8nk"
-                    },
-                    "filters":[],
-                    "hide":0,
-                    "label":"filter",
-                    "name":"influxdb_filter",
-                    "skipUrlSync":false,
-                    "type":"adhoc"
-                }
-            ]
+            "list":[]
         },
         "time":{
-            "from":"now-2d",
+            "from":"now-6h",
             "to":"now"
         },
         "timepicker":{},
         "timezone":"",
-        "title":"OADP Pull Request",
+        "title":"Pelorus Pull Request",
         "weekStart":""
     }
 }
