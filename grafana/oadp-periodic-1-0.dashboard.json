@@ -35,7 +35,7 @@
                 },
                 "id":39,
                 "options":{
-                    "content":"# OADP Periodic CI Dashboard - master ( STILL WIP, validating data)\n\n## Useful links\n* Search for errors:  https://search.ci.openshift.org/  \n* Test Grid: https://testgrid.k8s.io/redhat\n* OADP CI Config: https://github.com/openshift/release/tree/master/ci-operator/config/openshift/oadp-operator\n      \n## builds\n* upstream: https://app.travis-ci.com/github/openshift/oadp-operator\n* downstream: https://jenkins-cpaas-oadp.apps.cpaas-poc.r6c9.p1.openshiftapps.com/\n* internal cvp: https://jenkins-cvp-5d6ccd93bed8bd3809ddcb5d.apps.ocp-c1.prod.psi.redhat.com/view/Production%20Pipeline/job/cvp-product-test/\n\n## Legend\n* success: all oadp tests pass\n* failure: oadp tests failed OR infra failed\n* aborted: the job was canceled ( new patch submitted )\n* flake: the job failed but failed in a way that is UNRELATED to OADP.",
+                    "content":"# OADP Periodic CI Dashboard - 1.0 ( STILL WIP, validating data)\n\n## Useful links\n* Search for errors:  https://search.ci.openshift.org/  \n* Test Grid: https://testgrid.k8s.io/redhat\n* OADP CI Config: https://github.com/openshift/release/tree/master/ci-operator/config/openshift/oadp-operator\n      \n## builds\n* upstream: https://app.travis-ci.com/github/openshift/oadp-operator\n* downstream: https://jenkins-cpaas-oadp.apps.cpaas-poc.r6c9.p1.openshiftapps.com/\n* internal cvp: https://jenkins-cvp-5d6ccd93bed8bd3809ddcb5d.apps.ocp-c1.prod.psi.redhat.com/view/Production%20Pipeline/job/cvp-product-test/\n\n## Legend\n* success: all oadp tests pass\n* failure: oadp tests failed OR infra failed\n* aborted: the job was canceled ( new patch submitted )\n* flake: the job failed but failed in a way that is UNRELATED to OADP.",
                     "mode":"markdown"
                 },
                 "pluginVersion":"8.4.6",
@@ -151,300 +151,6 @@
                     "x":0,
                     "y":12
                 },
-                "id":66,
-                "links":[],
-                "options":{
-                    "legend":{
-                        "calcs":[],
-                        "displayMode":"table",
-                        "placement":"bottom",
-                        "values":[
-                            "value",
-                            "percent"
-                        ]
-                    },
-                    "pieType":"pie",
-                    "reduceOptions":{
-                        "calcs":[
-                            "lastNotNull"
-                        ],
-                        "fields":"",
-                        "values":false
-                    },
-                    "tooltip":{
-                        "mode":"single",
-                        "sort":"none"
-                    }
-                },
-                "pluginVersion":"7.3.6",
-                "targets":[
-                    {
-                        "alias":"SUCCESS",
-                        "datasource":{
-                            "type":"influxdb",
-                            "uid":"1vm2wY8nk"
-                        },
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "orderByTime":"ASC",
-                        "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*master.*4.10.*-e2e.*/   AND \"state\" = 'success' ) AND $timeFilter ",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"A",
-                        "resultFormat":"time_series",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    },
-                    {
-                        "alias":"FAILURE",
-                        "datasource":{
-                            "type":"influxdb",
-                            "uid":"1vm2wY8nk"
-                        },
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "orderByTime":"ASC",
-                        "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*master.*4.10.*-e2e.*/   AND \"state\" = 'failure' ) AND $timeFilter ",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"B",
-                        "resultFormat":"time_series",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    },
-                    {
-                        "alias":"ABORTED",
-                        "datasource":{
-                            "type":"influxdb",
-                            "uid":"1vm2wY8nk"
-                        },
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "orderByTime":"ASC",
-                        "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*master.*4.10.*-e2e.*/   AND \"state\" = 'aborted' ) AND $timeFilter ",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"C",
-                        "resultFormat":"time_series",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    },
-                    {
-                        "alias":"FLAKE",
-                        "datasource":{
-                            "type":"influxdb",
-                            "uid":"1vm2wY8nk"
-                        },
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "hide":false,
-                        "orderByTime":"ASC",
-                        "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*master.*4.10.*-e2e.*/  AND \"state\" = 'flake' ) AND $timeFilter",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"D",
-                        "resultFormat":"time_series",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    }
-                ],
-                "title":"OpenShift 4.10 Pass / Fail",
-                "type":"piechart"
-            },
-            {
-                "datasource":{
-                    "type":"influxdb",
-                    "uid":"1vm2wY8nk"
-                },
-                "fieldConfig":{
-                    "defaults":{
-                        "color":{
-                            "mode":"palette-classic"
-                        },
-                        "custom":{
-                            "hideFrom":{
-                                "legend":false,
-                                "tooltip":false,
-                                "viz":false
-                            }
-                        },
-                        "decimals":0,
-                        "mappings":[],
-                        "unit":"short"
-                    },
-                    "overrides":[
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"SUCCESS"
-                            },
-                            "properties":[
-                                {
-                                    "id":"color",
-                                    "value":{
-                                        "fixedColor":"green",
-                                        "mode":"fixed"
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"FAILURE"
-                            },
-                            "properties":[
-                                {
-                                    "id":"color",
-                                    "value":{
-                                        "fixedColor":"red",
-                                        "mode":"fixed"
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"ABORTED"
-                            },
-                            "properties":[
-                                {
-                                    "id":"color",
-                                    "value":{
-                                        "fixedColor":"purple",
-                                        "mode":"fixed"
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"FLAKE"
-                            },
-                            "properties":[
-                                {
-                                    "id":"color",
-                                    "value":{
-                                        "fixedColor":"orange",
-                                        "mode":"fixed"
-                                    }
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "gridPos":{
-                    "h":11,
-                    "w":6,
-                    "x":6,
-                    "y":12
-                },
                 "id":16,
                 "links":[],
                 "options":{
@@ -494,7 +200,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*master.*4.9.*-e2e.*/   AND \"state\" = 'success' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*1.0.*4.9.*-e2e.*/   AND \"state\" = 'success' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -537,7 +243,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*master.*4.9.*-e2e.*/   AND \"state\" = 'failure' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*1.0.*4.9.*-e2e.*/   AND \"state\" = 'failure' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -580,7 +286,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*master.*4.9.*-e2e.*/   AND \"state\" = 'aborted' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*1.0.*4.9.*-e2e.*/   AND \"state\" = 'aborted' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
@@ -624,7 +330,7 @@
                         "hide":false,
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*master.*4.9.*-e2e.*/  AND \"state\" = 'flake' ) AND $timeFilter",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*1.0.*4.9.*-e2e.*/  AND \"state\" = 'flake' ) AND $timeFilter",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"D",
@@ -736,7 +442,7 @@
                 "gridPos":{
                     "h":11,
                     "w":6,
-                    "x":12,
+                    "x":6,
                     "y":12
                 },
                 "id":67,
@@ -788,7 +494,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*master.*4.8.*-e2e.*/   AND \"state\" = 'success' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*1.0.*4.8.*-e2e.*/   AND \"state\" = 'success' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -831,7 +537,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*master.*4.8.*-e2e.*/   AND \"state\" = 'failure' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*1.0.*4.8.*-e2e.*/   AND \"state\" = 'failure' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -874,7 +580,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*master.*4.8.*-e2e.*/   AND \"state\" = 'aborted' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*1.0.*4.8.*-e2e.*/   AND \"state\" = 'aborted' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
@@ -918,7 +624,7 @@
                         "hide":false,
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*master.*4.8.*-e2e.*/  AND \"state\" = 'flake' ) AND $timeFilter",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*1.0.*4.8.*-e2e.*/  AND \"state\" = 'flake' ) AND $timeFilter",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"D",
@@ -1030,7 +736,7 @@
                 "gridPos":{
                     "h":11,
                     "w":6,
-                    "x":18,
+                    "x":12,
                     "y":12
                 },
                 "id":68,
@@ -1082,7 +788,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*master.*4.7.*-e2e.*/   AND \"state\" = 'success' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*1.0.*4.7.*-e2e.*/   AND \"state\" = 'success' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -1125,7 +831,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*master.*4.7.*-e2e.*/   AND \"state\" = 'failure' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*1.0.*4.7.*-e2e.*/   AND \"state\" = 'failure' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -1168,7 +874,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*master.*4.7.*-e2e.*/   AND \"state\" = 'aborted' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*1.0.*4.7.*-e2e.*/   AND \"state\" = 'aborted' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
@@ -1212,7 +918,7 @@
                         "hide":false,
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*master.*4.7.*-e2e.*/  AND \"state\" = 'flake' ) AND $timeFilter",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*1.0.*4.7.*-e2e.*/  AND \"state\" = 'flake' ) AND $timeFilter",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"D",
@@ -1341,1719 +1047,6 @@
                     "x":0,
                     "y":24
                 },
-                "id":69,
-                "links":[],
-                "options":{
-                    "legend":{
-                        "calcs":[],
-                        "displayMode":"table",
-                        "placement":"bottom",
-                        "values":[
-                            "value",
-                            "percent"
-                        ]
-                    },
-                    "pieType":"pie",
-                    "reduceOptions":{
-                        "calcs":[
-                            "lastNotNull"
-                        ],
-                        "fields":"",
-                        "values":false
-                    },
-                    "tooltip":{
-                        "mode":"single",
-                        "sort":"none"
-                    }
-                },
-                "pluginVersion":"7.3.6",
-                "targets":[
-                    {
-                        "alias":"SUCCESS",
-                        "datasource":{
-                            "type":"influxdb",
-                            "uid":"1vm2wY8nk"
-                        },
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "orderByTime":"ASC",
-                        "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*master.*4.10.*aws.*/  AND \"state\" = 'success' ) AND $timeFilter ",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"A",
-                        "resultFormat":"time_series",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    },
-                    {
-                        "alias":"FAILURE",
-                        "datasource":{
-                            "type":"influxdb",
-                            "uid":"1vm2wY8nk"
-                        },
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "orderByTime":"ASC",
-                        "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*master.*4.10.*aws.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"B",
-                        "resultFormat":"time_series",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    },
-                    {
-                        "alias":"ABORTED",
-                        "datasource":{
-                            "type":"influxdb",
-                            "uid":"1vm2wY8nk"
-                        },
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "orderByTime":"ASC",
-                        "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*master.*4.10.*aws.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"C",
-                        "resultFormat":"time_series",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    },
-                    {
-                        "alias":"FLAKE",
-                        "datasource":{
-                            "type":"influxdb",
-                            "uid":"1vm2wY8nk"
-                        },
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "hide":false,
-                        "orderByTime":"ASC",
-                        "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*master.*4.10.*aws.*/  AND \"state\" = 'flake' ) AND $timeFilter",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"D",
-                        "resultFormat":"time_series",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    }
-                ],
-                "title":"OpenShift 4.10 AWS",
-                "type":"piechart"
-            },
-            {
-                "datasource":{
-                    "type":"influxdb",
-                    "uid":"1vm2wY8nk"
-                },
-                "description":"",
-                "fieldConfig":{
-                    "defaults":{
-                        "color":{
-                            "mode":"palette-classic"
-                        },
-                        "custom":{
-                            "hideFrom":{
-                                "legend":false,
-                                "tooltip":false,
-                                "viz":false
-                            }
-                        },
-                        "decimals":0,
-                        "mappings":[],
-                        "unit":"short"
-                    },
-                    "overrides":[
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"SUCCESS"
-                            },
-                            "properties":[
-                                {
-                                    "id":"color",
-                                    "value":{
-                                        "fixedColor":"green",
-                                        "mode":"fixed"
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"FAILURE"
-                            },
-                            "properties":[
-                                {
-                                    "id":"color",
-                                    "value":{
-                                        "fixedColor":"red",
-                                        "mode":"fixed"
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"ABORTED"
-                            },
-                            "properties":[
-                                {
-                                    "id":"color",
-                                    "value":{
-                                        "fixedColor":"purple",
-                                        "mode":"fixed"
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"FLAKE"
-                            },
-                            "properties":[
-                                {
-                                    "id":"color",
-                                    "value":{
-                                        "fixedColor":"orange",
-                                        "mode":"fixed"
-                                    }
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "gridPos":{
-                    "h":9,
-                    "w":6,
-                    "x":6,
-                    "y":24
-                },
-                "id":70,
-                "links":[],
-                "options":{
-                    "legend":{
-                        "calcs":[],
-                        "displayMode":"table",
-                        "placement":"bottom",
-                        "values":[
-                            "value",
-                            "percent"
-                        ]
-                    },
-                    "pieType":"pie",
-                    "reduceOptions":{
-                        "calcs":[
-                            "lastNotNull"
-                        ],
-                        "fields":"",
-                        "values":false
-                    },
-                    "tooltip":{
-                        "mode":"single",
-                        "sort":"none"
-                    }
-                },
-                "pluginVersion":"7.3.6",
-                "targets":[
-                    {
-                        "alias":"SUCCESS",
-                        "datasource":{
-                            "type":"influxdb",
-                            "uid":"1vm2wY8nk"
-                        },
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "orderByTime":"ASC",
-                        "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*master.*4.10.*gcp.*/  AND \"state\" = 'success' ) AND $timeFilter ",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"A",
-                        "resultFormat":"time_series",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    },
-                    {
-                        "alias":"FAILURE",
-                        "datasource":{
-                            "type":"influxdb",
-                            "uid":"1vm2wY8nk"
-                        },
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "orderByTime":"ASC",
-                        "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*master.*4.10.*gcp.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"B",
-                        "resultFormat":"time_series",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    },
-                    {
-                        "alias":"ABORTED",
-                        "datasource":{
-                            "type":"influxdb",
-                            "uid":"1vm2wY8nk"
-                        },
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "orderByTime":"ASC",
-                        "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*master.*4.10.*gcp.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"C",
-                        "resultFormat":"time_series",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    },
-                    {
-                        "alias":"FLAKE",
-                        "datasource":{
-                            "type":"influxdb",
-                            "uid":"1vm2wY8nk"
-                        },
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "hide":false,
-                        "orderByTime":"ASC",
-                        "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*master.*4.10.*gcp.*/  AND \"state\" = 'flake' ) AND $timeFilter",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"D",
-                        "resultFormat":"time_series",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    }
-                ],
-                "title":"OpenShift 4.10 GCP",
-                "type":"piechart"
-            },
-            {
-                "datasource":{
-                    "type":"influxdb",
-                    "uid":"1vm2wY8nk"
-                },
-                "description":"",
-                "fieldConfig":{
-                    "defaults":{
-                        "color":{
-                            "mode":"palette-classic"
-                        },
-                        "custom":{
-                            "hideFrom":{
-                                "legend":false,
-                                "tooltip":false,
-                                "viz":false
-                            }
-                        },
-                        "decimals":0,
-                        "mappings":[],
-                        "unit":"short"
-                    },
-                    "overrides":[
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"SUCCESS"
-                            },
-                            "properties":[
-                                {
-                                    "id":"color",
-                                    "value":{
-                                        "fixedColor":"green",
-                                        "mode":"fixed"
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"FAILURE"
-                            },
-                            "properties":[
-                                {
-                                    "id":"color",
-                                    "value":{
-                                        "fixedColor":"red",
-                                        "mode":"fixed"
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"ABORTED"
-                            },
-                            "properties":[
-                                {
-                                    "id":"color",
-                                    "value":{
-                                        "fixedColor":"purple",
-                                        "mode":"fixed"
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"FLAKE"
-                            },
-                            "properties":[
-                                {
-                                    "id":"color",
-                                    "value":{
-                                        "fixedColor":"orange",
-                                        "mode":"fixed"
-                                    }
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "gridPos":{
-                    "h":9,
-                    "w":6,
-                    "x":12,
-                    "y":24
-                },
-                "id":71,
-                "links":[],
-                "options":{
-                    "legend":{
-                        "calcs":[],
-                        "displayMode":"table",
-                        "placement":"bottom",
-                        "values":[
-                            "value",
-                            "percent"
-                        ]
-                    },
-                    "pieType":"pie",
-                    "reduceOptions":{
-                        "calcs":[
-                            "lastNotNull"
-                        ],
-                        "fields":"",
-                        "values":false
-                    },
-                    "tooltip":{
-                        "mode":"single",
-                        "sort":"none"
-                    }
-                },
-                "pluginVersion":"7.3.6",
-                "targets":[
-                    {
-                        "alias":"SUCCESS",
-                        "datasource":{
-                            "type":"influxdb",
-                            "uid":"1vm2wY8nk"
-                        },
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "orderByTime":"ASC",
-                        "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*master.*4.10.*azure.*/  AND \"state\" = 'success' ) AND $timeFilter ",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"A",
-                        "resultFormat":"time_series",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    },
-                    {
-                        "alias":"FAILURE",
-                        "datasource":{
-                            "type":"influxdb",
-                            "uid":"1vm2wY8nk"
-                        },
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "orderByTime":"ASC",
-                        "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*master.*4.10.*azure.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"B",
-                        "resultFormat":"time_series",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    },
-                    {
-                        "alias":"ABORTED",
-                        "datasource":{
-                            "type":"influxdb",
-                            "uid":"1vm2wY8nk"
-                        },
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "orderByTime":"ASC",
-                        "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*master.*4.10.*azure.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"C",
-                        "resultFormat":"time_series",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    },
-                    {
-                        "alias":"FLAKE",
-                        "datasource":{
-                            "type":"influxdb",
-                            "uid":"1vm2wY8nk"
-                        },
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "hide":false,
-                        "orderByTime":"ASC",
-                        "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*master.*4.10.*azure.*/  AND \"state\" = 'flake' ) AND $timeFilter",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"D",
-                        "resultFormat":"time_series",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    }
-                ],
-                "title":"OpenShift 4.10 Azure",
-                "type":"piechart"
-            },
-            {
-                "datasource":{
-                    "type":"influxdb",
-                    "uid":"1vm2wY8nk"
-                },
-                "fieldConfig":{
-                    "defaults":{
-                        "custom":{
-                            "align":"auto",
-                            "displayMode":"auto",
-                            "filterable":true
-                        },
-                        "mappings":[
-                            {
-                                "options":{
-                                    "":{
-                                        "text":""
-                                    }
-                                },
-                                "type":"value"
-                            }
-                        ],
-                        "thresholds":{
-                            "mode":"absolute",
-                            "steps":[
-                                {
-                                    "color":"green",
-                                    "value":null
-                                },
-                                {
-                                    "color":"green",
-                                    "value":0
-                                },
-                                {
-                                    "color":"yellow",
-                                    "value":1
-                                },
-                                {
-                                    "color":"red",
-                                    "value":2
-                                },
-                                {
-                                    "color":"purple",
-                                    "value":3
-                                },
-                                {
-                                    "color":"orange",
-                                    "value":4
-                                },
-                                {
-                                    "color":"#959187",
-                                    "value":10
-                                }
-                            ]
-                        }
-                    },
-                    "overrides":[
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"job_name"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":753
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"build_id"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":188
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"duration"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":150
-                                },
-                                {
-                                    "id":"unit",
-                                    "value":"dthms"
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"job_name"
-                            },
-                            "properties":[
-                                {
-                                    "id":"links",
-                                    "value":[
-                                        {
-                                            "targetBlank":true,
-                                            "title":"link to logs",
-                                            "url":"${__data.fields.log::raw::raw}"
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"state_int"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.displayMode",
-                                    "value":"color-background"
-                                },
-                                {
-                                    "id":"mappings",
-                                    "value":[
-                                        {
-                                            "options":{
-                                                "0":{
-                                                    "index":4,
-                                                    "text":"success"
-                                                },
-                                                "1":{
-                                                    "index":3,
-                                                    "text":"pending"
-                                                },
-                                                "10":{
-                                                    "index":0,
-                                                    "text":"unknown"
-                                                },
-                                                "2":{
-                                                    "index":2,
-                                                    "text":"failure"
-                                                },
-                                                "3":{
-                                                    "index":1,
-                                                    "text":"aborted"
-                                                },
-                                                "4":{
-                                                    "index":5,
-                                                    "text":"flake"
-                                                }
-                                            },
-                                            "type":"value"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "id":"displayName",
-                                    "value":"state"
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"log"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":1
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"Time"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":159
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "gridPos":{
-                    "h":6,
-                    "w":24,
-                    "x":0,
-                    "y":33
-                },
-                "id":63,
-                "options":{
-                    "footer":{
-                        "fields":"",
-                        "reducer":[
-                            "sum"
-                        ],
-                        "show":false
-                    },
-                    "showHeader":true,
-                    "sortBy":[
-                        {
-                            "desc":true,
-                            "displayName":"Time"
-                        }
-                    ]
-                },
-                "pluginVersion":"8.4.6",
-                "targets":[
-                    {
-                        "datasource":{
-                            "type":"influxdb",
-                            "uid":"1vm2wY8nk"
-                        },
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "orderByTime":"ASC",
-                        "policy":"default",
-                        "query":"SELECT \"job_name\", \"state_int\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*master.*4.10.*aws.*/  ) AND $timeFilter ",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"A",
-                        "resultFormat":"table",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    }
-                ],
-                "title":"OADP -  OpenShift 4.10 AWS Periodic",
-                "transformations":[
-                    {
-                        "id":"organize",
-                        "options":{
-                            "excludeByName":{
-                                "log":false
-                            },
-                            "indexByName":{},
-                            "renameByName":{
-                                "log":""
-                            }
-                        }
-                    }
-                ],
-                "type":"table"
-            },
-            {
-                "datasource":{
-                    "type":"influxdb",
-                    "uid":"1vm2wY8nk"
-                },
-                "fieldConfig":{
-                    "defaults":{
-                        "custom":{
-                            "align":"auto",
-                            "displayMode":"auto",
-                            "filterable":true
-                        },
-                        "mappings":[
-                            {
-                                "options":{
-                                    "":{
-                                        "text":""
-                                    }
-                                },
-                                "type":"value"
-                            }
-                        ],
-                        "thresholds":{
-                            "mode":"absolute",
-                            "steps":[
-                                {
-                                    "color":"green",
-                                    "value":null
-                                },
-                                {
-                                    "color":"green",
-                                    "value":0
-                                },
-                                {
-                                    "color":"yellow",
-                                    "value":1
-                                },
-                                {
-                                    "color":"red",
-                                    "value":2
-                                },
-                                {
-                                    "color":"purple",
-                                    "value":3
-                                },
-                                {
-                                    "color":"orange",
-                                    "value":4
-                                },
-                                {
-                                    "color":"#959187",
-                                    "value":10
-                                }
-                            ]
-                        }
-                    },
-                    "overrides":[
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"job_name"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":753
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"build_id"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":188
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"duration"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":150
-                                },
-                                {
-                                    "id":"unit",
-                                    "value":"dthms"
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"job_name"
-                            },
-                            "properties":[
-                                {
-                                    "id":"links",
-                                    "value":[
-                                        {
-                                            "targetBlank":true,
-                                            "title":"link to logs",
-                                            "url":"${__data.fields.log::raw::raw}"
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"state_int"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.displayMode",
-                                    "value":"color-background"
-                                },
-                                {
-                                    "id":"mappings",
-                                    "value":[
-                                        {
-                                            "options":{
-                                                "0":{
-                                                    "index":4,
-                                                    "text":"success"
-                                                },
-                                                "1":{
-                                                    "index":3,
-                                                    "text":"pending"
-                                                },
-                                                "10":{
-                                                    "index":0,
-                                                    "text":"unknown"
-                                                },
-                                                "2":{
-                                                    "index":2,
-                                                    "text":"failure"
-                                                },
-                                                "3":{
-                                                    "index":1,
-                                                    "text":"aborted"
-                                                },
-                                                "4":{
-                                                    "index":5,
-                                                    "text":"flake"
-                                                }
-                                            },
-                                            "type":"value"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "id":"displayName",
-                                    "value":"state"
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"log"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":1
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"Time"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":159
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "gridPos":{
-                    "h":6,
-                    "w":24,
-                    "x":0,
-                    "y":39
-                },
-                "id":64,
-                "options":{
-                    "footer":{
-                        "fields":"",
-                        "reducer":[
-                            "sum"
-                        ],
-                        "show":false
-                    },
-                    "showHeader":true,
-                    "sortBy":[
-                        {
-                            "desc":true,
-                            "displayName":"Time"
-                        }
-                    ]
-                },
-                "pluginVersion":"8.4.6",
-                "targets":[
-                    {
-                        "datasource":{
-                            "type":"influxdb",
-                            "uid":"1vm2wY8nk"
-                        },
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "orderByTime":"ASC",
-                        "policy":"default",
-                        "query":"SELECT \"job_name\", \"state_int\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*master.*4.10.*gcp.*/  ) AND $timeFilter ",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"A",
-                        "resultFormat":"table",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    }
-                ],
-                "title":"OADP -  OpenShift 4.10 GCP Periodic",
-                "transformations":[
-                    {
-                        "id":"organize",
-                        "options":{
-                            "excludeByName":{
-                                "log":false
-                            },
-                            "indexByName":{},
-                            "renameByName":{
-                                "log":""
-                            }
-                        }
-                    }
-                ],
-                "type":"table"
-            },
-            {
-                "datasource":{
-                    "type":"influxdb",
-                    "uid":"1vm2wY8nk"
-                },
-                "fieldConfig":{
-                    "defaults":{
-                        "custom":{
-                            "align":"auto",
-                            "displayMode":"auto",
-                            "filterable":true
-                        },
-                        "mappings":[
-                            {
-                                "options":{
-                                    "":{
-                                        "text":""
-                                    }
-                                },
-                                "type":"value"
-                            }
-                        ],
-                        "thresholds":{
-                            "mode":"absolute",
-                            "steps":[
-                                {
-                                    "color":"green",
-                                    "value":null
-                                },
-                                {
-                                    "color":"green",
-                                    "value":0
-                                },
-                                {
-                                    "color":"yellow",
-                                    "value":1
-                                },
-                                {
-                                    "color":"red",
-                                    "value":2
-                                },
-                                {
-                                    "color":"purple",
-                                    "value":3
-                                },
-                                {
-                                    "color":"orange",
-                                    "value":4
-                                },
-                                {
-                                    "color":"#959187",
-                                    "value":10
-                                }
-                            ]
-                        }
-                    },
-                    "overrides":[
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"job_name"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":753
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"build_id"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":188
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"duration"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":150
-                                },
-                                {
-                                    "id":"unit",
-                                    "value":"dthms"
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"job_name"
-                            },
-                            "properties":[
-                                {
-                                    "id":"links",
-                                    "value":[
-                                        {
-                                            "targetBlank":true,
-                                            "title":"link to logs",
-                                            "url":"${__data.fields.log::raw::raw}"
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"state_int"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.displayMode",
-                                    "value":"color-background"
-                                },
-                                {
-                                    "id":"mappings",
-                                    "value":[
-                                        {
-                                            "options":{
-                                                "0":{
-                                                    "index":4,
-                                                    "text":"success"
-                                                },
-                                                "1":{
-                                                    "index":3,
-                                                    "text":"pending"
-                                                },
-                                                "10":{
-                                                    "index":0,
-                                                    "text":"unknown"
-                                                },
-                                                "2":{
-                                                    "index":2,
-                                                    "text":"failure"
-                                                },
-                                                "3":{
-                                                    "index":1,
-                                                    "text":"aborted"
-                                                },
-                                                "4":{
-                                                    "index":5,
-                                                    "text":"flake"
-                                                }
-                                            },
-                                            "type":"value"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "id":"displayName",
-                                    "value":"state"
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"log"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":1
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"Time"
-                            },
-                            "properties":[
-                                {
-                                    "id":"custom.width",
-                                    "value":159
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "gridPos":{
-                    "h":6,
-                    "w":24,
-                    "x":0,
-                    "y":45
-                },
-                "id":65,
-                "options":{
-                    "footer":{
-                        "fields":"",
-                        "reducer":[
-                            "sum"
-                        ],
-                        "show":false
-                    },
-                    "showHeader":true,
-                    "sortBy":[
-                        {
-                            "desc":true,
-                            "displayName":"Time"
-                        }
-                    ]
-                },
-                "pluginVersion":"8.4.6",
-                "targets":[
-                    {
-                        "datasource":{
-                            "type":"influxdb",
-                            "uid":"1vm2wY8nk"
-                        },
-                        "groupBy":[
-                            {
-                                "params":[
-                                    "$__interval"
-                                ],
-                                "type":"time"
-                            },
-                            {
-                                "params":[
-                                    "null"
-                                ],
-                                "type":"fill"
-                            }
-                        ],
-                        "orderByTime":"ASC",
-                        "policy":"default",
-                        "query":"SELECT \"job_name\", \"state_int\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*master.*4.10.*azure.*/  ) AND $timeFilter",
-                        "queryType":"randomWalk",
-                        "rawQuery":true,
-                        "refId":"A",
-                        "resultFormat":"table",
-                        "select":[
-                            [
-                                {
-                                    "params":[
-                                        "value"
-                                    ],
-                                    "type":"field"
-                                },
-                                {
-                                    "params":[],
-                                    "type":"mean"
-                                }
-                            ]
-                        ],
-                        "tags":[]
-                    }
-                ],
-                "title":"OADP -  OpenShift 4.10 Azure Periodic",
-                "transformations":[
-                    {
-                        "id":"organize",
-                        "options":{
-                            "excludeByName":{
-                                "log":false
-                            },
-                            "indexByName":{},
-                            "renameByName":{
-                                "log":""
-                            }
-                        }
-                    }
-                ],
-                "type":"table"
-            },
-            {
-                "datasource":{
-                    "type":"influxdb",
-                    "uid":"1vm2wY8nk"
-                },
-                "description":"",
-                "fieldConfig":{
-                    "defaults":{
-                        "color":{
-                            "mode":"palette-classic"
-                        },
-                        "custom":{
-                            "hideFrom":{
-                                "legend":false,
-                                "tooltip":false,
-                                "viz":false
-                            }
-                        },
-                        "decimals":0,
-                        "mappings":[],
-                        "unit":"short"
-                    },
-                    "overrides":[
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"SUCCESS"
-                            },
-                            "properties":[
-                                {
-                                    "id":"color",
-                                    "value":{
-                                        "fixedColor":"green",
-                                        "mode":"fixed"
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"FAILURE"
-                            },
-                            "properties":[
-                                {
-                                    "id":"color",
-                                    "value":{
-                                        "fixedColor":"red",
-                                        "mode":"fixed"
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"ABORTED"
-                            },
-                            "properties":[
-                                {
-                                    "id":"color",
-                                    "value":{
-                                        "fixedColor":"purple",
-                                        "mode":"fixed"
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "matcher":{
-                                "id":"byName",
-                                "options":"FLAKE"
-                            },
-                            "properties":[
-                                {
-                                    "id":"color",
-                                    "value":{
-                                        "fixedColor":"orange",
-                                        "mode":"fixed"
-                                    }
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "gridPos":{
-                    "h":9,
-                    "w":6,
-                    "x":0,
-                    "y":51
-                },
                 "id":72,
                 "links":[],
                 "options":{
@@ -3103,7 +1096,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*master.*4.9.*aws.*/  AND \"state\" = 'success' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*1.0.*4.9.*aws.*/  AND \"state\" = 'success' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -3146,7 +1139,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*master.*4.9.*aws.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*1.0.*4.9.*aws.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -3189,7 +1182,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*master.*4.9.*aws.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*1.0.*4.9.*aws.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
@@ -3233,7 +1226,7 @@
                         "hide":false,
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*master.*4.9.*aws.*/  AND \"state\" = 'flake' ) AND $timeFilter",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*1.0.*4.9.*aws.*/  AND \"state\" = 'flake' ) AND $timeFilter",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"D",
@@ -3347,7 +1340,7 @@
                     "h":9,
                     "w":6,
                     "x":6,
-                    "y":51
+                    "y":24
                 },
                 "id":73,
                 "links":[],
@@ -3398,7 +1391,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*master.*4.9.*gcp.*/  AND \"state\" = 'success' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*1.0.*4.9.*gcp.*/  AND \"state\" = 'success' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -3441,7 +1434,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*master.*4.9.*gcp.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*1.0.*4.9.*gcp.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -3484,7 +1477,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*master.*4.9.*gcp.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*1.0.*4.9.*gcp.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
@@ -3528,7 +1521,7 @@
                         "hide":false,
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*master.*4.9.*gcp.*/  AND \"state\" = 'flake' ) AND $timeFilter",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*1.0.*4.9.*gcp.*/  AND \"state\" = 'flake' ) AND $timeFilter",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"D",
@@ -3642,7 +1635,7 @@
                     "h":9,
                     "w":6,
                     "x":12,
-                    "y":51
+                    "y":24
                 },
                 "id":74,
                 "links":[],
@@ -3693,7 +1686,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*master.*4.9.*azure.*/  AND \"state\" = 'success' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*1.0.*4.9.*azure.*/  AND \"state\" = 'success' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -3736,7 +1729,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*master.*4.9.*azure.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*1.0.*4.9.*azure.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -3779,7 +1772,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*master.*4.9.*azure.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*1.0.*4.9.*azure.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
@@ -3823,7 +1816,7 @@
                         "hide":false,
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*master.*4.9.*azure.*/  AND \"state\" = 'flake' ) AND $timeFilter",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*1.0.*4.9.*azure.*/  AND \"state\" = 'flake' ) AND $timeFilter",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"D",
@@ -4043,7 +2036,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":60
+                    "y":33
                 },
                 "id":9,
                 "options":{
@@ -4085,7 +2078,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT \"job_name\", \"state_int\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*master.*4.9.*aws.*/  ) AND $timeFilter ",
+                        "query":"SELECT \"job_name\", \"state_int\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*1.0.*4.9.*aws.*/  ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -4319,7 +2312,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":66
+                    "y":39
                 },
                 "id":50,
                 "options":{
@@ -4361,7 +2354,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT \"job_name\", \"state_int\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*master.*4.9.*gcp.*/  ) AND $timeFilter ",
+                        "query":"SELECT \"job_name\", \"state_int\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*1.0.*4.9.*gcp.*/  ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -4595,7 +2588,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":72
+                    "y":45
                 },
                 "id":51,
                 "options":{
@@ -4637,7 +2630,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT \"job_name\", \"state_int\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*master.*4.9.*azure.*/  ) AND $timeFilter ",
+                        "query":"SELECT \"job_name\", \"state_int\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*1.0.*4.9.*azure.*/  ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -4765,7 +2758,7 @@
                     "h":9,
                     "w":6,
                     "x":0,
-                    "y":78
+                    "y":51
                 },
                 "id":75,
                 "links":[],
@@ -4816,7 +2809,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*master.*4.8.*aws.*/  AND \"state\" = 'success' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*1.0.*4.8.*aws.*/  AND \"state\" = 'success' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -4859,7 +2852,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*master.*4.8.*aws.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*1.0.*4.8.*aws.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -4902,7 +2895,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*master.*4.8.*aws.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*1.0.*4.8.*aws.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
@@ -4946,7 +2939,7 @@
                         "hide":false,
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*master.*4.8.*aws.*/  AND \"state\" = 'flake' ) AND $timeFilter",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*1.0.*4.8.*aws.*/  AND \"state\" = 'flake' ) AND $timeFilter",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"D",
@@ -5060,7 +3053,7 @@
                     "h":9,
                     "w":6,
                     "x":6,
-                    "y":78
+                    "y":51
                 },
                 "id":76,
                 "links":[],
@@ -5111,7 +3104,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*master.*4.8.*gcp.*/  AND \"state\" = 'success' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*1.0.*4.8.*gcp.*/  AND \"state\" = 'success' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -5154,7 +3147,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*master.*4.8.*gcp.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*1.0.*4.8.*gcp.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -5197,7 +3190,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*master.*4.8.*gcp.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*1.0.*4.8.*gcp.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
@@ -5241,7 +3234,7 @@
                         "hide":false,
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*master.*4.8.*gcp.*/  AND \"state\" = 'flake' ) AND $timeFilter",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*1.0.*4.8.*gcp.*/  AND \"state\" = 'flake' ) AND $timeFilter",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"D",
@@ -5355,7 +3348,7 @@
                     "h":9,
                     "w":6,
                     "x":12,
-                    "y":78
+                    "y":51
                 },
                 "id":80,
                 "links":[],
@@ -5406,7 +3399,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*master.*4.8.*azure.*/  AND \"state\" = 'success' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*1.0.*4.8.*azure.*/  AND \"state\" = 'success' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -5449,7 +3442,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*master.*4.8.*azure.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*1.0.*4.8.*azure.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -5492,7 +3485,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*master.*4.8.*azure.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*1.0.*4.8.*azure.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
@@ -5536,7 +3529,7 @@
                         "hide":false,
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*master.*4.8.*azure.*/  AND \"state\" = 'flake' ) AND $timeFilter",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*1.0.*4.8.*azure.*/  AND \"state\" = 'flake' ) AND $timeFilter",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"D",
@@ -5756,7 +3749,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":87
+                    "y":60
                 },
                 "id":52,
                 "options":{
@@ -5798,7 +3791,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT \"job_name\", \"state_int\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*master.*4.8.*aws.*/  ) AND $timeFilter ",
+                        "query":"SELECT \"job_name\", \"state_int\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*1.0.*4.8.*aws.*/  ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -6032,7 +4025,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":93
+                    "y":66
                 },
                 "id":53,
                 "options":{
@@ -6074,7 +4067,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT \"job_name\", \"state_int\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*master.*4.8.*gcp.*/  ) AND $timeFilter ",
+                        "query":"SELECT \"job_name\", \"state_int\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*1.0.*4.8.*gcp.*/  ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -6308,7 +4301,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":99
+                    "y":72
                 },
                 "id":54,
                 "options":{
@@ -6350,7 +4343,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT \"job_name\", \"state_int\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*master.*4.8.*azure.*/  ) AND $timeFilter ",
+                        "query":"SELECT \"job_name\", \"state_int\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*1.0.*4.8.*azure.*/  ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -6478,7 +4471,7 @@
                     "h":9,
                     "w":6,
                     "x":0,
-                    "y":105
+                    "y":78
                 },
                 "id":78,
                 "links":[],
@@ -6529,7 +4522,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*master.*4.7.*aws.*/  AND \"state\" = 'success' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*1.0.*4.7.*aws.*/  AND \"state\" = 'success' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -6572,7 +4565,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*master.*4.7.*aws.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*1.0.*4.7.*aws.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -6615,7 +4608,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*master.*4.7.*aws.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*1.0.*4.7.*aws.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
@@ -6659,7 +4652,7 @@
                         "hide":false,
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*master.*4.7.*aws.*/  AND \"state\" = 'flake' ) AND $timeFilter",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*1.0.*4.7.*aws.*/  AND \"state\" = 'flake' ) AND $timeFilter",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"D",
@@ -6773,7 +4766,7 @@
                     "h":9,
                     "w":6,
                     "x":6,
-                    "y":105
+                    "y":78
                 },
                 "id":79,
                 "links":[],
@@ -6824,7 +4817,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*master.*4.7.*gcp.*/  AND \"state\" = 'success' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*1.0.*4.7.*gcp.*/  AND \"state\" = 'success' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -6867,7 +4860,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*master.*4.7.*gcp.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*1.0.*4.7.*gcp.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -6910,7 +4903,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*master.*4.7.*gcp.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*1.0.*4.7.*gcp.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
@@ -6954,7 +4947,7 @@
                         "hide":false,
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*master.*4.7.*gcp.*/  AND \"state\" = 'flake' ) AND $timeFilter",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*1.0.*4.7.*gcp.*/  AND \"state\" = 'flake' ) AND $timeFilter",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"D",
@@ -7068,7 +5061,7 @@
                     "h":9,
                     "w":6,
                     "x":12,
-                    "y":105
+                    "y":78
                 },
                 "id":81,
                 "links":[],
@@ -7119,7 +5112,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*master.*4.7.*azure.*/  AND \"state\" = 'success' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~    /^periodic.*1.0.*4.7.*azure.*/  AND \"state\" = 'success' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -7162,7 +5155,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*master.*4.7.*azure.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*1.0.*4.7.*azure.*/  AND \"state\" = 'failure' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"B",
@@ -7205,7 +5198,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*master.*4.7.*azure.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~  /^periodic.*1.0.*4.7.*azure.*/  AND \"state\" = 'aborted' ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"C",
@@ -7249,7 +5242,7 @@
                         "hide":false,
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*master.*4.7.*azure.*/  AND \"state\" = 'flake' ) AND $timeFilter",
+                        "query":"SELECT count(\"state\") FROM \"build\"  WHERE (\"job_name\" =~   /^periodic.*1.0.*4.7.*azure.*/  AND \"state\" = 'flake' ) AND $timeFilter",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"D",
@@ -7469,7 +5462,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":114
+                    "y":87
                 },
                 "id":55,
                 "options":{
@@ -7511,7 +5504,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT \"job_name\", \"state_int\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*master.*4.7.*aws.*/  ) AND $timeFilter ",
+                        "query":"SELECT \"job_name\", \"state_int\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*1.0.*4.7.*aws.*/  ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -7745,7 +5738,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":120
+                    "y":93
                 },
                 "id":56,
                 "options":{
@@ -7787,7 +5780,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT \"job_name\", \"state_int\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*master.*4.7.*gcp.*/  ) AND $timeFilter ",
+                        "query":"SELECT \"job_name\", \"state_int\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*1.0.*4.7.*gcp.*/  ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -8021,7 +6014,7 @@
                     "h":6,
                     "w":24,
                     "x":0,
-                    "y":126
+                    "y":99
                 },
                 "id":57,
                 "options":{
@@ -8063,7 +6056,7 @@
                         ],
                         "orderByTime":"ASC",
                         "policy":"default",
-                        "query":"SELECT \"job_name\", \"state_int\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*master.*4.7.*azure.*/  ) AND $timeFilter ",
+                        "query":"SELECT \"job_name\", \"state_int\", \"build_id\", \"end_time\", \"duration\", \"log\" FROM \"build\"  WHERE (\"job_name\" =~ /^periodic.*1.0.*4.7.*azure.*/  ) AND $timeFilter ",
                         "queryType":"randomWalk",
                         "rawQuery":true,
                         "refId":"A",
@@ -8128,7 +6121,7 @@
         },
         "timepicker":{},
         "timezone":"",
-        "title":"OADP Periodic",
+        "title":"OADP Periodic - 1.0",
         "weekStart":""
     }
 }
