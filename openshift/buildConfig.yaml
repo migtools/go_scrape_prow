@@ -32,7 +32,8 @@ items:
       source:
         type: Git
         git:
-          uri: 'https://github.com/hhpatel14/go_scrape_prow.git'
+          uri: 'https://github.com/migtools/go_scrape_prow.git'
+          ref: main
         contextDir: /grafana
         sourceSecret:
           name: openshift
@@ -50,7 +51,7 @@ items:
   - kind: BuildConfig
     apiVersion: build.openshift.io/v1
     metadata:
-      name: telegraff
+      name: telegraf
       namespace: go-scrape-prow
       labels:
         app: telegraf
@@ -74,8 +75,8 @@ items:
       source:
         type: Git
         git:
-          uri: 'https://github.com/hhpatel14/go_scrape_prow.git'
-          ref: newOpenshift
+          uri: 'https://github.com/migtools/go_scrape_prow.git'
+          ref: main
         contextDir: /telegraf
         sourceSecret:
           name: openshift
